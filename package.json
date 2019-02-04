@@ -1,0 +1,11 @@
+{
+  "name": "librarian",
+  "version": "0.0.0",
+  "description": "The bookmark manager I always dreamed of",
+  "main": "index.js",
+  "author": "J Quinzell Rainwater",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^1.16.4"
+  }
+}
