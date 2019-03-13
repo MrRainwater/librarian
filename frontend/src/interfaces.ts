@@ -4,3 +4,5 @@ export interface IBookmark {
   description: string
   img: string
 }
+
+export type IBookmarkCreate = Pick<IBookmark, 'title' | 'description' | 'url'>

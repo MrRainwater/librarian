@@ -3,6 +3,8 @@ import { Layout, Panel } from 'react-toolbox/lib/layout'
 import Bookmarks from 'components/Bookmarks'
 import NewBookmarkButton from 'components/NewBookmarkButton'
 import * as classes from './styles/panel.scss'
+import CreateBookmark from './CreateBookmark'
+import { IBookmarkCreate } from 'interfaces'
 
 const data = [
   {
@@ -48,11 +50,23 @@ const data = [
 ]
 
 const Main: React.FunctionComponent = () => {
+  const [isCreateActive, setIsCreateActive] = React.useState(false)
+
+  function saveBookmark(bookmark: IBookmarkCreate) {
+    console.log(bookmark)
+    setIsCreateActive(false)
+  }
+
   return (
     <Layout>
       <Panel className={classes.panel}>
         <Bookmarks bookmarks={data} />
-        <NewBookmarkButton />
+        <NewBookmarkButton onClick={() => setIsCreateActive(true)} />
+        <CreateBookmark
+          active={isCreateActive}
+          onCancel={() => setIsCreateActive(false)}
+          onSave={saveBookmark}
+        />
       </Panel>
     </Layout>
   )
