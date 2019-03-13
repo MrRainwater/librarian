@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom'
 import { Provider } from 'mobx-react'
 import { Layout, Panel } from 'react-toolbox/lib/layout'
 import Bookmarks from 'components/Bookmarks'
+import * as classes from './components/styles/panel.scss'
 
 const data = [
   {
@@ -45,7 +46,7 @@ const data = [
 ReactDOM.render(
   <Provider>
     <Layout>
-      <Panel>
+      <Panel className={classes.panel}>
         <Bookmarks bookmarks={data} />
       </Panel>
     </Layout>
