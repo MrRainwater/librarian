@@ -13,11 +13,28 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: 'ts-loader'
+      },
+      {
+        test: /(\.sass|\.scss|\.css)$/,
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]--[hash:base64:5]'
+            }
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
       }
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    extensions: ['.tsx', '.ts', '.js', '.jsx', '.scss', 'sass'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
   output: {
