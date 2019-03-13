@@ -1,10 +1,54 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Provider } from 'mobx-react'
+import { Layout, Panel } from 'react-toolbox/lib/layout'
+import Bookmarks from 'components/Bookmarks'
+
+const data = [
+  {
+    title: 'Discord - Free Voice and Text Chat',
+    description:
+      'Step up your game with a modern voice & text chat app. Crystal clear voice, multiple server and channel support, mobile apps, and more.',
+    img:
+      'https://www.discordapp.com/assets/ba74954dde74ff40a32ff58069e78c36.png'
+  },
+  {
+    title: 'Discord - Free Voice and Text Chat (1)',
+    description:
+      'Step up your game with a modern voice & text chat app. Crystal clear voice, multiple server and channel support, mobile apps, and more.',
+    img:
+      'https://www.discordapp.com/assets/ba74954dde74ff40a32ff58069e78c36.png'
+  },
+  {
+    title: 'Discord - Free Voice and Text Chat (2)',
+    description:
+      'Step up your game with a modern voice & text chat app. Crystal clear voice, multiple server and channel support, mobile apps, and more.',
+    img:
+      'https://www.discordapp.com/assets/ba74954dde74ff40a32ff58069e78c36.png'
+  },
+  {
+    title: 'Discord - Free Voice and Text Chat (3)',
+    description:
+      'Step up your game with a modern voice & text chat app. Crystal clear voice, multiple server and channel support, mobile apps, and more.',
+    img:
+      'https://www.discordapp.com/assets/ba74954dde74ff40a32ff58069e78c36.png'
+  },
+  {
+    title: 'Discord - Free Voice and Text Chat (4)',
+    description:
+      'Step up your game with a modern voice & text chat app. Crystal clear voice, multiple server and channel support, mobile apps, and more.',
+    img:
+      'https://www.discordapp.com/assets/ba74954dde74ff40a32ff58069e78c36.png'
+  }
+]
 
 ReactDOM.render(
   <Provider>
-    <h1>Hi</h1>
+    <Layout>
+      <Panel>
+        <Bookmarks bookmarks={data} />
+      </Panel>
+    </Layout>
   </Provider>,
   document.getElementById('app')
 )
