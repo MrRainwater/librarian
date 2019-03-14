@@ -24,7 +24,7 @@ async function graphql(query: string, variables?: any) {
   }
 }
 
-export function bookmarks(): Promise<IBookmark> {
+export function getBookmarks(): Promise<IBookmark> {
   return graphql(`
     {
       bookmarks {
