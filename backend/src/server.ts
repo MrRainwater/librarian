@@ -65,6 +65,20 @@ const root = {
 }
 
 const app = express()
+
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  )
+  if (req.method === 'OPTIONS') {
+    return res.send(200)
+  } else {
+    return next()
+  }
+})
+
 app.use(
   '/graphql',
   graphqlHTTP({
@@ -73,5 +87,7 @@ app.use(
     graphiql: true
   })
 )
+
 app.listen(4000)
-console.log('Running a GraphQL API server at localhost:4000/graphql')
+
+console.log('Running server at localhost:4000/graphql')
