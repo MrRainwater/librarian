@@ -1,0 +1,20 @@
+{
+  "name": "librarian-backend",
+  "version": "0.0.0",
+  "author": "J Quinzell Rainwater",
+  "license": "MIT",
+  "scripts": {
+    "start": "node build/server.js",
+    "build": "tsc",
+    "clean": "rm build/*.js build/*.map"
+  },
+  "dependencies": {
+    "@types/express": "^4.16.1",
+    "@types/express-graphql": "^0.6.2",
+    "@types/graphql": "^14.0.7",
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.1.1",
+    "typescript": "^3.3.3333"
+  }
+}

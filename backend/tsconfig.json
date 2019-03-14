@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "lib": ["esnext", "dom"],
+    "target": "es2018",
+    "strict": true,
+    "baseUrl": "src",
+    "outDir": "build",
+    "module": "commonjs",
+    "sourceMap": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["build", "node_modules"],
+  "compileOnSave": true
+}
