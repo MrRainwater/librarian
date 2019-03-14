@@ -34,5 +34,5 @@ export function getBookmarks(): Promise<IBookmark[]> {
         img
       }
     }
-  `)
+  `).then(data => data.bookmarks)
 }
