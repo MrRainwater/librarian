@@ -1,7 +1,6 @@
 {
   "name": "librarian-frontent",
   "version": "0.0.0",
-  "main": "index.js",
   "author": "J Quinzell Rainwater",
   "license": "MIT",
   "scripts": {
