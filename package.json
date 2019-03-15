@@ -2,9 +2,16 @@
   "name": "librarian",
   "version": "0.0.0",
   "description": "The bookmark manager I always dreamed of",
-  "main": "index.js",
   "author": "J Quinzell Rainwater",
   "license": "MIT",
+  "scripts": {
+    "build:dev": "yarn run build:front && yarn run build:back",
+    "build:prod": "yarn run build:front -- --package-json-only && yarn run build:back -- --package-json-only",
+    "build:front": "yarn install --cwd frontend",
+    "build:back": "yarn install --cwd backend",
+    "start:front": "yarn start --cwd frontend",
+    "start:back": "yarn start --cwd backend"
+  },
   "devDependencies": {
     "prettier": "^1.16.4"
   }
