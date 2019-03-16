@@ -10,7 +10,8 @@
     "build:front": "yarn --cwd frontend install",
     "build:back": "yarn --cwd backend install",
     "start:front": "yarn --cwd frontend start",
-    "start:back": "yarn --cwd backend start"
+    "start:back": "yarn --cwd backend start",
+    "watch:back": "yarn --cwd backend run watch"
   },
   "devDependencies": {
     "prettier": "^1.16.4"

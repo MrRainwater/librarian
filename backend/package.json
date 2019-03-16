@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node build/server.js",
     "build": "tsc",
+    "watch": "tsc --watch",
     "clean": "rm build/*.js build/*.map"
   },
   "dependencies": {
