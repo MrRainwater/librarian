@@ -11,7 +11,9 @@
     "build:prod": "yarn run build:front -- --package-json-only && yarn run build:back -- --package-json-only",
     "build:front": "yarn --cwd frontend install",
     "build:back": "yarn --cwd backend install",
-    "watch:back": "yarn --cwd backend run watch"
+    "watch:back": "yarn --cwd backend run watch",
+    "run:front": "yarn --cwd frontend",
+    "run:back": "yarn --cwd backend"
   },
   "devDependencies": {
     "prettier": "^1.16.4"
