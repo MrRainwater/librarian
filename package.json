@@ -7,10 +7,10 @@
   "scripts": {
     "build:dev": "yarn run build:front && yarn run build:back",
     "build:prod": "yarn run build:front -- --package-json-only && yarn run build:back -- --package-json-only",
-    "build:front": "yarn install --cwd frontend",
-    "build:back": "yarn install --cwd backend",
-    "start:front": "yarn start --cwd frontend",
-    "start:back": "yarn start --cwd backend"
+    "build:front": "yarn --cwd frontend install",
+    "build:back": "yarn --cwd backend install",
+    "start:front": "yarn --cwd frontend start",
+    "start:back": "yarn --cwd backend start"
   },
   "devDependencies": {
     "prettier": "^1.16.4"
