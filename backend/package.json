@@ -4,7 +4,7 @@
   "author": "J Quinzell Rainwater",
   "license": "MIT",
   "scripts": {
-    "start": "node build/server.js",
+    "start": "nodemon build/server.js",
     "build": "tsc",
     "watch": "tsc --watch",
     "clean": "rm build/*.js build/*.map"
@@ -12,10 +12,20 @@
   "dependencies": {
     "@types/express": "^4.16.1",
     "@types/express-graphql": "^0.6.2",
+    "@types/got": "^9.4.1",
     "@types/graphql": "^14.0.7",
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
+    "got": "^9.6.0",
     "graphql": "^14.1.1",
+    "metascraper": "^4.10.2",
+    "metascraper-author": "^4.10.2",
+    "metascraper-date": "^4.10.2",
+    "metascraper-description": "^4.10.2",
+    "metascraper-image": "^4.10.2",
+    "metascraper-logo": "^4.10.2",
+    "metascraper-title": "^4.10.2",
+    "metascraper-url": "^4.10.2",
     "typescript": "^3.3.3333"
   }
 }
