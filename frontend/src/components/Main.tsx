@@ -13,7 +13,7 @@ const Main: React.FunctionComponent = () => {
 
   React.useEffect(() => {
     getBookmarks().then(setBookmarks)
-  })
+  }, [])
 
   function saveBookmark(bookmark: IBookmarkCreate) {
     console.log(bookmark)
