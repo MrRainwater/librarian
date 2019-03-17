@@ -2,12 +2,16 @@ import * as express from 'express'
 import * as graphqlHTTP from 'express-graphql'
 import schema from './types'
 import BookmarkStore from './bookmarks'
+import getMetadata from './scraper'
 
 const store = new BookmarkStore()
 
 const root = {
   bookmarks: () => {
     return store.data
+  },
+  metadata: ({ url }) => {
+    return getMetadata(url)
   }
 }
 
