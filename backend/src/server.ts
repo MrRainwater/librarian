@@ -1,22 +1,9 @@
 import * as express from 'express'
 import * as graphqlHTTP from 'express-graphql'
-import { buildSchema } from 'graphql'
+import schema from './types'
 import BookmarkStore from './bookmarks'
 
 const store = new BookmarkStore()
-
-const schema = buildSchema(`
-  type Bookmark {
-    url: String
-    title: String
-    description: String
-    img: String
-  }
-
-  type Query {
-    bookmarks: [Bookmark]
-  }
-`)
 
 const root = {
   bookmarks: () => {
