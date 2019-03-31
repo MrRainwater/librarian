@@ -13,13 +13,18 @@ async function graphql(query: string, variables?: any) {
         variables
       })
     })
-    const json = await res.json()
+    const { data, errors } = await res.json()
 
-    return json.data
+    if (errors) throw errors
+
+    return data
   } catch (err) {
     console.error('Error in graphql call')
     console.error(query)
     console.error({ variables })
+    if (Array.isArray(err)) {
+      err.map(e => new Error(e.message)).forEach(e => console.error(e))
+    }
     throw new Error('Network Error')
   }
 }
