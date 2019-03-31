@@ -31,7 +31,7 @@ async function graphql(query: string, variables?: any) {
 
 export function getBookmarks(): Promise<IBookmark[]> {
   return graphql(`
-    {
+    query getBookmarks {
       bookmarks {
         url
         title
