@@ -33,5 +33,6 @@ export default async function getMetadata(
 ): Promise<Partial<Metadata>> {
   const { body: html, url } = await got(targetUrl)
   const metadata = await scraper({ html, url })
+  metadata.img = metadata.image
   return metadata
 }

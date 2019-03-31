@@ -2,7 +2,7 @@ export default `
   type Metadata {
     title: String
     description: String
-    image: String
+    img: String
     logo: String
     url: String
     author: String
