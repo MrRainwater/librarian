@@ -36,3 +36,20 @@ export function getBookmarks(): Promise<IBookmark[]> {
     }
   `).then(data => data.bookmarks)
 }
+
+export function getMetadata(url: string): Promise<IBookmark> {
+  return graphql(
+    `
+      query getMetadata($url: String!) {
+        metadata(url: $url) {
+          url
+          title
+          description
+          img
+          logo
+        }
+      }
+    `,
+    { url }
+  ).then(data => data.metadata)
+}
