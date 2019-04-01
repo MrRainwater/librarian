@@ -10,6 +10,10 @@ const root = {
   bookmarks: () => {
     return store.data
   },
+  createBookmark: ({ input }) => {
+    store.add(input)
+    return input
+  },
   metadata: ({ url }) => {
     return getMetadata(url)
   }
