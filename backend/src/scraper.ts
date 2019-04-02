@@ -21,7 +21,7 @@ const scraper = metascraper([
 interface Metadata {
   title: string
   description: string
-  image: string
+  img: string
   logo: string
   url: string
   author: string
