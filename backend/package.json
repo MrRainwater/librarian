@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon build/server.js",
-    "import_bookmarks": "node build/import.js",
+    "import": "node build/import.js",
     "build": "tsc",
     "watch": "tsc --watch",
     "clean": "rm build/*.js build/*.map"
