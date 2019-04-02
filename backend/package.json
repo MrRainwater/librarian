@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon build/server.js",
+    "import_bookmarks": "node build/import.js",
     "build": "tsc",
     "watch": "tsc --watch",
     "clean": "rm build/*.js build/*.map"
@@ -14,10 +15,12 @@
     "@types/express-graphql": "^0.6.2",
     "@types/got": "^9.4.1",
     "@types/graphql": "^14.0.7",
+    "@types/jsdom": "^12.2.3",
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
     "got": "^9.6.0",
     "graphql": "^14.1.1",
+    "jsdom": "^14.0.0",
     "metascraper": "^4.10.2",
     "metascraper-author": "^4.10.2",
     "metascraper-date": "^4.10.2",
