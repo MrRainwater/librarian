@@ -18,7 +18,7 @@ const scraper = metascraper([
   date()
 ])
 
-interface Metadata {
+export interface Metadata {
   title: string
   description: string
   img: string
@@ -28,7 +28,7 @@ interface Metadata {
   date: string
 }
 
-export default async function getMetadata(
+export async function getMetadata(
   targetUrl: string
 ): Promise<Partial<Metadata>> {
   const { body: html, url } = await got(targetUrl)
