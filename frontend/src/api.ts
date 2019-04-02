@@ -42,6 +42,22 @@ export function getBookmarks(): Promise<IBookmark[]> {
   `).then(data => data.bookmarks)
 }
 
+export function createBookmark(input: IBookmark): Promise<IBookmark> {
+  return graphql(
+    `
+      mutation createBookmark($input: BookmarkInput!) {
+        createBookmark(input: $input) {
+          url
+          title
+          description
+          img
+        }
+      }
+    `,
+    { input }
+  ).then(data => data.createBookmark)
+}
+
 export function getMetadata(url: string): Promise<IBookmark> {
   return graphql(
     `
@@ -51,7 +67,6 @@ export function getMetadata(url: string): Promise<IBookmark> {
           title
           description
           img
-          logo
         }
       }
     `,

@@ -2,6 +2,8 @@ import * as React from 'react'
 import Dialog from 'react-toolbox/lib/dialog'
 import { IBookmark } from 'interfaces'
 import Input from 'react-toolbox/lib/input'
+import { createBookmark } from 'api'
+import { useBookmarks } from 'hooks'
 
 interface Props {
   metadata: IBookmark
@@ -17,7 +19,7 @@ const CreateBookmarkDialog: React.FunctionComponent<Props> = ({
   const actions = [
     {
       label: 'Save',
-      onClick: () => onSave(bookmark)
+      onClick: () => save()
     },
     {
       label: 'Cancel',
@@ -25,7 +27,14 @@ const CreateBookmarkDialog: React.FunctionComponent<Props> = ({
     }
   ]
 
+  function save() {
+    createBookmark(bookmark)
+    setBookmarks([...bookmarks, bookmark])
+    onSave(bookmark)
+  }
+
   const [bookmark, setBookmark] = React.useState<IBookmark>(metadata)
+  const [bookmarks, setBookmarks] = useBookmarks()
 
   function mergeBookmark<T extends IBookmark, K extends keyof T>(key: K) {
     return (val: T[K]) =>
@@ -71,13 +80,6 @@ const CreateBookmarkDialog: React.FunctionComponent<Props> = ({
         label="img"
         value={bookmark.img}
         onChange={mergeBookmark('img')}
-      />
-
-      <Input
-        type="text"
-        label="logo"
-        value={bookmark.logo}
-        onChange={mergeBookmark('logo')}
       />
     </Dialog>
   )
