@@ -9,6 +9,6 @@
     "sourceMap": true,
     "experimentalDecorators": true
   },
-  "include": ["src/**/*", "./typings.d.ts"],
+  "include": ["src/**/*", "./typings.d.ts", "tests/**/*"],
   "exclude": ["node_modules"]
 }
