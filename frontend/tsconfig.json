@@ -4,7 +4,9 @@
     "jsx": "react",
     "module": "commonjs",
     "baseUrl": "./src",
+    "allowJs": true,
     "strict": true,
+    "lib": ["esnext", "dom"],
     "removeComments": true,
     "sourceMap": true,
     "experimentalDecorators": true
