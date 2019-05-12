@@ -1,8 +1,9 @@
 import { reducer, initialState } from 'stores/BookmarkStore'
+import { BookmarkFactory } from 'factories/BookmarkFactory'
 
 describe('BookmarkReducer', () => {
   it('add bookmark', () => {
-    const bookmark = { title: 'title' }
+    const bookmark = BookmarkFactory.build()
 
     const { bookmarks } = reducer(initialState, {
       type: 'ADD_BOOKMARK',
@@ -14,16 +15,15 @@ describe('BookmarkReducer', () => {
 
   it('add tag', () => {
     const tag = 'tag'
-    const title = 'title'
-    const bookmark = { title, tags: [] }
+    const bookmark = BookmarkFactory.build()
     const initialState = { bookmarks: [bookmark] }
 
     const { bookmarks } = reducer(initialState, {
       type: 'TAG_BOOKMARK_BY_TITLE',
-      title,
+      title: bookmark.title,
       tag
     })
 
-    expect(bookmarks).toEqual([{ title: 'title', tags: [tag] }])
+    expect(bookmarks).toEqual([{ ...bookmark, tags: [tag] }])
   })
 })
