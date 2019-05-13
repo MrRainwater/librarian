@@ -26,4 +26,18 @@ describe('BookmarkReducer', () => {
 
     expect(bookmarks).toEqual([{ ...bookmark, tags: [tag] }])
   })
+
+  it('add to folder', () => {
+    const folder = 'folder'
+    const bookmark = BookmarkFactory.build()
+    const initialState = { bookmarks: [bookmark] }
+
+    const { bookmarks } = reducer(initialState, {
+      type: 'ADD_BOOKMARK_TO_FOLDER',
+      title: bookmark.title,
+      folder
+    })
+
+    expect(bookmarks).toEqual([{ ...bookmark, folders: [folder] }])
+  })
 })

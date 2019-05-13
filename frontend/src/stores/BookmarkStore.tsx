@@ -10,13 +10,19 @@ interface AddBookmark {
   bookmark: IBookmark
 }
 
+interface AddBookmarkToFolder {
+  type: 'ADD_BOOKMARK_TO_FOLDER'
+  title: string
+  folder: string
+}
+
 interface TagBookmark {
   type: 'TAG_BOOKMARK_BY_TITLE'
   tag: string
   title: string
 }
 
-type Action = AddBookmark | TagBookmark
+type Action = AddBookmark | TagBookmark | AddBookmarkToFolder
 
 type Reducer = (state: State, action: Action) => State
 
@@ -32,6 +38,7 @@ export const initialState = {
 }
 
 export const reducer: Reducer = (state, action) => {
+  const bookmark = state.bookmarks.find(b => b.title === (action as any).title)
   switch (action.type) {
     case 'ADD_BOOKMARK':
       return {
@@ -39,7 +46,6 @@ export const reducer: Reducer = (state, action) => {
         bookmarks: [...state.bookmarks, action.bookmark]
       }
     case 'TAG_BOOKMARK_BY_TITLE':
-      const bookmark = state.bookmarks.find(b => b.title === action.title)
       if (bookmark) {
         return {
           ...state,
@@ -48,6 +54,21 @@ export const reducer: Reducer = (state, action) => {
             {
               ...bookmark,
               tags: [...bookmark.tags, action.tag]
+            }
+          ]
+        }
+      } else {
+        return state
+      }
+    case 'ADD_BOOKMARK_TO_FOLDER':
+      if (bookmark) {
+        return {
+          ...state,
+          bookmarks: [
+            ...state.bookmarks.filter(b => b.title !== action.title),
+            {
+              ...bookmark,
+              folders: [...bookmark.folders, action.folder]
             }
           ]
         }
