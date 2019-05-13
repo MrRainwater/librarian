@@ -1,6 +1,11 @@
 .bookmarks {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
   .bookmark {
     margin: 1em;
+    flex-basis: 350px;
+    height: 350px;
   }
 }
