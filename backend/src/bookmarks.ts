@@ -2,7 +2,7 @@ import { readFileSync } from 'fs'
 
 const bookmarks = JSON.parse(
   readFileSync('data/bookmarks.json').toString()
-) as any[]
+) as Bookmark[]
 
 interface Bookmark {
   url: string
@@ -12,7 +12,13 @@ interface Bookmark {
 }
 
 export default class BookmarkStore {
-  data: Bookmark[] = bookmarks.slice(0, 50)
+  data: Bookmark[] = bookmarks.reduce<Bookmark[]>(
+    (unique, current) =>
+      unique.find(b => b.title === current.title)
+        ? unique
+        : [...unique, current],
+    []
+  )
 
   add(bookmark: Bookmark) {
     this.data.push(bookmark)
