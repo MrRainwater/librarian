@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as classes from './styles/Bookmarks.scss'
 import {
   Card,
   CardMedia,
@@ -9,6 +8,7 @@ import {
 } from 'react-toolbox/lib/card'
 import { IBookmark } from 'interfaces'
 import { IconButton } from 'react-toolbox/lib/button'
+import * as classes from './styles/Bookmarks.scss'
 
 interface Props {
   bookmark: IBookmark
@@ -16,11 +16,11 @@ interface Props {
 }
 
 const Bookmark: React.FunctionComponent<Props> = ({ bookmark, className }) => (
-  <Card className={className}>
+  <Card className={classes.bookmark}>
+    <CardTitle className={classes.title} title={bookmark.title} />
     <CardMedia image={bookmark.img} aspectRatio="wide" />
-    <CardTitle title={bookmark.title} />
-    <CardText>{bookmark.description}</CardText>
-    <CardActions>
+    <CardText className={classes.content}>{bookmark.description}</CardText>
+    <CardActions className={classes.actions}>
       <a href={bookmark.url} target="_blank">
         <IconButton icon="link" />
       </a>

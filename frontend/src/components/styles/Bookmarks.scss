@@ -6,6 +6,21 @@
   .bookmark {
     margin: 1em;
     flex-basis: 350px;
-    height: 350px;
+    position: relative;
+
+    $action-height: 55px;
+
+    .title {
+      height: 75px;
+    }
+
+    .content {
+      padding-bottom: $action-height;
+    }
+
+    .actions {
+      position: absolute;
+      bottom: 0;
+    }
   }
 }
