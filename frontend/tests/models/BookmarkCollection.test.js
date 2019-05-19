@@ -27,4 +27,24 @@ describe('BookmarkCollection', () => {
 
     expect(result).toEqual([bookmark1, bookmark3])
   })
+
+  it('filters by title', () => {
+    const title = 'title'
+    const bookmark = BookmarkFactory.build({ title })
+    const bookmarks = [bookmark, BookmarkFactory.build()]
+    const collection = new BookmarkCollection(bookmarks)
+
+    const result = [...collection.titleContains(title)]
+
+    expect(result).toEqual([bookmark])
+  })
+
+  it('returns all bookmarks if empty search param', () => {
+    const bookmarks = [BookmarkFactory.build(), BookmarkFactory.build()]
+    const collection = new BookmarkCollection(bookmarks)
+
+    const result = [...collection.titleContains('')]
+
+    expect(result).toEqual(bookmarks)
+  })
 })

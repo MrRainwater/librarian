@@ -18,4 +18,9 @@ export default class BookmarkCollection {
 
   withTags = (tags: string[]) =>
     new BookmarkCollection(this.data.filter(b => hasAny(b.tags, tags)))
+
+  titleContains = (text: string) =>
+    new BookmarkCollection(
+      this.data.filter(b => (b.title || '').includes(text))
+    )
 }

@@ -23,6 +23,7 @@ const Bookmark: React.FunctionComponent<Props> = ({ bookmark }) => (
       <a href={bookmark.url} target="_blank">
         <IconButton icon="link" />
       </a>
+      <IconButton icon="label" />
     </CardActions>
   </Card>
 )
