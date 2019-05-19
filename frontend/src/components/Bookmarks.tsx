@@ -11,11 +11,7 @@ const Bookmarks: React.FunctionComponent<Props> = ({ bookmarks }) => {
   return (
     <div className={classes.bookmarks}>
       {bookmarks.map(bookmark => (
-        <Bookmark
-          key={bookmark.title}
-          bookmark={bookmark}
-          className={classes.bookmark}
-        />
+        <Bookmark key={bookmark.title} bookmark={bookmark} />
       ))}
     </div>
   )

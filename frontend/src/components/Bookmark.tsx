@@ -12,10 +12,9 @@ import * as classes from './styles/Bookmarks.scss'
 
 interface Props {
   bookmark: IBookmark
-  className?: string
 }
 
-const Bookmark: React.FunctionComponent<Props> = ({ bookmark, className }) => (
+const Bookmark: React.FunctionComponent<Props> = ({ bookmark }) => (
   <Card className={classes.bookmark}>
     <CardTitle className={classes.title} title={bookmark.title} />
     <CardMedia image={bookmark.img} aspectRatio="wide" />
