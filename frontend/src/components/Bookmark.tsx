@@ -9,6 +9,7 @@ import {
 import { IBookmark } from 'interfaces'
 import { IconButton } from 'react-toolbox/lib/button'
 import * as classes from './styles/Bookmarks.scss'
+import AddTag from './AddTag'
 
 interface Props {
   bookmark: IBookmark
@@ -23,7 +24,7 @@ const Bookmark: React.FunctionComponent<Props> = ({ bookmark }) => (
       <a href={bookmark.url} target="_blank">
         <IconButton icon="link" />
       </a>
-      <IconButton icon="label" />
+      <AddTag onAddTag={() => null} />
     </CardActions>
   </Card>
 )
