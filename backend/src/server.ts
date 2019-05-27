@@ -14,6 +14,12 @@ const root = {
     store.add(input)
     return input
   },
+  tagBookmark: ({ id, tag }) => {
+    return store.addTag(id, tag)
+  },
+  folderBookmark: ({ id, folder }) => {
+    return store.addFolder(id, folder)
+  },
   metadata: ({ url }) => {
     return getMetadata(url)
   }

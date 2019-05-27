@@ -4,6 +4,8 @@ export default `
     title: String
     description: String
     img: String
+    tags: [String]
+    folders: [String]
   }
 
   input BookmarkInput {
