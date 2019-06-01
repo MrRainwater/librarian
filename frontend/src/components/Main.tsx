@@ -8,14 +8,15 @@ import { useBookmarks } from 'hooks'
 import BookmarkCollection from 'models/BookmarkCollection'
 import BookmarkFilter from './BookmarkFilter'
 import { IBookmark } from 'interfaces'
+import { useBookmarksStore } from 'stores/BookmarkStore'
 
 const Main: React.FunctionComponent = () => {
-  const [bookmarks, setBookmarks] = React.useState<IBookmark[]>([])
+  const [{ bookmarks }, dispatch] = useBookmarksStore()
   const [filteredBookmarks, setFiltered] = React.useState(bookmarks)
 
   React.useEffect(() => {
     getBookmarks().then(bookmarks => {
-      setBookmarks(bookmarks)
+      dispatch({ type: 'SET_BOOKMARKS', bookmarks })
       setFiltered(bookmarks)
     })
   }, [])

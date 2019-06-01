@@ -22,7 +22,12 @@ interface TagBookmark {
   title: string
 }
 
-type Action = AddBookmark | TagBookmark | AddBookmarkToFolder
+interface SetBookmarks {
+  type: 'SET_BOOKMARKS'
+  bookmarks: IBookmark[]
+}
+
+type Action = AddBookmark | TagBookmark | AddBookmarkToFolder | SetBookmarks
 
 type Reducer = (state: State, action: Action) => State
 
@@ -40,6 +45,11 @@ export const initialState = {
 export const reducer: Reducer = (state, action) => {
   const bookmark = state.bookmarks.find(b => b.title === (action as any).title)
   switch (action.type) {
+    case 'SET_BOOKMARKS':
+      return {
+        ...state,
+        bookmarks: action.bookmarks
+      }
     case 'ADD_BOOKMARK':
       return {
         ...state,
@@ -96,8 +106,6 @@ export const BookmarksStoreProvider: React.FC<{
 
 export const useBookmarksStore = () => useContext(BookmarksContext)
 
-export const withBookmarksStore = (Component: React.FC) => (
-  <BookmarksStoreProvider>
-    <Component />
-  </BookmarksStoreProvider>
-)
+export const WithBookmarksStore: React.FC<{ children: React.ReactChild }> = ({
+  children
+}) => <BookmarksStoreProvider>{children}</BookmarksStoreProvider>
