@@ -1,5 +1,7 @@
 module.exports = {
   preset: 'ts-jest/presets/js-with-ts',
+  setupFilesAfterEnv: ['jest-enzyme'],
+  testEnvironment: 'enzyme',
   rootDir: './',
   roots: ['<rootDir>/src/', '<rootDir>/tests/', '<rootDir>'],
   modulePaths: ['<rootDir>/src/', '<rootDir>/tests/'],
