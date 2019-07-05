@@ -106,6 +106,20 @@ export const BookmarksStoreProvider: React.FC<{
 
 export const useBookmarksStore = () => useContext(BookmarksContext)
 
+export const useBookmarkActions = (bookmark: IBookmark) => {
+  const [, dispatch] = useBookmarksStore()
+  const title = bookmark.title
+
+  return {
+    addToFolder(folder: string) {
+      dispatch({ type: 'ADD_BOOKMARK_TO_FOLDER', folder, title })
+    },
+    tag(tag: string) {
+      dispatch({ type: 'TAG_BOOKMARK_BY_TITLE', title, tag })
+    }
+  }
+}
+
 export const WithBookmarksStore: React.FC<{ children: React.ReactChild }> = ({
   children
 }) => <BookmarksStoreProvider>{children}</BookmarksStoreProvider>
