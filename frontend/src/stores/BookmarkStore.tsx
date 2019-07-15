@@ -117,6 +117,6 @@ export const useBookmarkActions = (bookmark: IBookmark) => {
   }
 }
 
-export const WithBookmarksStore: React.FC<{ children: React.ReactChild }> = ({
-  children
-}) => <BookmarksStoreProvider>{children}</BookmarksStoreProvider>
+export const withBookmarksStore = (component: React.ReactElement) => (
+  <BookmarksStoreProvider>{component}</BookmarksStoreProvider>
+)
