@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Layout, Panel } from 'react-toolbox/lib/layout'
-import Bookmarks from 'components/Bookmarks'
+import Bookmarks from 'components/Bookmarks/Bookmarks'
 import * as classes from './styles/panel.scss'
 import { getBookmarks } from 'api'
 import AppBar from './AppBar'
