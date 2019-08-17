@@ -91,7 +91,9 @@ export const reducer: Reducer = (state, action) => {
   }
 }
 
-export const BookmarksContext = createContext(useReducer(reducer, initialState))
+export const BookmarksContext = createContext<
+  [typeof initialState, React.Dispatch<Action>]
+>([initialState, () => initialState])
 
 export const BookmarksStoreProvider: React.FC<{
   children: React.ReactNode
