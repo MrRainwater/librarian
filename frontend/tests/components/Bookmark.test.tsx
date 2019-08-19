@@ -1,12 +1,10 @@
 import * as React from 'react'
 import Bookmark from 'components/Bookmarks/Bookmark'
-import Tags from 'components/Bookmarks/BookmarkTags'
 import { shallow } from 'enzyme'
 import { BookmarkFactory } from '../factories/BookmarkFactory'
 import { IBookmark } from 'interfaces'
 import { CardTitle, CardMedia, CardText } from 'react-toolbox/lib/card'
-import { withBookmarksStore } from 'stores/BookmarkStore'
-import Button from 'react-toolbox/lib/button'
+import { IconButton } from 'react-toolbox/lib/button'
 
 describe('Bookmark', () => {
   let bookmark: IBookmark
@@ -28,12 +26,14 @@ describe('Bookmark', () => {
   it('displays button for each action item', () => {
     const component = shallow(<Bookmark bookmark={bookmark} />)
 
-    const findButton = (text: string) =>
-      component.find(Button).findWhere(button => button.text() === text)
+    const findIconButton = (icon: string) =>
+      component
+        .find(IconButton)
+        .findWhere(button => button.prop('icon') === icon)
 
-    expect(findButton('Edit')).toExist()
-    expect(findButton('Link')).toExist()
-    expect(findButton('Tags')).toExist()
-    expect(findButton('Folders')).toExist()
+    expect(findIconButton('link')).toExist()
+    expect(findIconButton('edit')).toExist()
+    expect(findIconButton('label')).toExist() //label icon represents tags
+    expect(findIconButton('folder')).toExist()
   })
 })
