@@ -8,12 +8,14 @@ const store = new BookmarkStore()
 
 const root = {
   bookmarks: () => {
-    return store.data
+    return store.bookmarks
   },
+  folders: () => store.folders,
   createBookmark: ({ input }) => {
     store.add(input)
     return input
   },
+  createFolder: ({ name }) => store.createFolder(name),
   tagBookmark: ({ id, tag }) => {
     return store.addTag(id, tag)
   },

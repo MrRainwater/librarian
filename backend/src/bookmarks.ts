@@ -11,7 +11,7 @@ interface IBookmark {
   img: string
 }
 
-class Bookmark implements IBookmark {
+export class Bookmark implements IBookmark {
   id = ''
   url = ''
   title = ''
@@ -26,21 +26,35 @@ class Bookmark implements IBookmark {
   }
 }
 
+class Folder {
+  name = ''
+  bookmarks = []
+
+  constructor(name: string) {
+    this.name = name
+  }
+}
+
 export default class BookmarkStore {
-  data: Bookmark[] = bookmarks.reduce<Bookmark[]>(
+  bookmarks: Bookmark[] = bookmarks.reduce<Bookmark[]>(
     (unique, current) =>
       unique.find(b => b.title === current.title)
         ? unique
         : [...unique, new Bookmark(current)],
     []
   )
+  folders: Folder[] = []
 
   add(bookmark: Bookmark) {
-    this.data.push(bookmark)
+    this.bookmarks.push(bookmark)
   }
 
   find(id: string) {
-    return this.data.find(b => b.title === id)
+    return this.bookmarks.find(b => b.title === id)
+  }
+
+  findFolder(name: string) {
+    return this.folders.find(f => f.name === name)
   }
 
   addTag(id: string, tag: string) {
@@ -49,9 +63,17 @@ export default class BookmarkStore {
     return bookmark
   }
 
-  addFolder(id: string, folder: string) {
+  createFolder(name: string) {
+    const folder = new Folder(name)
+    this.folders.push(folder)
+    return folder
+  }
+
+  addFolder(id: string, folderName: string) {
     const bookmark = this.find(id)
-    bookmark.folders.push(folder)
+    const folder = this.findFolder(folderName)
+    bookmark.folders.push(folderName)
+    folder.bookmarks.push(bookmark)
     return bookmark
   }
 }
