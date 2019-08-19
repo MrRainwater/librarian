@@ -12,6 +12,7 @@ interface IBookmark {
 }
 
 class Bookmark implements IBookmark {
+  id = ''
   url = ''
   title = ''
   description = ''
@@ -21,6 +22,7 @@ class Bookmark implements IBookmark {
 
   constructor(data: IBookmark) {
     Object.assign(this, data)
+    this.id = data.url
   }
 }
 
