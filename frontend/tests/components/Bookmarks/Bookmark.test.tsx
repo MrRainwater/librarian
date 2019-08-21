@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Bookmark from 'components/Bookmarks/Bookmark'
 import { shallow } from 'enzyme'
-import { BookmarkFactory } from '../factories/BookmarkFactory'
+import { BookmarkFactory } from '../../factories/BookmarkFactory'
 import { IBookmark } from 'interfaces'
 import { CardTitle, CardMedia, CardText } from 'react-toolbox/lib/card'
 import { IconButton } from 'react-toolbox/lib/button'
