@@ -17,4 +17,17 @@ describe('SpeedDialButton', () => {
     onClick()
     expect(component.find('div.button-list')).not.toExist()
   })
+
+  it('renders children onClick', () => {
+    const Child = () => <h1>Hello</h1>
+    const component = shallow(
+      <SpeedDialButton>
+        <Child />
+      </SpeedDialButton>
+    )
+
+    component.find(Button).prop('onClick')!()
+
+    expect(component.find('div.button-list').find(Child)).toExist()
+  })
 })
