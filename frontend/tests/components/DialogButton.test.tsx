@@ -23,5 +23,5 @@ describe('Dialog Button', () => {
     onClick()
     expect(component.find(Dialog)).toHaveProp({ active: false })
   })
-  it('passes children to dialog')
+  it.todo('passes children to dialog')
 })
