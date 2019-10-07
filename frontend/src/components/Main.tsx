@@ -25,7 +25,7 @@ const Main: React.FunctionComponent = () => {
     <Layout>
       <Panel className={classes.panel}>
         <AppBar />
-        <BookmarkFilter initialBookmarks={bookmarks} onResults={setFiltered} />
+        <BookmarkFilter bookmarks={bookmarks} onResults={setFiltered} />
         <Bookmarks bookmarks={filteredBookmarks} />
       </Panel>
     </Layout>

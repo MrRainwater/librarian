@@ -4,17 +4,18 @@ import BookmarkCollection from 'models/BookmarkCollection'
 import { IBookmark } from 'interfaces'
 
 interface Props {
-  initialBookmarks: IBookmark[]
+  bookmarks: IBookmark[]
   onResults: (bookmarks: IBookmark[]) => void
 }
 
-const BookmarkFilter: React.FC<Props> = ({ initialBookmarks, onResults }) => {
+const BookmarkFilter: React.FC<Props> = ({ bookmarks, onResults }) => {
   const [searchText, setSearchText] = React.useState('')
-  const bookmarks = new BookmarkCollection(initialBookmarks)
+  const bookmarkCollection = new BookmarkCollection(bookmarks)
 
-  React.useEffect(() => onResults([...bookmarks.titleContains(searchText)]), [
-    searchText
-  ])
+  React.useEffect(
+    () => onResults([...bookmarkCollection.titleContains(searchText)]),
+    [searchText]
+  )
 
   return (
     <Input

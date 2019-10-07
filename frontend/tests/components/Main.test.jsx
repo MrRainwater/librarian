@@ -41,9 +41,7 @@ describe('Main', () => {
       useBookmarksStore.mockReturnValue([{ bookmarks }, jest.fn()])
       const component = shallow(<Main />)
 
-      expect(component.find(BookmarkFilter)).toHaveProp({
-        initialBookmarks: bookmarks
-      })
+      expect(component.find(BookmarkFilter)).toHaveProp({ bookmarks })
     })
 
     it('changes filtered bookmarks', () => {
