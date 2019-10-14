@@ -22,3 +22,5 @@ export const BookmarkFactory = new Factory<Partial<IBookmark & Options>>()
     description: 'desc',
     img: ''
   })
+
+export default BookmarkFactory
