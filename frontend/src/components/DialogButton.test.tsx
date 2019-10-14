@@ -10,10 +10,13 @@ const defaultProps = {
 }
 
 describe('Dialog Button', () => {
+  const getOnClick = (component: ShallowWrapper) =>
+    component.find(Button).prop('onClick')!
+
   it('clicking toggles dialog active', () => {
     const component = shallow(<DialogButton {...defaultProps} />)
 
-    const onClick = component.find(Button).prop('onClick')!
+    const onClick = getOnClick(component)
 
     expect(component.find(Dialog)).toHaveProp({ active: false })
 
@@ -23,5 +26,16 @@ describe('Dialog Button', () => {
     onClick()
     expect(component.find(Dialog)).toHaveProp({ active: false })
   })
-  it.todo('passes children to dialog')
+
+  it('passes children to dialog', () => {
+    const child = <span id="child">child</span>
+    const component = shallow(
+      <DialogButton {...defaultProps}>{child}</DialogButton>
+    )
+
+    const onClick = getOnClick(component)
+    onClick()
+
+    expect(component.find(Dialog).children()).toContainMatchingElement('#child')
+  })
 })
