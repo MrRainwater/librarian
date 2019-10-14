@@ -7,5 +7,6 @@ module.exports = {
   modulePaths: ['<rootDir>/src/', '<rootDir>/tests/'],
   moduleNameMapper: {
     '\\.(css|less|scss|sss|styl)$': '<rootDir>/node_modules/jest-css-modules'
-  }
+  },
+  resetMocks: true
 }
