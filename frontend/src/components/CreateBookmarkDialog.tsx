@@ -44,8 +44,6 @@ const CreateBookmarkDialog: React.FunctionComponent<Props> = ({
       })
   }
 
-  console.log(bookmark)
-
   return (
     <Dialog
       active={true}
