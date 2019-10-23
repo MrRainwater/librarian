@@ -20,7 +20,7 @@ const AddTag: React.FC<Props> = ({ onAddTag }) => {
     setDialogOpen(false)
   }
 
-  function addTag(tag: string) {
+  function addTag() {
     closeDialog()
     onAddTag(tag)
   }
