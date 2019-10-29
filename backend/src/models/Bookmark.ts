@@ -12,6 +12,6 @@ const schema = new Schema({
   folder: { type: Schema.Types.ObjectId, ref: 'Folder' }
 })
 
-const User = model<IBookmarkModel>('User', schema)
+const User = model<IBookmarkModel>('Bookmark', schema)
 
 export default User
