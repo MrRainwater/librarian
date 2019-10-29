@@ -3,9 +3,13 @@ import * as graphqlHTTP from 'express-graphql'
 import schema from './types'
 import BookmarkStore from './bookmarks'
 import { getMetadata } from './scraper'
+import resolvers from './resolvers'
+import * as mongoose from 'mongoose'
 
 const store = new BookmarkStore()
-
+mongoose.connect('mongodb://localhost:27017/librarian', {
+  useNewUrlParser: true
+})
 const root = {
   bookmarks: () => {
     return store.bookmarks
@@ -24,7 +28,8 @@ const root = {
   },
   metadata: ({ url }) => {
     return getMetadata(url)
-  }
+  },
+  ...resolvers
 }
 
 const app = express()
