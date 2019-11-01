@@ -7,6 +7,7 @@ interface IBookmarkInput {
   description: string
 }
 type CreateArgs = { input: IBookmarkInput }
+type TagArgs = { id: string; tag: string }
 
 const resolvers = {
   async createBookmark({ input }: CreateArgs) {
@@ -14,6 +15,13 @@ const resolvers = {
   },
   bookmarks() {
     return Bookmark.find()
+  },
+  tagBookmark({ id, tag }: TagArgs) {
+    return Bookmark.findByIdAndUpdate(
+      id,
+      { $push: { tags: tag } },
+      { new: true }
+    )
   }
 }
 
