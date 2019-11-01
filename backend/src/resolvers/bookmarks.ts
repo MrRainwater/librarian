@@ -10,8 +10,8 @@ type CreateArgs = { input: IBookmarkInput }
 type TagArgs = { id: string; tag: string }
 
 const resolvers = {
-  async createBookmark({ input }: CreateArgs) {
-    return await Bookmark.create(input)
+  createBookmark({ input }: CreateArgs) {
+    return Bookmark.create(input)
   },
   bookmarks() {
     return Bookmark.find()
