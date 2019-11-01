@@ -10,10 +10,7 @@ type CreateArgs = { input: IBookmarkInput }
 
 const resolvers = {
   async createBookmark({ input }: CreateArgs) {
-    console.log(input)
-    const model = await Bookmark.create(input)
-    console.log(model)
-    return model
+    return await Bookmark.create(input)
   },
   bookmarks() {
     return Bookmark.find()
