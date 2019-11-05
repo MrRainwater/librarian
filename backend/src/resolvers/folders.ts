@@ -3,6 +3,7 @@ import Folder from '../models/Folder'
 type CreateArgs = { name: string }
 
 type MoveArgs = { targetId: string; destinationId: string }
+
 const resolvers = {
   folders() {
     return Folder.find()
