@@ -6,11 +6,19 @@ interface IFolderModel extends IFolder, Document {}
 
 const schema = new Schema({
   name: String,
-  subFolders: [{ type: Schema.Types.ObjectId, ref: 'Folder' }]
+  parentFolderId: [{ type: Schema.Types.ObjectId, ref: 'Folder' }]
 })
 
 schema.methods.bookmarks = function() {
   return Bookmark.find({ folder: this.id })
+}
+
+schema.methods.parentFolder = function() {
+  return Folder.findById(this.parentFolderId)
+}
+
+schema.methods.subFolders = function() {
+  return Folder.find({ parentFolderId: this.id })
 }
 
 const Folder = model<IFolderModel>('Folder', schema)
