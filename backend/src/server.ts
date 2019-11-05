@@ -2,7 +2,6 @@ import * as express from 'express'
 import * as graphqlHTTP from 'express-graphql'
 import schema from './types'
 import BookmarkStore from './bookmarks'
-import { getMetadata } from './scraper'
 import resolvers from './resolvers'
 import * as mongoose from 'mongoose'
 
@@ -10,27 +9,6 @@ const store = new BookmarkStore()
 mongoose.connect('mongodb://localhost:27017/librarian', {
   useNewUrlParser: true
 })
-const root = {
-  bookmarks: () => {
-    return store.bookmarks
-  },
-  folders: () => store.folders,
-  createBookmark: ({ input }) => {
-    store.add(input)
-    return input
-  },
-  createFolder: ({ name }) => store.createFolder(name),
-  tagBookmark: ({ id, tag }) => {
-    return store.addTag(id, tag)
-  },
-  folderBookmark: ({ id, folder }) => {
-    return store.addFolder(id, folder)
-  },
-  metadata: ({ url }) => {
-    return getMetadata(url)
-  },
-  ...resolvers
-}
 
 const app = express()
 
@@ -51,7 +29,7 @@ app.use(
   '/graphql',
   graphqlHTTP({
     schema: schema,
-    rootValue: root,
+    rootValue: resolvers,
     graphiql: true
   })
 )
