@@ -10,7 +10,7 @@ const schema = new Schema({
 })
 
 schema.methods.bookmarks = function() {
-  return Bookmark.find({ folder: this.id })
+  return Bookmark.find({ folderId: this.id })
 }
 
 schema.methods.parentFolder = function() {

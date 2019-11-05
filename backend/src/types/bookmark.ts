@@ -6,7 +6,7 @@ export default `
     description: String
     img: String
     tags: [String]
-    folders: [String]
+    folder: Folder
   }
 
   input BookmarkInput {

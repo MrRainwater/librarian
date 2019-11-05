@@ -8,6 +8,7 @@ interface IBookmarkInput {
 }
 type CreateArgs = { input: IBookmarkInput }
 type TagArgs = { id: string; tag: string }
+type MoveArgs = { bookmarkId: string; folderId: string }
 
 const resolvers = {
   createBookmark({ input }: CreateArgs) {
@@ -22,6 +23,9 @@ const resolvers = {
       { $push: { tags: tag } },
       { new: true }
     )
+  },
+  moveBookmark({ bookmarkId, folderId }: MoveArgs) {
+    return Bookmark.findByIdAndUpdate(bookmarkId, { folderId }, { new: true })
   }
 }
 
