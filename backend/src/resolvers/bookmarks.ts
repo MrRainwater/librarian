@@ -1,4 +1,5 @@
 import Bookmark from '../models/Bookmark'
+import { getMetadata } from '../scraper'
 
 interface IBookmarkInput {
   id: string
@@ -26,6 +27,9 @@ const resolvers = {
   },
   moveBookmark({ bookmarkId, folderId }: MoveArgs) {
     return Bookmark.findByIdAndUpdate(bookmarkId, { folderId }, { new: true })
+  },
+  metadata: ({ url }) => {
+    return getMetadata(url)
   }
 }
 
