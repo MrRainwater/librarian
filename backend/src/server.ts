@@ -1,11 +1,9 @@
 import * as express from 'express'
 import * as graphqlHTTP from 'express-graphql'
 import schema from './types'
-import BookmarkStore from './bookmarks'
 import resolvers from './resolvers'
 import * as mongoose from 'mongoose'
 
-const store = new BookmarkStore()
 mongoose.connect('mongodb://localhost:27017/librarian', {
   useNewUrlParser: true
 })
