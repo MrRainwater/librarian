@@ -1,5 +1,5 @@
-import { Schema, model, Document } from 'mongoose'
 import IFolder from 'interfaces/Folder'
+import { Document, model, Schema } from 'mongoose'
 import Bookmark from './Bookmark'
 
 interface IFolderModel extends IFolder, Document {}

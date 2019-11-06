@@ -1,5 +1,5 @@
-import { Schema, model, Document } from 'mongoose'
 import IBookmark from 'interfaces/Bookmark'
+import { Document, model, Schema } from 'mongoose'
 import Folder from './Folder'
 
 interface IBookmarkModel extends IBookmark, Document {}

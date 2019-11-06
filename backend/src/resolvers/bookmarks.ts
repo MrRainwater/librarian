@@ -7,25 +7,36 @@ interface IBookmarkInput {
   title: string
   description: string
 }
-type CreateArgs = { input: IBookmarkInput }
-type TagArgs = { id: string; tag: string }
-type MoveArgs = { bookmarkId: string; folderId: string }
+
+interface ICreateArgs {
+  input: IBookmarkInput
+}
+
+interface ITagArgs {
+  id: string
+  tag: string
+}
+
+interface IMoveArgs {
+  bookmarkId: string
+  folderId: string
+}
 
 const resolvers = {
-  createBookmark({ input }: CreateArgs) {
+  createBookmark({ input }: ICreateArgs) {
     return Bookmark.create(input)
   },
   bookmarks() {
     return Bookmark.find()
   },
-  tagBookmark({ id, tag }: TagArgs) {
+  tagBookmark({ id, tag }: ITagArgs) {
     return Bookmark.findByIdAndUpdate(
       id,
       { $push: { tags: tag } },
       { new: true }
     )
   },
-  moveBookmark({ bookmarkId, folderId }: MoveArgs) {
+  moveBookmark({ bookmarkId, folderId }: IMoveArgs) {
     return Bookmark.findByIdAndUpdate(bookmarkId, { folderId }, { new: true })
   },
   metadata: ({ url }) => {

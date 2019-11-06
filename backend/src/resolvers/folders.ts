@@ -1,17 +1,22 @@
 import Folder from '../models/Folder'
 
-type CreateArgs = { name: string }
+interface ICreateArgs {
+  name: string
+}
 
-type MoveArgs = { targetId: string; destinationId: string }
+interface IMoveArgs {
+  targetId: string
+  destinationId: string
+}
 
 const resolvers = {
   folders() {
     return Folder.find()
   },
-  createFolder({ name }: CreateArgs) {
+  createFolder({ name }: ICreateArgs) {
     return Folder.create({ name })
   },
-  moveFolder({ targetId, destinationId }: MoveArgs) {
+  moveFolder({ targetId, destinationId }: IMoveArgs) {
     return Folder.findByIdAndUpdate(targetId, { parentFolderId: destinationId })
   }
 }

@@ -1,9 +1,9 @@
 import { buildSchema } from 'graphql'
-import query from './query'
-import mutation from './mutation'
 import bookmark from './bookmark'
-import metadata from './metadata'
 import folder from './folder'
+import metadata from './metadata'
+import mutation from './mutation'
+import query from './query'
 
 export default buildSchema(
   [query, mutation, bookmark, folder, metadata].join('')

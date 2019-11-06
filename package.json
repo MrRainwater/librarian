@@ -13,16 +13,17 @@
     "build:back": "yarn --cwd backend install",
     "watch:back": "yarn --cwd backend run watch",
     "run:front": "yarn --cwd frontend",
-    "run:back": "yarn --cwd backend"
-  },
-  "devDependencies": {
-    "prettier": "^1.16.4"
+    "run:back": "yarn --cwd backend",
+    "lint": "tslint backend/**/*.ts frontend/**/*.ts"
   },
   "dependencies": {
     "@types/enzyme": "^3.9.1",
     "@types/jest": "^24.0.11",
     "enzyme": "^3.9.0",
     "jest": "^24.7.1",
-    "ts-jest": "^24.0.2"
+    "prettier": "^1.16.4",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.2"
   }
 }

@@ -1,8 +1,8 @@
 import * as express from 'express'
 import * as graphqlHTTP from 'express-graphql'
-import schema from './types'
-import resolvers from './resolvers'
 import * as mongoose from 'mongoose'
+import resolvers from './resolvers'
+import schema from './types'
 
 mongoose.connect('mongodb://localhost:27017/librarian', {
   useNewUrlParser: true
@@ -26,7 +26,7 @@ app.use(function(req, res, next) {
 app.use(
   '/graphql',
   graphqlHTTP({
-    schema: schema,
+    schema,
     rootValue: resolvers,
     graphiql: true
   })
@@ -34,4 +34,5 @@ app.use(
 
 app.listen(4000)
 
+// tslint:disable-next-line: no-console
 console.log('Running server at localhost:4000/graphql')

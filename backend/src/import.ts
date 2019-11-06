@@ -1,14 +1,18 @@
-import { JSDOM } from 'jsdom'
 import { readFileSync, writeFileSync } from 'fs'
+import { JSDOM } from 'jsdom'
 import { join } from 'path'
-import { getMetadata, Metadata } from './scraper'
+import { getMetadata } from './scraper'
+
+/* tslint:disable */
 
 const html = readFileSync(join(__dirname, '..', 'bookmarks.html')).toString()
 const {
   window: { document }
 } = new JSDOM(html)
 
-const links = Array.from(document.querySelectorAll('a')).map(link => link.href)
+const links = Array.from(document.querySelectorAll('a')).map(
+  (link) => link.href
+)
 
 const metadata = []
 const total = links.length
@@ -23,8 +27,8 @@ function progress() {
 function saveData() {
   const data = metadata
     .filter(Boolean)
-    .reduce((data, { url, title, description, img }) => {
-      return [...data, { url, title, description, img }]
+    .reduce((result, { url, title, description, img }) => {
+      return [...result, { url, title, description, img }]
     }, [])
   writeFileSync(join(__dirname, '..', 'bookmarks.json'), JSON.stringify(data))
   process.exit()
@@ -39,10 +43,10 @@ function resetTimer() {
 
 Promise.all(
   links
-    .filter(l => l.startsWith('http'))
-    .map(l =>
+    .filter((l) => l.startsWith('http'))
+    .map((l) =>
       getMetadata(l)
-        .then(res => {
+        .then((res) => {
           finished += 1
           metadata.push(res)
           resetTimer()
@@ -59,10 +63,10 @@ Promise.all(
         })
     )
 )
-  .then(metadata => {
+  .then((metadata) => {
     saveData()
   })
-  .catch(err => {
+  .catch((err) => {
     console.error('ERROR IN PROMISE.ALL')
     saveData()
   })
