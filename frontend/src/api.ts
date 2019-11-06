@@ -15,7 +15,9 @@ async function graphql(query: string, variables?: any) {
     })
     const { data, errors } = await res.json()
 
-    if (errors) throw errors
+    if (errors) {
+      throw errors
+    }
 
     return data
   } catch (err) {
@@ -23,7 +25,7 @@ async function graphql(query: string, variables?: any) {
     console.error(query)
     console.error({ variables })
     if (Array.isArray(err)) {
-      err.map(e => new Error(e.message)).forEach(e => console.error(e))
+      err.map((e) => new Error(e.message)).forEach((e) => console.error(e))
     }
     throw new Error('Network Error')
   }
@@ -39,7 +41,7 @@ export function getBookmarks(): Promise<IBookmark[]> {
         img
       }
     }
-  `).then(data => data.bookmarks)
+  `).then((data) => data.bookmarks)
 }
 
 export function createBookmark(input: IBookmark): Promise<IBookmark> {
@@ -55,7 +57,7 @@ export function createBookmark(input: IBookmark): Promise<IBookmark> {
       }
     `,
     { input }
-  ).then(data => data.createBookmark)
+  ).then((data) => data.createBookmark)
 }
 
 export function getMetadata(url: string): Promise<IBookmark> {
@@ -71,5 +73,5 @@ export function getMetadata(url: string): Promise<IBookmark> {
       }
     `,
     { url }
-  ).then(data => data.metadata)
+  ).then((data) => data.metadata)
 }

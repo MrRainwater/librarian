@@ -11,6 +11,8 @@
       }
     ],
     "object-literal-sort-keys": false,
-    "only-arrow-functions": false
+    "only-arrow-functions": false,
+    "object-literal-key-quotes": [true, "as-needed"],
+    "no-console": [true, "log"]
   }
 }
