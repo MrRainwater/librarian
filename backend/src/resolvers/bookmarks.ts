@@ -31,7 +31,7 @@ const resolvers = {
     return Bookmark.create(input)
   },
   bookmarks() {
-    return Bookmark.find()
+    return Bookmark.find({ folderId: null })
   },
   tagBookmark({ id, tag }: ITagArgs) {
     return Bookmark.findByIdAndUpdate(
