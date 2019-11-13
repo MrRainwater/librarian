@@ -6,17 +6,18 @@ mongoose.connect('mongodb://localhost:27017/librarian', {
   useNewUrlParser: true
 })
 
+const times = <T>(n: number, cb: (i: number) => T) =>
+  [...Array(10).keys()].map(cb)
+
+const bookmarkData = () => ({
+  url: faker.internet.url(),
+  title: faker.random.word(),
+  description: faker.lorem.sentence(),
+  img: faker.image.imageUrl()
+})
+
 const seed = async () => {
-  await Promise.all(
-    [...Array(10).keys()].map(() =>
-      Bookmark.create({
-        url: faker.internet.url(),
-        title: faker.random.word(),
-        description: faker.lorem.sentence(),
-        img: faker.image.imageUrl()
-      })
-    )
-  )
+  await Promise.all(times(10, () => Bookmark.create(bookmarkData())))
   console.info('seeded')
   mongoose.disconnect()
 }
