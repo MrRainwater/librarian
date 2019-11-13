@@ -22,7 +22,7 @@ const seed = async () => {
   mongoose.disconnect()
 }
 
-mongoose.connection.once('open', () => {
-  mongoose.connection.db.dropDatabase()
+mongoose.connection.once('open', async () => {
+  await mongoose.connection.db.dropDatabase()
   seed()
 })
