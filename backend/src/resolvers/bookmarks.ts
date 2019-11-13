@@ -22,6 +22,10 @@ interface IMoveArgs {
   folderId: string
 }
 
+interface IMetadataArgs {
+  url: string
+}
+
 const resolvers = {
   createBookmark({ input }: ICreateArgs) {
     return Bookmark.create(input)
@@ -39,7 +43,7 @@ const resolvers = {
   moveBookmark({ bookmarkId, folderId }: IMoveArgs) {
     return Bookmark.findByIdAndUpdate(bookmarkId, { folderId }, { new: true })
   },
-  metadata: ({ url }) => {
+  metadata: ({ url }: IMetadataArgs) => {
     return getMetadata(url)
   }
 }

@@ -19,13 +19,13 @@ const scraper = metascraper([
 ])
 
 export interface IMetadata {
-  title: string
-  description: string
-  img: string
-  logo: string
-  url: string
-  author: string
-  date: string
+  title?: string
+  description?: string
+  img?: string
+  logo?: string
+  url?: string
+  author?: string
+  date?: string
 }
 
 export async function getMetadata(

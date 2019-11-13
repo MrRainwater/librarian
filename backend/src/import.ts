@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from 'fs'
 import { JSDOM } from 'jsdom'
 import { join } from 'path'
-import { getMetadata } from './scraper'
+import { getMetadata, IMetadata } from './scraper'
 
 /* tslint:disable */
 
@@ -14,7 +14,7 @@ const links = Array.from(document.querySelectorAll('a')).map(
   (link) => link.href
 )
 
-const metadata = []
+const metadata: IMetadata[] = []
 const total = links.length
 let finished = 0
 let errors = 0
@@ -27,7 +27,7 @@ function progress() {
 function saveData() {
   const data = metadata
     .filter(Boolean)
-    .reduce((result, { url, title, description, img }) => {
+    .reduce<IMetadata[]>((result, { url, title, description, img }) => {
       return [...result, { url, title, description, img }]
     }, [])
   writeFileSync(join(__dirname, '..', 'bookmarks.json'), JSON.stringify(data))
