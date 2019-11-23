@@ -1,15 +1,17 @@
-import * as React from 'react'
-import Input from 'react-toolbox/lib/input'
 import { useGetMetadata } from 'hooks'
 import { IBookmark } from 'interfaces'
+import * as React from 'react'
+import Input from 'react-toolbox/lib/input'
 
 const { useState, useEffect } = React
 
-interface Props {
+interface IProps {
   onNewBookmark: (bookmark: IBookmark) => void
 }
 
-const NewBookarkInput: React.FunctionComponent<Props> = ({ onNewBookmark }) => {
+const NewBookarkInput: React.FunctionComponent<IProps> = ({
+  onNewBookmark
+}) => {
   const [url, setUrl] = useState('')
   const [metadata, getMetadata] = useGetMetadata()
 

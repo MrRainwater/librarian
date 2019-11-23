@@ -1,10 +1,9 @@
-import * as React from 'react'
 import DialogButton from 'components/DialogButton'
+import { shallow, ShallowWrapper } from 'enzyme'
+import * as React from 'react'
 import Button from 'react-toolbox/lib/button'
 import Dialog from 'react-toolbox/lib/dialog'
-import { shallow, ShallowWrapper } from 'enzyme'
 
-const Child = () => <div>Hello</div>
 const defaultProps = {
   title: 'title'
 }

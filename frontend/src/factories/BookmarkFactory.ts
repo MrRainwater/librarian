@@ -1,21 +1,21 @@
-import { Factory } from 'rosie'
 import { IBookmark } from 'interfaces'
 import { times } from 'lodash'
+import { Factory } from 'rosie'
 
-interface Options {
+interface IOptions {
   numTags: number
   numFolders: number
 }
 
-export const BookmarkFactory = new Factory<Partial<IBookmark & Options>>()
-  .sequence('title', i => `Bookmark ${i}`)
+export const BookmarkFactory = new Factory<Partial<IBookmark & IOptions>>()
+  .sequence('title', (i) => `Bookmark ${i}`)
   .option('numTags', 0)
   .attr('tags', ['numTags'], (numTags: number) =>
-    times(numTags, i => `Tag ${i}`)
+    times(numTags, (i) => `Tag ${i}`)
   )
   .option('numFolders', 0)
   .attr('folders', ['numFolders'], (numFolders: number) =>
-    times(numFolders, i => `Folder ${i}`)
+    times(numFolders, (i) => `Folder ${i}`)
   )
   .attrs({
     url: 'url',

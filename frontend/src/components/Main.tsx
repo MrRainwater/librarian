@@ -1,23 +1,23 @@
+import { getBookmarks } from 'api'
+import Bookmarks from 'components/Bookmarks/Bookmarks'
+import { useBookmarks } from 'hooks'
+import { IBookmark } from 'interfaces'
+import BookmarkCollection from 'models/BookmarkCollection'
 import * as React from 'react'
 import { Layout, Panel } from 'react-toolbox/lib/layout'
-import Bookmarks from 'components/Bookmarks/Bookmarks'
-import * as classes from './styles/panel.scss'
-import { getBookmarks } from 'api'
-import AppBar from './AppBar'
-import { useBookmarks } from 'hooks'
-import BookmarkCollection from 'models/BookmarkCollection'
-import BookmarkFilter from './BookmarkFilter'
-import { IBookmark } from 'interfaces'
 import { useBookmarksStore } from 'stores/BookmarkStore'
+import AppBar from './AppBar'
+import BookmarkFilter from './BookmarkFilter'
+import * as classes from './styles/panel.scss'
 
 const Main: React.FunctionComponent = () => {
   const [{ bookmarks }, dispatch] = useBookmarksStore()
   const [filteredBookmarks, setFiltered] = React.useState(bookmarks)
 
   React.useEffect(() => {
-    getBookmarks().then(bookmarks => {
-      dispatch({ type: 'SET_BOOKMARKS', bookmarks })
-      setFiltered(bookmarks)
+    getBookmarks().then((data) => {
+      dispatch({ type: 'SET_BOOKMARKS', bookmarks: data })
+      setFiltered(data)
     })
   }, [])
 

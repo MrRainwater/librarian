@@ -1,14 +1,14 @@
+import { IBookmark } from 'interfaces'
+import BookmarkCollection from 'models/BookmarkCollection'
 import * as React from 'react'
 import Input from 'react-toolbox/lib/input'
-import BookmarkCollection from 'models/BookmarkCollection'
-import { IBookmark } from 'interfaces'
 
-interface Props {
+interface IIProps {
   bookmarks: IBookmark[]
   onResults: (bookmarks: IBookmark[]) => void
 }
 
-const BookmarkFilter: React.FC<Props> = ({ bookmarks, onResults }) => {
+const BookmarkFilter: React.FC<IProps> = ({ bookmarks, onResults }) => {
   const [searchText, setSearchText] = React.useState('')
   const bookmarkCollection = new BookmarkCollection(bookmarks)
 

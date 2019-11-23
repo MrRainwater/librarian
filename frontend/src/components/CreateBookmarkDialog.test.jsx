@@ -16,7 +16,7 @@ describe('CreateBookmarkDialog', () => {
   const defaultProps = { metadata, onCancel, onSave }
 
   const findInput = (component, label) =>
-    component.find(Input).findWhere(input => input.prop('label') === label)
+    component.find(Input).findWhere((input) => input.prop('label') === label)
 
   const setInputs = (component, { title, description, url, img }) => {
     title && findInput(component, 'title').prop('onChange')(title)
@@ -36,12 +36,12 @@ describe('CreateBookmarkDialog', () => {
     img && expect(findInput(component, 'img')).toHaveProp({ value: img })
   }
 
-  const getOnCancel = component => {
+  const getOnCancel = (component) => {
     const [, action] = component.find(Dialog).prop('actions')
     return action.onClick
   }
 
-  const getOnSave = component => {
+  const getOnSave = (component) => {
     const [action] = component.find(Dialog).prop('actions')
     return action.onClick
   }

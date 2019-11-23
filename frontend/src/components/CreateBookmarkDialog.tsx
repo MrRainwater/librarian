@@ -1,17 +1,17 @@
-import * as React from 'react'
-import Dialog from 'react-toolbox/lib/dialog'
-import { IBookmark } from 'interfaces'
-import Input from 'react-toolbox/lib/input'
 import { createBookmark } from 'api'
 import { useBookmarks } from 'hooks'
+import { IBookmark } from 'interfaces'
+import * as React from 'react'
+import Dialog from 'react-toolbox/lib/dialog'
+import Input from 'react-toolbox/lib/input'
 
-interface Props {
+interface IProps {
   metadata: IBookmark
   onCancel: () => void
   onSave: (bookmark: IBookmark) => void
 }
 
-const CreateBookmarkDialog: React.FunctionComponent<Props> = ({
+const CreateBookmarkDialog: React.FunctionComponent<IProps> = ({
   metadata,
   onCancel,
   onSave

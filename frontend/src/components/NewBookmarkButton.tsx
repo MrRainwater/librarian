@@ -2,11 +2,11 @@ import * as React from 'react'
 import { Button } from 'react-toolbox/lib/button'
 import * as classes from './styles/NewBookmarkButton.scss'
 
-interface Props {
+interface IProps {
   onClick?: () => void
 }
 
-const NewBookmarkButton: React.FunctionComponent<Props> = ({ onClick }) => (
+const NewBookmarkButton: React.FunctionComponent<IProps> = ({ onClick }) => (
   <Button
     className={classes.button}
     floating

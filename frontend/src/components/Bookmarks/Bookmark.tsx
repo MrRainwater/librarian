@@ -1,20 +1,20 @@
+import { IBookmark } from 'interfaces'
 import * as React from 'react'
+import { IconButton } from 'react-toolbox/lib/button'
 import {
   Card,
+  CardActions,
   CardMedia,
-  CardTitle,
   CardText,
-  CardActions
+  CardTitle
 } from 'react-toolbox/lib/card'
-import { IBookmark } from 'interfaces'
-import { IconButton } from 'react-toolbox/lib/button'
 import * as classes from './styles/Bookmarks.scss'
 
-interface Props {
+interface IProps {
   bookmark: IBookmark
 }
 
-const Bookmark: React.FunctionComponent<Props> = ({ bookmark }) => (
+const Bookmark: React.FunctionComponent<IProps> = ({ bookmark }) => (
   <Card className={classes.bookmark}>
     <CardTitle className={classes.title} title={bookmark.title} />
     <CardMedia image={bookmark.img} aspectRatio="wide" />

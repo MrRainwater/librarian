@@ -1,6 +1,6 @@
-import * as React from 'react'
 import SpeedDialButton from 'components/SpeedDialButton'
 import { shallow } from 'enzyme'
+import * as React from 'react'
 import Button from 'react-toolbox/lib/button'
 
 describe('SpeedDialButton', () => {

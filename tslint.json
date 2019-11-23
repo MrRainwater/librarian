@@ -14,5 +14,6 @@
     "only-arrow-functions": false,
     "object-literal-key-quotes": [true, "as-needed"],
     "no-console": [true, "log"]
-  }
+  },
+  "jsRules": true
 }

@@ -5,29 +5,29 @@ const { createContext, useReducer, useContext } = React
 
 type State = typeof initialState
 
-interface AddBookmark {
+interface IAddBookmark {
   type: 'ADD_BOOKMARK'
   bookmark: IBookmark
 }
 
-interface AddBookmarkToFolder {
+interface IAddBookmarkToFolder {
   type: 'ADD_BOOKMARK_TO_FOLDER'
   title: string
   folder: string
 }
 
-interface TagBookmark {
+interface ITagBookmark {
   type: 'TAG_BOOKMARK_BY_TITLE'
   tag: string
   title: string
 }
 
-interface SetBookmarks {
+interface ISetBookmarks {
   type: 'SET_BOOKMARKS'
   bookmarks: IBookmark[]
 }
 
-type Action = AddBookmark | TagBookmark | AddBookmarkToFolder | SetBookmarks
+type Action = IAddBookmark | ITagBookmark | IAddBookmarkToFolder | ISetBookmarks
 
 type Reducer = (state: State, action: Action) => State
 
@@ -43,7 +43,9 @@ export const initialState = {
 }
 
 export const reducer: Reducer = (state, action) => {
-  const bookmark = state.bookmarks.find(b => b.title === (action as any).title)
+  const bookmark = state.bookmarks.find(
+    (b) => b.title === (action as any).title
+  )
   switch (action.type) {
     case 'SET_BOOKMARKS':
       return {
@@ -60,7 +62,7 @@ export const reducer: Reducer = (state, action) => {
         return {
           ...state,
           bookmarks: [
-            ...state.bookmarks.filter(b => b.title !== action.title),
+            ...state.bookmarks.filter((b) => b.title !== action.title),
             {
               ...bookmark,
               tags: [...bookmark.tags, action.tag]
@@ -75,7 +77,7 @@ export const reducer: Reducer = (state, action) => {
         return {
           ...state,
           bookmarks: [
-            ...state.bookmarks.filter(b => b.title !== action.title),
+            ...state.bookmarks.filter((b) => b.title !== action.title),
             {
               ...bookmark,
               folders: [...bookmark.folders, action.folder]

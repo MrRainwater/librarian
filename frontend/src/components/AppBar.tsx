@@ -1,8 +1,8 @@
+import { IBookmark } from 'interfaces'
 import * as React from 'react'
 import AppBar from 'react-toolbox/lib/app_bar'
-import NewBookarkInput from './NewBookmarkInput'
-import { IBookmark } from 'interfaces'
 import CreateBookmarkDialog from './CreateBookmarkDialog'
+import NewBookarkInput from './NewBookmarkInput'
 
 const { useState } = React
 

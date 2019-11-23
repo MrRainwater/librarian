@@ -14,7 +14,7 @@
     "watch:back": "yarn --cwd backend run watch",
     "run:front": "yarn --cwd frontend",
     "run:back": "yarn --cwd backend",
-    "lint": "tslint backend/**/*.ts frontend/**/*.ts"
+    "lint": "tslint -e ./**/*.test.js -e ./**/*.test.jsx -e ./**/*.test.tsx -e ./**/*.test.ts -p ./frontend && tslint -p ./backend"
   },
   "dependencies": {
     "@types/enzyme": "^3.9.1",

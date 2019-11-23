@@ -1,13 +1,13 @@
 import * as React from 'react'
-import Dialog from 'react-toolbox/lib/dialog'
 import Button from 'react-toolbox/lib/button'
+import Dialog from 'react-toolbox/lib/dialog'
 
-interface Props {
+interface IProps {
   title: string
   confirmMessage?: string
 }
 
-const DialogButton: React.FC<Props> = ({
+const DialogButton: React.FC<IProps> = ({
   children,
   title,
   confirmMessage = 'Save'
@@ -15,7 +15,7 @@ const DialogButton: React.FC<Props> = ({
   const [openDialog, setOpenDialog] = React.useState(false)
 
   function toggleDialog() {
-    setOpenDialog(val => !val)
+    setOpenDialog((val) => !val)
   }
 
   const actions = [

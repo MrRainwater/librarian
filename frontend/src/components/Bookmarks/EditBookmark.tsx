@@ -1,7 +1,5 @@
 import * as React from 'react'
 
-interface Props {}
-
-const EditBookmark: React.FC<Props> = () => <div></div>
+const EditBookmark: React.FC = () => <div />
 
 export default EditBookmark

@@ -1,7 +1,5 @@
 import * as React from 'react'
 
-interface Props {}
-
-const EditTags: React.FC<Props> = () => <div></div>
+const EditTags: React.FC = () => <div />
 
 export default EditTags

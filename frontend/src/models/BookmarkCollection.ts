@@ -1,26 +1,23 @@
 import { IBookmark } from 'interfaces'
 
 function hasAny<T>(collection: T[], values: T[]) {
-  return values.reduce(
-    (hasAny, value) => hasAny && collection.includes(value),
-    true
-  )
+  return values.reduce((has, value) => has && collection.includes(value), true)
 }
 
 export default class BookmarkCollection {
-  data: IBookmark[]
+  public data: IBookmark[]
 
   constructor(data: IBookmark[]) {
     this.data = data
   }
 
-  [Symbol.iterator] = () => this.data[Symbol.iterator]()
+  public [Symbol.iterator] = () => this.data[Symbol.iterator]()
 
-  withTags = (tags: string[]) =>
-    new BookmarkCollection(this.data.filter(b => hasAny(b.tags, tags)))
+  public withTags = (tags: string[]) =>
+    new BookmarkCollection(this.data.filter((b) => hasAny(b.tags, tags)))
 
-  titleContains = (text: string) =>
+  public titleContains = (text: string) =>
     new BookmarkCollection(
-      this.data.filter(b => (b.title || '').includes(text))
+      this.data.filter((b) => (b.title || '').includes(text))
     )
 }

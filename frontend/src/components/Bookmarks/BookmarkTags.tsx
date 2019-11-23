@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-interface Props {
+interface IProps {
   tags: string[]
 }
 
-const BookmarkTags: React.FC<Props> = () => <div></div>
+const BookmarkTags: React.FC<IProps> = () => <div />
 
 export default BookmarkTags
