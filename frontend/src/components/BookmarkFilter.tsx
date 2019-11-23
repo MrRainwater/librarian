@@ -3,7 +3,7 @@ import BookmarkCollection from 'models/BookmarkCollection'
 import * as React from 'react'
 import Input from 'react-toolbox/lib/input'
 
-interface IIProps {
+interface IProps {
   bookmarks: IBookmark[]
   onResults: (bookmarks: IBookmark[]) => void
 }
