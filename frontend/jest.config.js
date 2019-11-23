@@ -3,8 +3,8 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   testEnvironment: 'enzyme',
   rootDir: './',
-  roots: ['<rootDir>/src/', '<rootDir>/tests/', '<rootDir>'],
-  modulePaths: ['<rootDir>/src/', '<rootDir>/tests/'],
+  roots: ['<rootDir>/src/', '<rootDir>'],
+  modulePaths: ['<rootDir>/src/'],
   moduleNameMapper: {
     '\\.(css|less|scss|sss|styl)$': '<rootDir>/node_modules/jest-css-modules'
   },
