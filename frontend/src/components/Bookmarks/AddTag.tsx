@@ -1,6 +1,6 @@
+import { Button, Dialog, DialogActions, DialogTitle } from '@material-ui/core'
 import * as React from 'react'
 import { IconButton } from 'react-toolbox/lib/button'
-import Dialog from 'react-toolbox/lib/dialog'
 
 interface IProps {
   onAddTag: (tag: string) => void
@@ -24,22 +24,16 @@ const AddTag: React.FC<IProps> = ({ onAddTag }) => {
     onAddTag(tag)
   }
 
-  const dialogActions = [
-    { label: 'Save', onClick: addTag },
-    { label: 'Cancel', onClick: closeDialog }
-  ]
-
   return (
     <React.Fragment>
       <IconButton icon="label" onClick={openDialog} />
-      <Dialog
-        title="Add Tag"
-        active={dialogOpen}
-        onEscKeyDown={closeDialog}
-        onOverlayClick={closeDialog}
-        actions={dialogActions}
-      >
+      <Dialog open={dialogOpen} onClose={closeDialog}>
+        <DialogTitle>Add Tag</DialogTitle>
         <input value={tag} onChange={(e) => setTag(e.target.value)} />
+        <DialogActions>
+          <Button onClick={closeDialog}>Cancel</Button>
+          <Button onClick={addTag}>Save</Button>
+        </DialogActions>
       </Dialog>
     </React.Fragment>
   )
