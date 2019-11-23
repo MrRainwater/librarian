@@ -1,3 +1,4 @@
+import TextField from '@material-ui/core/TextField'
 import { useGetMetadata } from 'hooks'
 import { IBookmark } from 'interfaces'
 import * as React from 'react'
@@ -23,12 +24,11 @@ const NewBookarkInput: React.FunctionComponent<IProps> = ({
   }, [metadata])
 
   return (
-    <Input
-      hint="New Bookmark"
+    <TextField
       label="url"
       value={url}
-      onChange={(value: string) => setUrl(value)}
-      onKeyPress={(e: any) => e.key === 'Enter' && getMetadata(url)}
+      onChange={(e) => setUrl(e.target.value)}
+      onKeyDown={(e) => e.key === 'Enter' && getMetadata(url)}
     />
   )
 }

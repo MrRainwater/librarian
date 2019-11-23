@@ -3,17 +3,19 @@ import { useGetMetadata } from 'hooks'
 import { BookmarkFactory } from 'factories/BookmarkFactory'
 import { shallow } from 'enzyme'
 import NewBookarkInput from 'components/NewBookmarkInput'
-import Input from 'react-toolbox/lib/input'
+import TextField from '@material-ui/core/TextField'
 import { act } from 'react-dom/test-utils'
 
 jest.mock('hooks')
 
 describe('NewBookmarkInput', () => {
-  const mockGetMetadata = bookmark => {
+  const mockGetMetadata = (bookmark) => {
     const get = jest.fn()
     useGetMetadata.mockReturnValue([bookmark, get])
     return get
   }
+
+  const event = (value) => ({ target: { value } })
 
   it('calls onNewBookmark if metadata and clears url', () => {
     mockGetMetadata()
@@ -21,10 +23,10 @@ describe('NewBookmarkInput', () => {
     const component = mount(<NewBookarkInput onNewBookmark={spy} />)
 
     mockGetMetadata(BookmarkFactory.build())
-    act(() => component.find(Input).prop('onChange')('url'))
+    act(() => component.find(TextField).prop('onChange')(event('url')))
     component.update()
 
-    expect(component.find(Input)).toHaveProp({ value: '' })
+    expect(component.find(TextField)).toHaveProp({ value: '' })
     expect(spy).toBeCalledTimes(1)
   })
 
@@ -34,8 +36,8 @@ describe('NewBookmarkInput', () => {
     const spy = jest.fn()
     const component = shallow(<NewBookarkInput onNewBookmark={spy} />)
 
-    component.find(Input).prop('onChange')(url)
-    component.find(Input).prop('onKeyPress')({ key: 'Enter' })
+    component.find(TextField).prop('onChange')(event('url'))
+    component.find(TextField).prop('onKeyDown')({ key: 'Enter' })
 
     expect(getMetadata).toBeCalledWith(url)
   })
