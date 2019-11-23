@@ -1,13 +1,13 @@
+import { Fab } from '@material-ui/core'
 import SpeedDialButton from 'components/SpeedDialButton'
 import { shallow } from 'enzyme'
 import * as React from 'react'
-import Button from 'react-toolbox/lib/button'
 
 describe('SpeedDialButton', () => {
   it('toggles list of buttons on click', () => {
     const component = shallow(<SpeedDialButton />)
 
-    const onClick = component.find(Button).prop('onClick')!
+    const onClick = component.find(Fab).prop('onClick')
 
     expect(component.find('div.button-list')).not.toExist()
 
@@ -26,7 +26,7 @@ describe('SpeedDialButton', () => {
       </SpeedDialButton>
     )
 
-    component.find(Button).prop('onClick')!()
+    component.find(Fab).prop('onClick')()
 
     expect(component.find('div.button-list').find(Child)).toExist()
   })

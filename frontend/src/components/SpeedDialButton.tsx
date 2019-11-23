@@ -1,5 +1,5 @@
+import { Fab } from '@material-ui/core'
 import * as React from 'react'
-import Button from 'react-toolbox/lib/button'
 
 const SpeedDialButton: React.FC = ({ children }) => {
   const [displayButtons, setDisplayButtons] = React.useState(false)
@@ -10,7 +10,7 @@ const SpeedDialButton: React.FC = ({ children }) => {
 
   return (
     <div className="speed-dial-button">
-      <Button onClick={toggleDisplay} floating />
+      <Fab onClick={toggleDisplay} />
       {displayButtons && <div className="button-list">{children}</div>}
     </div>
   )
