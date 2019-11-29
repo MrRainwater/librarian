@@ -1,10 +1,18 @@
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField
+} from '@material-ui/core'
 import { createBookmark } from 'api'
 import { useBookmarks } from 'hooks'
 import { IBookmark } from 'interfaces'
 import * as React from 'react'
-import Dialog from 'react-toolbox/lib/dialog'
-import Input from 'react-toolbox/lib/input'
 
+const Spacer = () => <Box mb={4} />
 interface IProps {
   metadata: IBookmark
   onCancel: () => void
@@ -16,17 +24,6 @@ const CreateBookmarkDialog: React.FunctionComponent<IProps> = ({
   onCancel,
   onSave
 }) => {
-  const actions = [
-    {
-      label: 'Save',
-      onClick: () => save()
-    },
-    {
-      label: 'Cancel',
-      onClick: onCancel
-    }
-  ]
-
   function save() {
     createBookmark(bookmark)
     setBookmarks([...bookmarks, bookmark])
@@ -37,48 +34,57 @@ const CreateBookmarkDialog: React.FunctionComponent<IProps> = ({
   const [bookmarks, setBookmarks] = useBookmarks()
 
   function mergeBookmark<T extends IBookmark, K extends keyof T>(key: K) {
-    return (val: T[K]) =>
+    return (e: React.ChangeEvent<HTMLInputElement>) =>
       setBookmark({
         ...bookmark,
-        [key]: val
+        [key]: e.target.value
       })
   }
 
   return (
-    <Dialog
-      active={true}
-      title="Create a bookmark"
-      actions={actions}
-      onEscKeyDown={onCancel}
-      onOverlayClick={onCancel}
-    >
-      <Input
-        type="text"
-        label="title"
-        value={bookmark.title}
-        onChange={mergeBookmark('title')}
-      />
-
-      <Input
-        type="text"
-        label="description"
-        value={bookmark.description}
-        onChange={mergeBookmark('description')}
-      />
-
-      <Input
-        type="text"
-        label="url"
-        value={bookmark.url}
-        onChange={mergeBookmark('url')}
-      />
-
-      <Input
-        type="text"
-        label="img"
-        value={bookmark.img}
-        onChange={mergeBookmark('img')}
-      />
+    <Dialog open={true} fullWidth>
+      <DialogTitle>Create a Bookmark</DialogTitle>
+      <DialogContent>
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="title"
+          value={bookmark.title}
+          onChange={mergeBookmark('title')}
+        />
+        <Spacer />
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="description"
+          value={bookmark.description}
+          onChange={mergeBookmark('description')}
+        />
+        <Spacer />
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="url"
+          value={bookmark.url}
+          onChange={mergeBookmark('url')}
+        />
+        <Spacer />
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="img"
+          value={bookmark.img}
+          onChange={mergeBookmark('img')}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onCancel}>Cancel</Button>
+        <Button onClick={save}>Save</Button>
+      </DialogActions>
     </Dialog>
   )
 }

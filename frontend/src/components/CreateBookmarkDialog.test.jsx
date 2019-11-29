@@ -5,6 +5,7 @@ import CreateBookmarkDialog from './CreateBookmarkDialog'
 import Dialog from 'react-toolbox/lib/dialog'
 import { createBookmark } from 'api'
 import { useBookmarks } from 'hooks'
+import { Button, TextField } from '@material-ui/core'
 
 jest.mock('api')
 jest.mock('hooks')
@@ -15,15 +16,19 @@ describe('CreateBookmarkDialog', () => {
   const onSave = jest.fn()
   const defaultProps = { metadata, onCancel, onSave }
 
+  const event = (value) => ({ target: { value } })
+
   const findInput = (component, label) =>
-    component.find(Input).findWhere((input) => input.prop('label') === label)
+    component
+      .find(TextField)
+      .findWhere((input) => input.prop('label') === label)
 
   const setInputs = (component, { title, description, url, img }) => {
-    title && findInput(component, 'title').prop('onChange')(title)
+    title && findInput(component, 'title').prop('onChange')(event(title))
     description &&
-      findInput(component, 'description').prop('onChange')(description)
-    url && findInput(component, 'url').prop('onChange')(url)
-    img && findInput(component, 'img').prop('onChange')(img)
+      findInput(component, 'description').prop('onChange')(event(description))
+    url && findInput(component, 'url').prop('onChange')(event(url))
+    img && findInput(component, 'img').prop('onChange')(event(img))
   }
 
   const expectInputs = (component, { title, description, url, img }) => {
@@ -37,13 +42,17 @@ describe('CreateBookmarkDialog', () => {
   }
 
   const getOnCancel = (component) => {
-    const [, action] = component.find(Dialog).prop('actions')
-    return action.onClick
+    return component
+      .find(Button)
+      .first()
+      .prop('onClick')
   }
 
   const getOnSave = (component) => {
-    const [action] = component.find(Dialog).prop('actions')
-    return action.onClick
+    return component
+      .find(Button)
+      .last()
+      .prop('onClick')
   }
 
   beforeEach(() => {
