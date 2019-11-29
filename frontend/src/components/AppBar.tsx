@@ -10,20 +10,23 @@ const LibrarianAppBar: React.FunctionComponent = () => {
   const [bookmark, setBookmark] = useState<IBookmark | undefined>(undefined)
 
   return (
-    <AppBar title="Librarian">
-      <Toolbar>
-        <Typography variant="h4">Librarian</Typography>
-        <Box flexGrow={1} />
-        <NewBookarkInput onNewBookmark={setBookmark} />
-        {bookmark && (
-          <CreateBookmarkDialog
-            metadata={bookmark}
-            onCancel={() => setBookmark(undefined)}
-            onSave={() => setBookmark(undefined)}
-          />
-        )}
-      </Toolbar>
-    </AppBar>
+    <>
+      <AppBar title="Librarian">
+        <Toolbar>
+          <Typography variant="h4">Librarian</Typography>
+          <Box flexGrow={1} />
+          <NewBookarkInput onNewBookmark={setBookmark} />
+          {bookmark && (
+            <CreateBookmarkDialog
+              metadata={bookmark}
+              onCancel={() => setBookmark(undefined)}
+              onSave={() => setBookmark(undefined)}
+            />
+          )}
+        </Toolbar>
+      </AppBar>
+      <Box mb={'64px'} />
+    </>
   )
 }
 
