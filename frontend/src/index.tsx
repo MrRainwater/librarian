@@ -1,4 +1,4 @@
-import Main from 'components/Main'
+import Main from 'components/Global/Main'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { BookmarksStoreProvider } from 'stores/BookmarkStore'

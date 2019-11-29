@@ -1,5 +1,5 @@
 import { Fab } from '@material-ui/core'
-import SpeedDialButton from 'components/SpeedDialButton'
+import SpeedDialButton from 'components/Global/SpeedDialButton'
 import { shallow } from 'enzyme'
 import * as React from 'react'
 

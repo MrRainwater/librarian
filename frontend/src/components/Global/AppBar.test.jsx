@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { BookmarkFactory } from '../factories/BookmarkFactory'
+import { BookmarkFactory } from '../../factories/BookmarkFactory'
 import { shallow } from 'enzyme'
-import NewBookarkInput from 'components/NewBookmarkInput'
-import LibrarianAppBar from 'components/AppBar'
-import CreateBookmarkDialog from 'components/CreateBookmarkDialog'
+import NewBookarkInput from 'components/Global/NewBookmarkInput'
+import LibrarianAppBar from 'components/Global/AppBar'
+import CreateBookmarkDialog from 'components/Global/CreateBookmarkDialog'
 
 describe('AppBar', () => {
-  const createBookmark = component => {
+  const createBookmark = (component) => {
     const bookmark = BookmarkFactory.build()
     component.find(NewBookarkInput).prop('onNewBookmark')(bookmark)
     return bookmark

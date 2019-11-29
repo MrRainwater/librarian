@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { act } from 'react-dom/test-utils'
 import { useBookmarksStore } from 'stores/BookmarkStore'
-import Main from 'components/Main'
+import Main from 'components/Global/Main'
 import { shallow, mount } from 'enzyme'
 import { getBookmarks } from 'api'
-import { BookmarkFactory } from '../factories/BookmarkFactory'
+import { BookmarkFactory } from '../../factories/BookmarkFactory'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
-import BookmarkFilter from 'components/BookmarkFilter'
+import BookmarkFilter from 'components/Global/BookmarkFilter'
 
 jest.mock('stores/BookmarkStore')
 jest.mock('api')
