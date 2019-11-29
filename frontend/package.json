@@ -25,7 +25,6 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^4.3.1",
-    "react-toolbox": "^2.0.0-beta.13",
     "rosie": "^2.0.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
