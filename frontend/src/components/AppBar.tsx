@@ -1,6 +1,6 @@
+import { AppBar, Box, Toolbar, Typography } from '@material-ui/core'
 import { IBookmark } from 'interfaces'
 import * as React from 'react'
-import AppBar from 'react-toolbox/lib/app_bar'
 import CreateBookmarkDialog from './CreateBookmarkDialog'
 import NewBookarkInput from './NewBookmarkInput'
 
@@ -11,14 +11,18 @@ const LibrarianAppBar: React.FunctionComponent = () => {
 
   return (
     <AppBar title="Librarian">
-      <NewBookarkInput onNewBookmark={setBookmark} />
-      {bookmark && (
-        <CreateBookmarkDialog
-          metadata={bookmark}
-          onCancel={() => setBookmark(undefined)}
-          onSave={() => setBookmark(undefined)}
-        />
-      )}
+      <Toolbar>
+        <Typography variant="h4">Librarian</Typography>
+        <Box flexGrow={1} />
+        <NewBookarkInput onNewBookmark={setBookmark} />
+        {bookmark && (
+          <CreateBookmarkDialog
+            metadata={bookmark}
+            onCancel={() => setBookmark(undefined)}
+            onSave={() => setBookmark(undefined)}
+          />
+        )}
+      </Toolbar>
     </AppBar>
   )
 }
