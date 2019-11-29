@@ -1,14 +1,10 @@
+import { Container } from '@material-ui/core'
 import { getBookmarks } from 'api'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
-import { useBookmarks } from 'hooks'
-import { IBookmark } from 'interfaces'
-import BookmarkCollection from 'models/BookmarkCollection'
 import * as React from 'react'
-import { Layout, Panel } from 'react-toolbox/lib/layout'
 import { useBookmarksStore } from 'stores/BookmarkStore'
 import AppBar from './AppBar'
 import BookmarkFilter from './BookmarkFilter'
-import * as classes from './styles/panel.scss'
 
 const Main: React.FunctionComponent = () => {
   const [{ bookmarks }, dispatch] = useBookmarksStore()
@@ -22,13 +18,13 @@ const Main: React.FunctionComponent = () => {
   }, [])
 
   return (
-    <Layout>
-      <Panel className={classes.panel}>
-        <AppBar />
+    <>
+      <AppBar />
+      <Container maxWidth="xl">
         <BookmarkFilter bookmarks={bookmarks} onResults={setFiltered} />
         <Bookmarks bookmarks={filteredBookmarks} />
-      </Panel>
-    </Layout>
+      </Container>
+    </>
   )
 }
 
