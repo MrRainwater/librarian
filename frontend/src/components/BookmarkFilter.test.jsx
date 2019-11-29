@@ -1,8 +1,8 @@
 import { shallow, mount } from 'enzyme'
 import BookmarkFilter from './BookmarkFilter'
 import BookmarkFactory from 'factories/BookmarkFactory'
-import Input from 'react-toolbox/lib/input'
 import { act } from 'react-dom/test-utils'
+import { TextField } from '@material-ui/core'
 describe('BookmarkFilter', () => {
   const bookmarks = [
     BookmarkFactory.build({ title: 'ABC' }),
@@ -14,7 +14,11 @@ describe('BookmarkFilter', () => {
   it('calls onResults with filtered bookmarks', () => {
     const component = mount(<BookmarkFilter {...defaultProps} />)
 
-    act(() => component.find(Input).prop('onChange')(bookmarks[0].title))
+    act(() =>
+      component.find(TextField).prop('onChange')({
+        target: { value: bookmarks[0].title }
+      })
+    )
 
     expect(onResults).toBeCalledWith([bookmarks[0]])
   })

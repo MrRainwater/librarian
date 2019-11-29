@@ -1,7 +1,7 @@
+import { TextField } from '@material-ui/core'
 import { IBookmark } from 'interfaces'
 import BookmarkCollection from 'models/BookmarkCollection'
 import * as React from 'react'
-import Input from 'react-toolbox/lib/input'
 
 interface IProps {
   bookmarks: IBookmark[]
@@ -18,11 +18,11 @@ const BookmarkFilter: React.FC<IProps> = ({ bookmarks, onResults }) => {
   )
 
   return (
-    <Input
+    <TextField
       type="text"
       label="Filter"
       value={searchText}
-      onChange={setSearchText}
+      onChange={(e) => setSearchText(e.target.value)}
     />
   )
 }
