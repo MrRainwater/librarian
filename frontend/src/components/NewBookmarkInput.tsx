@@ -2,7 +2,6 @@ import TextField from '@material-ui/core/TextField'
 import { useGetMetadata } from 'hooks'
 import { IBookmark } from 'interfaces'
 import * as React from 'react'
-import Input from 'react-toolbox/lib/input'
 
 const { useState, useEffect } = React
 

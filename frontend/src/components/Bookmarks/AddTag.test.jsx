@@ -1,8 +1,7 @@
 import { shallow } from 'enzyme'
 import AddTag from './AddTag'
 import Dialog from 'react-toolbox/lib/dialog'
-import { IconButton } from 'react-toolbox/lib/button'
-import { Button } from '@material-ui/core'
+import { Button, IconButton } from '@material-ui/core'
 
 describe('AddTag', () => {
   it('calls onAddTag with inputed tag', () => {
