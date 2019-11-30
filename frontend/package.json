@@ -18,6 +18,7 @@
     "@types/react-router-dom": "^4.3.0",
     "@types/rosie": "^0.0.36",
     "css-loader": "^2.1.0",
+    "immutable": "^4.0.0-rc.12",
     "jest-css-modules": "^2.0.0",
     "lodash": "^4.17.11",
     "mobx": "^5.8.0",
