@@ -14,6 +14,13 @@ const Main: React.FunctionComponent = () => {
   const [{ folders, currentFolderId }, dispatch] = useBookmarksStore()
   const bookmarks = folders.get(currentFolderId)!.bookmarks
   const [filteredBookmarks, setFiltered] = React.useState(bookmarks)
+  const currentFolders = folders
+    .valueSeq()
+    .filter(
+      ({ parentFolderId, id }) =>
+        id !== currentFolderId && parentFolderId === currentFolderId
+    )
+    .toArray()
 
   React.useEffect(() => {
     getInitial().then((data) => {
@@ -28,7 +35,7 @@ const Main: React.FunctionComponent = () => {
       <Container maxWidth="xl">
         <AppBar />
         <BookmarkFilter bookmarks={bookmarks} onResults={setFiltered} />
-        <Bookmarks bookmarks={filteredBookmarks} />
+        <Bookmarks bookmarks={filteredBookmarks} folders={currentFolders} />
         <Box position="fixed" bottom={0} right={0} m={3}>
           <SpeedDialButton />
         </Box>

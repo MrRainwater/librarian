@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardActions,
   CardContent,
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 interface IProps {
   title: string
   img: string
-  content: string
+  content?: string
   actions: React.ReactNode
 }
 const LibraryCard: React.FC<IProps> = ({ title, img, content, actions }) => {
@@ -35,7 +36,7 @@ const LibraryCard: React.FC<IProps> = ({ title, img, content, actions }) => {
     <Card className={styles.root}>
       <CardHeader className={styles.title} title={title} />
       <CardMedia className={styles.media} image={img} />
-      <CardContent>{content}</CardContent>
+      {content && <CardContent>{content}</CardContent>}
       <CardActions>{actions}</CardActions>
     </Card>
   )
