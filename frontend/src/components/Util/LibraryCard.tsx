@@ -6,8 +6,8 @@ import {
   CardMedia,
   makeStyles
 } from '@material-ui/core'
-import * as React from 'react'
 import { useTheme } from '@material-ui/styles'
+import * as React from 'react'
 
 const useStyles = makeStyles((theme) => ({
   root: {
