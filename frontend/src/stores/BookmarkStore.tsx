@@ -30,8 +30,9 @@ export const initialState: IState = {
     '': {
       id: '',
       name: '',
+      bookmarks: [],
       subFolderIds: [],
-      bookmarks: []
+      parentFolderId: ''
     }
   })
 }

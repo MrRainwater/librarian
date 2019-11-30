@@ -56,6 +56,7 @@ export function getInitial(): Promise<{
     bookmarks,
     folders: folders.map((folder: any) => ({
       ...folder,
+      parentFolderId: '',
       subFolderIds: folder.subFolders.map(({ id }: { id: string }) => id)
     }))
   }))
