@@ -6,6 +6,7 @@ const { createContext, useReducer, useContext } = React
 
 interface IState {
   folders: Map<string, IFolder>
+  currentFolderId: string
 }
 
 interface IInitialize {
@@ -34,7 +35,8 @@ export const initialState: IState = {
       subFolderIds: [],
       parentFolderId: ''
     }
-  })
+  }),
+  currentFolderId: ''
 }
 
 export const reducer: Reducer = (state, action) => {

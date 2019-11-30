@@ -11,8 +11,8 @@ import SpeedDialButton from './SpeedDialButton'
 const theme = createMuiTheme()
 
 const Main: React.FunctionComponent = () => {
-  const [{ folders }, dispatch] = useBookmarksStore()
-  const bookmarks = folders.get('')!.bookmarks
+  const [{ folders, currentFolderId }, dispatch] = useBookmarksStore()
+  const bookmarks = folders.get(currentFolderId)!.bookmarks
   const [filteredBookmarks, setFiltered] = React.useState(bookmarks)
 
   React.useEffect(() => {
