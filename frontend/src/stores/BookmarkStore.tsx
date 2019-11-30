@@ -43,13 +43,12 @@ export const reducer: Reducer = (state, action) => {
   switch (action.type) {
     case 'INITIALIZE':
       const bookmarks = action.bookmarks
+      const globalFolder = state.folders.get('')!
       const folders = Map(action.folders.map((folder) => [folder.id, folder]))
       return {
         ...state,
         folders: folders.set('', {
-          id: '',
-          name: '',
-          subFolderIds: [],
+          ...globalFolder,
           bookmarks
         })
       }
