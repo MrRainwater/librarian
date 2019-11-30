@@ -1,19 +1,16 @@
-import { IBookmark } from 'interfaces'
+import { IBookmark, IFolder } from 'interfaces'
 import * as React from 'react'
 
 const { createContext, useReducer, useContext } = React
 
-type State = typeof initialState
+interface IState {
+  folders: IFolder[]
+  bookmarks: IBookmark[]
+}
 
 interface IAddBookmark {
   type: 'ADD_BOOKMARK'
   bookmark: IBookmark
-}
-
-interface IAddBookmarkToFolder {
-  type: 'ADD_BOOKMARK_TO_FOLDER'
-  title: string
-  folder: string
 }
 
 interface ITagBookmark {
@@ -27,9 +24,9 @@ interface ISetBookmarks {
   bookmarks: IBookmark[]
 }
 
-type Action = IAddBookmark | ITagBookmark | IAddBookmarkToFolder | ISetBookmarks
+type IAction = IAddBookmark | ITagBookmark | ISetBookmarks
 
-type Reducer = (state: State, action: Action) => State
+type Reducer = (state: IState, action: IAction) => IState
 
 function logError(action: never) {
   console.error({
@@ -38,8 +35,9 @@ function logError(action: never) {
   })
 }
 
-export const initialState = {
-  bookmarks: [] as IBookmark[]
+export const initialState: IState = {
+  folders: [],
+  bookmarks: []
 }
 
 export const reducer: Reducer = (state, action) => {
@@ -72,21 +70,6 @@ export const reducer: Reducer = (state, action) => {
       } else {
         return state
       }
-    case 'ADD_BOOKMARK_TO_FOLDER':
-      if (bookmark) {
-        return {
-          ...state,
-          bookmarks: [
-            ...state.bookmarks.filter((b) => b.title !== action.title),
-            {
-              ...bookmark,
-              folders: [...bookmark.folders, action.folder]
-            }
-          ]
-        }
-      } else {
-        return state
-      }
     default:
       logError(action)
       return state
@@ -94,7 +77,7 @@ export const reducer: Reducer = (state, action) => {
 }
 
 export const BookmarksContext = createContext<
-  [typeof initialState, React.Dispatch<Action>]
+  [typeof initialState, React.Dispatch<IAction>]
 >([initialState, () => initialState])
 
 export const BookmarksStoreProvider: React.FC<{
@@ -112,9 +95,6 @@ export const useBookmarkActions = (bookmark: IBookmark) => {
   const title = bookmark.title
 
   return {
-    addToFolder(folder: string) {
-      dispatch({ type: 'ADD_BOOKMARK_TO_FOLDER', folder, title })
-    },
     tag(tag: string) {
       dispatch({ type: 'TAG_BOOKMARK_BY_TITLE', title, tag })
     }

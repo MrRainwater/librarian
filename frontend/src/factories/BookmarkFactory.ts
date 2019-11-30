@@ -14,9 +14,6 @@ export const BookmarkFactory = new Factory<Partial<IBookmark & IOptions>>()
     times(numTags, (i) => `Tag ${i}`)
   )
   .option('numFolders', 0)
-  .attr('folders', ['numFolders'], (numFolders: number) =>
-    times(numFolders, (i) => `Folder ${i}`)
-  )
   .attrs({
     url: 'url',
     description: 'desc',
