@@ -1,4 +1,4 @@
-import { Container, createMuiTheme, CssBaseline } from '@material-ui/core'
+import { Box, Container, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import { getBookmarks } from 'api'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
@@ -6,6 +6,7 @@ import * as React from 'react'
 import { useBookmarksStore } from 'stores/BookmarkStore'
 import AppBar from './AppBar'
 import BookmarkFilter from './BookmarkFilter'
+import SpeedDialButton from './SpeedDialButton'
 
 const theme = createMuiTheme()
 
@@ -27,6 +28,9 @@ const Main: React.FunctionComponent = () => {
         <AppBar />
         <BookmarkFilter bookmarks={bookmarks} onResults={setFiltered} />
         <Bookmarks bookmarks={filteredBookmarks} />
+        <Box position="fixed" bottom={0} right={0} m={3}>
+          <SpeedDialButton />
+        </Box>
       </Container>
     </ThemeProvider>
   )

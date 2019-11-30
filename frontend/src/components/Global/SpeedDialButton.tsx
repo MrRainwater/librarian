@@ -1,7 +1,17 @@
-import { Fab } from '@material-ui/core'
+import {
+  Add as AddIcon,
+  Bookmark as BookmarkIcon,
+  Folder as FolderIcon
+} from '@material-ui/icons'
+import { SpeedDial, SpeedDialAction } from '@material-ui/lab'
 import * as React from 'react'
 
-const SpeedDialButton: React.FC = ({ children }) => {
+const actions = [
+  { icon: <BookmarkIcon />, name: 'Bookmark' },
+  { icon: <FolderIcon />, name: 'Folder' }
+]
+
+const SpeedDialButton: React.FC = () => {
   const [displayButtons, setDisplayButtons] = React.useState(false)
 
   function toggleDisplay() {
@@ -9,10 +19,22 @@ const SpeedDialButton: React.FC = ({ children }) => {
   }
 
   return (
-    <div className="speed-dial-button">
-      <Fab onClick={toggleDisplay} />
-      {displayButtons && <div className="button-list">{children}</div>}
-    </div>
+    <SpeedDial
+      ariaLabel="Add Button"
+      open={displayButtons}
+      direction="up"
+      icon={<AddIcon />}
+      onClick={toggleDisplay}
+    >
+      {actions.map(({ icon, name }) => (
+        <SpeedDialAction
+          key={name}
+          icon={icon}
+          tooltipTitle={name}
+          tooltipOpen
+        />
+      ))}
+    </SpeedDial>
   )
 }
 export default SpeedDialButton
