@@ -1,4 +1,4 @@
-import { IBookmark } from 'interfaces'
+import { IBookmark, IFolder } from 'interfaces'
 
 async function graphql(query: string, variables?: any) {
   try {
@@ -31,17 +31,34 @@ async function graphql(query: string, variables?: any) {
   }
 }
 
-export function getBookmarks(): Promise<IBookmark[]> {
+export function getInitial(): Promise<{
+  bookmarks: IBookmark[]
+  folders: IFolder[]
+}> {
   return graphql(`
-    query getBookmarks {
+    query getInitial {
+      folders {
+        id
+        name
+        subFolders {
+          id
+        }
+      }
       bookmarks {
+        id
         url
         title
         description
         img
       }
     }
-  `).then((data) => data.bookmarks)
+  `).then(({ bookmarks, folders }) => ({
+    bookmarks,
+    folders: folders.map((folder: any) => ({
+      ...folder,
+      subFolderIds: folder.subFolders.map(({ id }: { id: string }) => id)
+    }))
+  }))
 }
 
 export function createBookmark(input: IBookmark): Promise<IBookmark> {

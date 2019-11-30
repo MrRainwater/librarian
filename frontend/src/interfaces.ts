@@ -13,5 +13,5 @@ export interface IFolder {
   id: string
   name: string
   bookmarks: IBookmark[]
-  subFolders: IFolder[]
+  subFolderIds: string[]
 }

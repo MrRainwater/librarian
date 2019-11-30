@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils'
 import { useBookmarksStore } from 'stores/BookmarkStore'
 import Main from 'components/Global/Main'
 import { shallow, mount } from 'enzyme'
-import { getBookmarks } from 'api'
+import { getInitial } from 'api'
 import { BookmarkFactory } from '../../factories/BookmarkFactory'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
 import BookmarkFilter from 'components/Global/BookmarkFilter'
@@ -14,7 +14,7 @@ jest.mock('api')
 describe('Main', () => {
   beforeEach(() => {
     useBookmarksStore.mockReturnValue([{ bookmarks: [] }, jest.fn()])
-    getBookmarks.mockResolvedValue([])
+    getInitial.mockResolvedValue({ folders: [], bookmarks: [] })
   })
 
   describe('load', () => {

@@ -1,6 +1,6 @@
 import { Box, Container, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
-import { getBookmarks } from 'api'
+import { getInitial } from 'api'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
 import * as React from 'react'
 import { useBookmarksStore } from 'stores/BookmarkStore'
@@ -11,13 +11,14 @@ import SpeedDialButton from './SpeedDialButton'
 const theme = createMuiTheme()
 
 const Main: React.FunctionComponent = () => {
-  const [{ bookmarks }, dispatch] = useBookmarksStore()
+  const [{ folders }, dispatch] = useBookmarksStore()
+  const bookmarks = folders.get('')!.bookmarks
   const [filteredBookmarks, setFiltered] = React.useState(bookmarks)
 
   React.useEffect(() => {
-    getBookmarks().then((data) => {
-      dispatch({ type: 'SET_BOOKMARKS', bookmarks: data })
-      setFiltered(data)
+    getInitial().then((data) => {
+      dispatch({ type: 'INITIALIZE', ...data })
+      setFiltered(data.bookmarks)
     })
   }, [])
 

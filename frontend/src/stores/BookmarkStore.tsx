@@ -1,30 +1,20 @@
+import { Map } from 'immutable'
 import { IBookmark, IFolder } from 'interfaces'
 import * as React from 'react'
 
 const { createContext, useReducer, useContext } = React
 
 interface IState {
+  folders: Map<string, IFolder>
+}
+
+interface IInitialize {
+  type: 'INITIALIZE'
   folders: IFolder[]
   bookmarks: IBookmark[]
 }
 
-interface IAddBookmark {
-  type: 'ADD_BOOKMARK'
-  bookmark: IBookmark
-}
-
-interface ITagBookmark {
-  type: 'TAG_BOOKMARK_BY_TITLE'
-  tag: string
-  title: string
-}
-
-interface ISetBookmarks {
-  type: 'SET_BOOKMARKS'
-  bookmarks: IBookmark[]
-}
-
-type IAction = IAddBookmark | ITagBookmark | ISetBookmarks
+type IAction = IInitialize
 
 type Reducer = (state: IState, action: IAction) => IState
 
@@ -36,42 +26,32 @@ function logError(action: never) {
 }
 
 export const initialState: IState = {
-  folders: [],
-  bookmarks: []
+  folders: Map({
+    '': {
+      id: '',
+      name: '',
+      subFolderIds: [],
+      bookmarks: []
+    }
+  })
 }
 
 export const reducer: Reducer = (state, action) => {
-  const bookmark = state.bookmarks.find(
-    (b) => b.title === (action as any).title
-  )
   switch (action.type) {
-    case 'SET_BOOKMARKS':
+    case 'INITIALIZE':
+      const bookmarks = action.bookmarks
+      const folders = Map(action.folders.map((folder) => [folder.id, folder]))
       return {
         ...state,
-        bookmarks: action.bookmarks
-      }
-    case 'ADD_BOOKMARK':
-      return {
-        ...state,
-        bookmarks: [...state.bookmarks, action.bookmark]
-      }
-    case 'TAG_BOOKMARK_BY_TITLE':
-      if (bookmark) {
-        return {
-          ...state,
-          bookmarks: [
-            ...state.bookmarks.filter((b) => b.title !== action.title),
-            {
-              ...bookmark,
-              tags: [...bookmark.tags, action.tag]
-            }
-          ]
-        }
-      } else {
-        return state
+        folders: folders.set('', {
+          id: '',
+          name: '',
+          subFolderIds: [],
+          bookmarks
+        })
       }
     default:
-      logError(action)
+      // logError(action)
       return state
   }
 }
@@ -89,17 +69,6 @@ export const BookmarksStoreProvider: React.FC<{
 )
 
 export const useBookmarksStore = () => useContext(BookmarksContext)
-
-export const useBookmarkActions = (bookmark: IBookmark) => {
-  const [, dispatch] = useBookmarksStore()
-  const title = bookmark.title
-
-  return {
-    tag(tag: string) {
-      dispatch({ type: 'TAG_BOOKMARK_BY_TITLE', title, tag })
-    }
-  }
-}
 
 export const withBookmarksStore = (component: React.ReactElement) => (
   <BookmarksStoreProvider>{component}</BookmarksStoreProvider>
