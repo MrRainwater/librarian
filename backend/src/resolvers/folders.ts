@@ -19,7 +19,7 @@ interface IMoveArgs {
 
 const resolvers = {
   folders() {
-    return Folder.find()
+    return Folder.find({ parentFolderId: null })
   },
   openFolder({ folderId }: IOpenArgs) {
     return Folder.findById(folderId)
