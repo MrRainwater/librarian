@@ -5,5 +5,6 @@ export default `
     tagBookmark(id: String, tag: String): Bookmark
     moveBookmark(bookmarkId: String, folderId: String): Bookmark
     moveFolder(targetId: String, destinationId: String): Folder
+    deleteFolder(folderId: String): Folder
   }
 `

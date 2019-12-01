@@ -8,6 +8,10 @@ interface IOpenArgs {
   folderId: string
 }
 
+interface IDeleteArgs {
+  folderId: string
+}
+
 interface IMoveArgs {
   targetId: string
   destinationId: string
@@ -25,6 +29,9 @@ const resolvers = {
   },
   moveFolder({ targetId, destinationId }: IMoveArgs) {
     return Folder.findByIdAndUpdate(targetId, { parentFolderId: destinationId })
+  },
+  deleteFolder({ folderId }: IDeleteArgs) {
+    return Folder.findByIdAndDelete(folderId)
   }
 }
 
