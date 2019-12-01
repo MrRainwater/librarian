@@ -28,12 +28,19 @@ interface IProps {
   img: string
   content?: string
   actions: React.ReactNode
+  onClick?: () => void
 }
-const LibraryCard: React.FC<IProps> = ({ title, img, content, actions }) => {
+const LibraryCard: React.FC<IProps> = ({
+  title,
+  img,
+  content,
+  actions,
+  onClick
+}) => {
   const theme = useTheme()
   const styles = useStyles(theme)
   return (
-    <Card className={styles.root}>
+    <Card className={styles.root} onClick={onClick}>
       <CardHeader className={styles.title} title={title} />
       <CardMedia className={styles.media} image={img} />
       {content && <CardContent>{content}</CardContent>}

@@ -1,8 +1,8 @@
 import { IBookmark, IFolder } from 'interfaces'
 import * as React from 'react'
 import Bookmark from './Bookmark'
-import * as classes from './styles/Bookmarks.scss'
 import Folder from './Folder'
+import * as classes from './styles/Bookmarks.scss'
 
 interface IProps {
   bookmarks: IBookmark[]
@@ -13,10 +13,10 @@ const Bookmarks: React.FunctionComponent<IProps> = ({ bookmarks, folders }) => {
   return (
     <div className={classes.bookmarks}>
       {folders.map((folder) => (
-        <Folder folder={folder} />
+        <Folder key={folder.id} folder={folder} />
       ))}
       {bookmarks.map((bookmark) => (
-        <Bookmark key={bookmark.title} bookmark={bookmark} />
+        <Bookmark key={bookmark.id} bookmark={bookmark} />
       ))}
     </div>
   )

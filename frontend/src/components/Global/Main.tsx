@@ -12,7 +12,8 @@ const theme = createMuiTheme()
 
 const Main: React.FunctionComponent = () => {
   const [{ folders, currentFolderId }, dispatch] = useBookmarksStore()
-  const bookmarks = folders.get(currentFolderId)!.bookmarks
+  const folder = folders.get(currentFolderId)!
+  const bookmarks = folder.bookmarks
   const [filteredBookmarks, setFiltered] = React.useState(bookmarks)
   const currentFolders = folders
     .valueSeq()
@@ -25,9 +26,12 @@ const Main: React.FunctionComponent = () => {
   React.useEffect(() => {
     getInitial().then((data) => {
       dispatch({ type: 'INITIALIZE', ...data })
-      setFiltered(data.bookmarks)
     })
   }, [])
+
+  React.useEffect(() => {
+    setFiltered(folder.bookmarks)
+  }, [folder])
 
   return (
     <ThemeProvider theme={theme}>

@@ -62,6 +62,25 @@ export function getInitial(): Promise<{
   }))
 }
 
+export function openFolder(folderId: string): Promise<IBookmark[]> {
+  return graphql(
+    `
+      query openFolder($folderId: String!) {
+        openFolder(folderId: $folderId) {
+          bookmarks {
+            id
+            url
+            title
+            description
+            img
+          }
+        }
+      }
+    `,
+    { folderId }
+  ).then(({ openFolder: { bookmarks } }) => bookmarks)
+}
+
 export function createBookmark(input: IBookmark): Promise<IBookmark> {
   return graphql(
     `

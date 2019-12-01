@@ -4,6 +4,10 @@ interface ICreateArgs {
   name: string
 }
 
+interface IOpenArgs {
+  folderId: string
+}
+
 interface IMoveArgs {
   targetId: string
   destinationId: string
@@ -12,6 +16,9 @@ interface IMoveArgs {
 const resolvers = {
   folders() {
     return Folder.find()
+  },
+  openFolder({ folderId }: IOpenArgs) {
+    return Folder.findById(folderId)
   },
   createFolder({ name }: ICreateArgs) {
     return Folder.create({ name })

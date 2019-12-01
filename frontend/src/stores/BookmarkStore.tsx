@@ -15,7 +15,18 @@ interface IInitialize {
   bookmarks: IBookmark[]
 }
 
-type IAction = IInitialize
+interface IOpenFolder {
+  type: 'OPEN_FOLDER'
+  folderId: string
+}
+
+interface ISetFolder {
+  type: 'SET_FOLDER'
+  folderId: string
+  bookmarks: IBookmark[]
+}
+
+type IAction = IInitialize | IOpenFolder | ISetFolder
 
 type Reducer = (state: IState, action: IAction) => IState
 
@@ -40,11 +51,16 @@ export const initialState: IState = {
 }
 
 export const reducer: Reducer = (state, action) => {
+  let bookmarks: IBookmark[]
+  let folders: Map<string, IFolder>
+  let folder: IFolder
+  let currentFolderId: string
+
   switch (action.type) {
     case 'INITIALIZE':
-      const bookmarks = action.bookmarks
+      bookmarks = action.bookmarks
       const globalFolder = state.folders.get('')!
-      const folders = Map(action.folders.map((folder) => [folder.id, folder]))
+      folders = Map(action.folders.map((f) => [f.id, f]))
       return {
         ...state,
         folders: folders.set('', {
@@ -52,8 +68,21 @@ export const reducer: Reducer = (state, action) => {
           bookmarks
         })
       }
+    case 'OPEN_FOLDER':
+      folder = state.folders.get(action.folderId)!
+      currentFolderId = folder ? folder.id : state.currentFolderId
+      return { ...state, currentFolderId }
+    case 'SET_FOLDER':
+      folder = state.folders.get(action.folderId)!
+      currentFolderId = folder ? folder.id : state.currentFolderId
+      bookmarks = folder.bookmarks ? folder.bookmarks : action.bookmarks
+      return {
+        ...state,
+        currentFolderId,
+        folders: state.folders.set(folder.id, { ...folder, bookmarks })
+      }
     default:
-      // logError(action)
+      logError(action)
       return state
   }
 }

@@ -12,7 +12,7 @@ export type IBookmarkCreate = Pick<IBookmark, 'title' | 'description' | 'url'>
 export interface IFolder {
   id: string
   name: string
-  bookmarks: IBookmark[]
+  bookmarks?: IBookmark[]
   subFolderIds: string[]
   parentFolderId: string
 }
