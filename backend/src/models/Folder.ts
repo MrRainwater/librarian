@@ -6,7 +6,7 @@ interface IFolderModel extends IFolder, Document {}
 
 const schema = new Schema({
   name: String,
-  parentFolderId: [{ type: Schema.Types.ObjectId, ref: 'Folder' }]
+  parentFolderId: { type: Schema.Types.ObjectId, ref: 'Folder' }
 })
 
 schema.methods.bookmarks = function() {
