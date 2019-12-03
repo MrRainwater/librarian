@@ -13,7 +13,7 @@ const theme = createMuiTheme()
 const Main: React.FunctionComponent = () => {
   const [{ folders, currentFolderId }, dispatch] = useBookmarksStore()
   const folder = folders.get(currentFolderId)!
-  const bookmarks = folder.bookmarks
+  const bookmarks = folder.bookmarks!
   const [filteredBookmarks, setFiltered] = React.useState(bookmarks)
   const currentFolders = folders
     .valueSeq()
@@ -30,8 +30,8 @@ const Main: React.FunctionComponent = () => {
   }, [])
 
   React.useEffect(() => {
-    setFiltered(folder.bookmarks)
-  }, [folder])
+    setFiltered(bookmarks)
+  }, [bookmarks])
 
   return (
     <ThemeProvider theme={theme}>
