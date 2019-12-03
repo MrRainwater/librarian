@@ -24,6 +24,7 @@ interface ISetFolder {
   type: 'SET_FOLDER'
   folderId: string
   bookmarks: IBookmark[]
+  subFolders: IFolder[]
 }
 
 type IAction = IInitialize | IOpenFolder | ISetFolder
@@ -73,13 +74,18 @@ export const reducer: Reducer = (state, action) => {
       currentFolderId = folder ? folder.id : state.currentFolderId
       return { ...state, currentFolderId }
     case 'SET_FOLDER':
-      folder = state.folders.get(action.folderId)!
+      folders = state.folders.merge(action.subFolders.map((f) => [f.id, f]))
+      folder = folders.get(action.folderId)!
       currentFolderId = folder ? folder.id : state.currentFolderId
       bookmarks = folder.bookmarks ? folder.bookmarks : action.bookmarks
       return {
         ...state,
         currentFolderId,
-        folders: state.folders.set(folder.id, { ...folder, bookmarks })
+        folders: folders.set(folder.id, {
+          ...folder,
+          bookmarks,
+          subFolderIds: action.subFolders.map(({ id }) => id)
+        })
       }
     default:
       logError(action)

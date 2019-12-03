@@ -22,6 +22,7 @@ const Main: React.FunctionComponent = () => {
         id !== currentFolderId && parentFolderId === currentFolderId
     )
     .toArray()
+  console.log(folders.valueSeq().toArray())
 
   React.useEffect(() => {
     getInitial().then((data) => {

@@ -62,11 +62,17 @@ export function getInitial(): Promise<{
   }))
 }
 
-export function openFolder(folderId: string): Promise<IBookmark[]> {
+export function openFolder(
+  folderId: string
+): Promise<{ bookmarks: IBookmark[]; subFolders: IFolder[] }> {
   return graphql(
     `
       query openFolder($folderId: String!) {
         openFolder(folderId: $folderId) {
+          subFolders {
+            id
+            name
+          }
           bookmarks {
             id
             url
@@ -78,7 +84,13 @@ export function openFolder(folderId: string): Promise<IBookmark[]> {
       }
     `,
     { folderId }
-  ).then(({ openFolder: { bookmarks } }) => bookmarks)
+  ).then(({ openFolder: { bookmarks, subFolders } }) => ({
+    bookmarks,
+    subFolders: subFolders.map((folder: IFolder) => ({
+      ...folder,
+      parentFolderId: folderId
+    }))
+  }))
 }
 
 export function createBookmark(input: IBookmark): Promise<IBookmark> {

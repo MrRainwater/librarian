@@ -12,8 +12,13 @@ const Folder: React.FC<IProps> = ({ folder }) => {
   const [{ folders, currentFolderId }, dispatch] = useBookmarksStore()
   const onClick = async () => {
     if (!folder.bookmarks) {
-      const bookmarks = await openFolder(folder.id)
-      dispatch({ type: 'SET_FOLDER', folderId: folder.id, bookmarks })
+      const { bookmarks, subFolders } = await openFolder(folder.id)
+      dispatch({
+        type: 'SET_FOLDER',
+        folderId: folder.id,
+        bookmarks,
+        subFolders
+      })
     } else {
       dispatch({ type: 'OPEN_FOLDER', folderId: folder.id })
     }

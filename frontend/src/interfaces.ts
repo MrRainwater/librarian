@@ -13,6 +13,6 @@ export interface IFolder {
   id: string
   name: string
   bookmarks?: IBookmark[]
-  subFolderIds: string[]
+  subFolderIds?: string[]
   parentFolderId: string
 }
