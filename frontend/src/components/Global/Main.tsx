@@ -2,6 +2,7 @@ import { Box, Container, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import { getInitial } from 'api'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
+import CurrentFolder from 'components/Bookmarks/CurrentFolder'
 import * as React from 'react'
 import { useBookmarksStore } from 'stores/BookmarkStore'
 import AppBar from './AppBar'
@@ -40,6 +41,7 @@ const Main: React.FunctionComponent = () => {
       <Container maxWidth="xl">
         <AppBar />
         <BookmarkFilter bookmarks={bookmarks} onResults={setFiltered} />
+        <CurrentFolder />
         <Bookmarks bookmarks={filteredBookmarks} folders={currentFolders} />
         <Box position="fixed" bottom={0} right={0} m={3}>
           <SpeedDialButton />
