@@ -1,45 +1,32 @@
-import { Map } from 'immutable'
+import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IBookmark, IFolder } from 'interfaces'
-import * as React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-const { createContext, useReducer, useContext } = React
-
-interface IState {
-  folders: Map<string, IFolder>
+interface IFolderMap {
+  [id: string]: IFolder
+}
+export interface IState {
+  folders: IFolderMap
   currentFolderId: string
 }
 
 interface IInitialize {
-  type: 'INITIALIZE'
   folders: IFolder[]
   bookmarks: IBookmark[]
 }
 
 interface IOpenFolder {
-  type: 'OPEN_FOLDER'
   folderId: string
 }
 
 interface ISetFolder {
-  type: 'SET_FOLDER'
   folderId: string
   bookmarks: IBookmark[]
   subFolders: IFolder[]
 }
 
-type IAction = IInitialize | IOpenFolder | ISetFolder
-
-type Reducer = (state: IState, action: IAction) => IState
-
-function logError(action: never) {
-  console.error({
-    message: 'Invalid action',
-    action
-  })
-}
-
 export const initialState: IState = {
-  folders: Map({
+  folders: {
     '': {
       id: '',
       name: '',
@@ -47,66 +34,41 @@ export const initialState: IState = {
       subFolderIds: [],
       parentFolderId: ''
     }
-  }),
+  },
   currentFolderId: ''
 }
 
-export const reducer: Reducer = (state, action) => {
-  let bookmarks: IBookmark[]
-  let folders: Map<string, IFolder>
-  let folder: IFolder
-  let currentFolderId: string
-
-  switch (action.type) {
-    case 'INITIALIZE':
-      bookmarks = action.bookmarks
-      const globalFolder = state.folders.get('')!
-      folders = Map(action.folders.map((f) => [f.id, f]))
-      return {
-        ...state,
-        folders: folders.set('', {
-          ...globalFolder,
-          bookmarks
-        })
-      }
-    case 'OPEN_FOLDER':
-      folder = state.folders.get(action.folderId)!
-      currentFolderId = folder ? folder.id : state.currentFolderId
-      return { ...state, currentFolderId }
-    case 'SET_FOLDER':
-      folders = state.folders.merge(action.subFolders.map((f) => [f.id, f]))
-      folder = folders.get(action.folderId)!
-      currentFolderId = folder ? folder.id : state.currentFolderId
-      bookmarks = folder.bookmarks ? folder.bookmarks : action.bookmarks
-      return {
-        ...state,
-        currentFolderId,
-        folders: folders.set(folder.id, {
-          ...folder,
-          bookmarks,
-          subFolderIds: action.subFolders.map(({ id }) => id)
-        })
-      }
-    default:
-      logError(action)
-      return state
+const librarySlice = createSlice({
+  name: 'library',
+  initialState,
+  reducers: {
+    initialize(state, action: PayloadAction<IInitialize>) {
+      const { bookmarks, folders } = action.payload
+      const globalFolder = state.folders['']!
+      globalFolder.bookmarks = bookmarks
+      folders.forEach((f) => (state.folders[f.id] = f))
+    },
+    openFolder(state, action: PayloadAction<IOpenFolder>) {
+      const folder = state.folders[action.payload.folderId]!
+      state.currentFolderId = folder ? folder.id : state.currentFolderId
+    },
+    setFolder(state, action: PayloadAction<ISetFolder>) {
+      action.payload.subFolders.forEach((f) => (state.folders[f.id] = f))
+      const folder = state.folders[action.payload.folderId]!
+      state.currentFolderId = folder ? folder.id : state.currentFolderId
+      folder.bookmarks = folder.bookmarks
+        ? folder.bookmarks
+        : action.payload.bookmarks
+    }
   }
+})
+
+export const { reducer, actions } = librarySlice
+
+export const store = configureStore({ reducer })
+
+export const useBookmarksStore = () => {
+  const library = useSelector((state: IState) => state)
+  const dispatch = useDispatch()
+  return [library, dispatch] as [typeof library, typeof dispatch]
 }
-
-export const BookmarksContext = createContext<
-  [typeof initialState, React.Dispatch<IAction>]
->([initialState, () => initialState])
-
-export const BookmarksStoreProvider: React.FC<{
-  children: React.ReactNode
-}> = ({ children }) => (
-  <BookmarksContext.Provider value={useReducer(reducer, initialState)}>
-    {children}
-  </BookmarksContext.Provider>
-)
-
-export const useBookmarksStore = () => useContext(BookmarksContext)
-
-export const withBookmarksStore = (component: React.ReactElement) => (
-  <BookmarksStoreProvider>{component}</BookmarksStoreProvider>
-)

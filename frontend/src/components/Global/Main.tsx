@@ -4,29 +4,26 @@ import { getInitial } from 'api'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
 import CurrentFolder from 'components/Bookmarks/CurrentFolder'
 import * as React from 'react'
-import { useBookmarksStore } from 'stores/BookmarkStore'
+import { actions, useBookmarksStore } from 'stores/BookmarkStore'
 import AppBar from './AppBar'
 import BookmarkFilter from './BookmarkFilter'
 import SpeedDialButton from './SpeedDialButton'
 
 const theme = createMuiTheme()
 
-const Main: React.FunctionComponent = () => {
+const Main: React.FC = () => {
   const [{ folders, currentFolderId }, dispatch] = useBookmarksStore()
-  const folder = folders.get(currentFolderId)!
+  const folder = folders[currentFolderId]!
   const bookmarks = folder.bookmarks!
   const [filteredBookmarks, setFiltered] = React.useState(bookmarks)
-  const currentFolders = folders
-    .valueSeq()
-    .filter(
-      ({ parentFolderId, id }) =>
-        id !== currentFolderId && parentFolderId === currentFolderId
-    )
-    .toArray()
+  const currentFolders = Object.values(folders).filter(
+    ({ parentFolderId, id }) =>
+      id !== currentFolderId && parentFolderId === currentFolderId
+  )
 
   React.useEffect(() => {
     getInitial().then((data) => {
-      dispatch({ type: 'INITIALIZE', ...data })
+      dispatch(actions.initialize(data))
     })
   }, [])
 

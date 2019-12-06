@@ -1,11 +1,12 @@
 import Main from 'components/Global/Main'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { BookmarksStoreProvider } from 'stores/BookmarkStore'
+import { Provider } from 'react-redux'
+import { store } from 'stores/BookmarkStore'
 
 ReactDOM.render(
-  <BookmarksStoreProvider>
+  <Provider store={store}>
     <Main />
-  </BookmarksStoreProvider>,
+  </Provider>,
   document.getElementById('app')
 )
