@@ -24,7 +24,7 @@ const CurrentFolder: React.FC = () => {
           <FolderIcon onClick={() => openFolder('')} />
         </Grid>
         {hierarchy.map(({ name, id }) => (
-          <Grid item>
+          <Grid key={id} item>
             <Typography variant="h6" onClick={() => openFolder(id)}>
               {name} >
             </Typography>
