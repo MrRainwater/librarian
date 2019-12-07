@@ -9,10 +9,14 @@ export interface IBookmark {
 
 export type IBookmarkCreate = Pick<IBookmark, 'title' | 'description' | 'url'>
 
-export interface IFolder {
+export interface IFolderPreview {
   id: string
   name: string
-  bookmarks?: IBookmark[]
-  subFolderIds?: string[]
   parentFolderId: string
 }
+
+export interface IFolderFull extends IFolderPreview {
+  bookmarks: IBookmark[]
+}
+
+export type IFolder = IFolderPreview | IFolderFull

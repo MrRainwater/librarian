@@ -3,6 +3,7 @@ import { ThemeProvider } from '@material-ui/styles'
 import { getInitial } from 'api'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
 import CurrentFolder from 'components/Bookmarks/CurrentFolder'
+import { IFolderFull } from 'interfaces'
 import * as React from 'react'
 import { actions, useBookmarksStore } from 'stores/BookmarkStore'
 import AppBar from './AppBar'
@@ -14,12 +15,12 @@ const theme = createMuiTheme()
 const Main: React.FC = () => {
   const [{ folders, currentFolderId }, dispatch] = useBookmarksStore()
   const folder = folders[currentFolderId]!
-  const bookmarks = folder.bookmarks!
+  const bookmarks = 'bookmarks' in folder ? folder.bookmarks : []
   const [filteredBookmarks, setFiltered] = React.useState(bookmarks)
   const currentFolders = Object.values(folders).filter(
     ({ parentFolderId, id }) =>
       id !== currentFolderId && parentFolderId === currentFolderId
-  )
+  ) as IFolderFull[]
 
   React.useEffect(() => {
     getInitial().then((data) => {
