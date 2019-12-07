@@ -38,7 +38,13 @@ const Main: React.FC = () => {
       <Container maxWidth="xl">
         <AppBar />
         <BookmarkFilter bookmarks={bookmarks} onResults={setFiltered} />
-        <CurrentFolder />
+        <CurrentFolder
+          folders={folders}
+          currentFolderId={currentFolderId}
+          onFolderClick={(folderId) =>
+            dispatch(actions.openFolder({ folderId }))
+          }
+        />
         <Bookmarks bookmarks={filteredBookmarks} folders={currentFolders} />
         <Box position="fixed" bottom={0} right={0} m={3}>
           <SpeedDialButton />

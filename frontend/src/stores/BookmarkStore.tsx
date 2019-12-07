@@ -2,7 +2,7 @@ import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IBookmark, IFolder, IFolderFull } from 'interfaces'
 import { useDispatch, useSelector } from 'react-redux'
 
-interface IFolderMap {
+export interface IFolderMap {
   '': IFolderFull
   [id: string]: IFolder
 }

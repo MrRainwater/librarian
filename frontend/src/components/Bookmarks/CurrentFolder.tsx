@@ -2,10 +2,19 @@ import { Box, Grid, Typography } from '@material-ui/core'
 import { Folder as FolderIcon } from '@material-ui/icons'
 import { IFolder } from 'interfaces'
 import * as React from 'react'
-import { actions, useBookmarksStore } from 'stores/BookmarkStore'
+import { IFolderMap } from 'stores/BookmarkStore'
 
-const CurrentFolder: React.FC = () => {
-  const [{ currentFolderId, folders }, dispatch] = useBookmarksStore()
+interface IProps {
+  folders: IFolderMap
+  currentFolderId: string
+  onFolderClick: (id: string) => void
+}
+
+const CurrentFolder: React.FC<IProps> = ({
+  folders,
+  currentFolderId,
+  onFolderClick
+}) => {
   let workingId = currentFolderId
   const hierarchy: IFolder[] = []
   while (workingId) {
@@ -14,18 +23,15 @@ const CurrentFolder: React.FC = () => {
     hierarchy.unshift(folder)
   }
 
-  const openFolder = (folderId: string) =>
-    dispatch(actions.openFolder({ folderId }))
-
   return (
     <Box m={2}>
       <Grid container direction="row" spacing={2} alignItems="baseline">
         <Grid item>
-          <FolderIcon onClick={() => openFolder('')} />
+          <FolderIcon onClick={() => onFolderClick('')} />
         </Grid>
         {hierarchy.map(({ name, id }) => (
           <Grid key={id} item>
-            <Typography variant="h6" onClick={() => openFolder(id)}>
+            <Typography variant="h6" onClick={() => onFolderClick(id)}>
               {name} >
             </Typography>
           </Grid>
