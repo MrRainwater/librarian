@@ -1,6 +1,13 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import {
+  Box,
+  Collapse,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText
+} from '@material-ui/core'
 import { Folder as FolderIcon } from '@material-ui/icons'
-import { IFolder } from 'interfaces'
+import { IFolder, IFolderPreview } from 'interfaces'
 import * as React from 'react'
 import { IFolderMap } from 'stores/BookmarkStore'
 
@@ -10,33 +17,82 @@ interface IProps {
   onFolderClick: (id: string) => void
 }
 
+interface INestedFolderProps {
+  folder: INestedFolder
+  onClick: (id: string) => void
+}
+
+interface INestedFolder extends IFolderPreview {
+  subFolders: INestedFolder[]
+}
+
+interface INestedFolderMap {
+  [name: string]: INestedFolder
+}
+
+const FolderListItem: React.FC<INestedFolderProps> = ({ folder, onClick }) => {
+  const [openSubFolders, setOpenSubFolders] = React.useState(false)
+  const toggle = () => {
+    setOpenSubFolders(!openSubFolders)
+    onClick(folder.id)
+  }
+  return (
+    <>
+      <ListItem button onClick={toggle}>
+        <ListItemIcon>
+          <FolderIcon />
+        </ListItemIcon>
+        <ListItemText primary={folder.name} />
+      </ListItem>
+      {folder.subFolders.length ? (
+        <Collapse in={openSubFolders}>
+          <List>
+            {folder.subFolders.map((subFolder) => (
+              <FolderListItem folder={subFolder} onClick={onClick} />
+            ))}
+          </List>
+        </Collapse>
+      ) : null}
+    </>
+  )
+}
+
 const CurrentFolder: React.FC<IProps> = ({
   folders,
   currentFolderId,
   onFolderClick
 }) => {
-  let workingId = currentFolderId
-  const hierarchy: IFolder[] = []
-  while (workingId) {
-    const folder = folders[workingId]!
-    workingId = folder.parentFolderId
-    hierarchy.unshift(folder)
-  }
+  const foldersList = Object.values(folders)
+  const rootFolders = foldersList.filter(
+    ({ parentFolderId, id }) => !parentFolderId && id !== ''
+  )
+
+  const nestFolder = (folder: IFolder): INestedFolder => ({
+    ...folder,
+    subFolders: foldersList
+      .filter(({ parentFolderId }) => parentFolderId === folder.id)
+      .map(nestFolder)
+  })
+
+  const hierarchy = rootFolders.map(nestFolder)
 
   return (
     <Box m={2}>
-      <Grid container direction="row" spacing={2} alignItems="baseline">
-        <Grid item>
-          <FolderIcon onClick={() => onFolderClick('')} />
-        </Grid>
-        {hierarchy.map(({ name, id }) => (
-          <Grid key={id} item>
-            <Typography variant="h6" onClick={() => onFolderClick(id)}>
-              {name} >
-            </Typography>
-          </Grid>
+      <List>
+        <ListItem button onClick={() => onFolderClick('')}>
+          <ListItemIcon>
+            <FolderIcon />
+          </ListItemIcon>
+        </ListItem>
+
+        {hierarchy.map((folder) => (
+          <FolderListItem
+            key={folder.id}
+            folder={folder}
+            onClick={onFolderClick}
+          />
         ))}
-      </Grid>
+      </List>
     </Box>
   )
 }
