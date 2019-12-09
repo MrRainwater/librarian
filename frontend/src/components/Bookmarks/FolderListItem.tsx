@@ -42,6 +42,7 @@ const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
           <List>
             {folder.subFolders.map((subFolder) => (
               <FolderListItem
+                key={subFolder.id}
                 folder={subFolder}
                 onClick={onClick}
                 depth={depth + 1}
