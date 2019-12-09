@@ -20,3 +20,7 @@ export interface IFolderFull extends IFolderPreview {
 }
 
 export type IFolder = IFolderPreview | IFolderFull
+
+export interface INestedFolder extends IFolderPreview {
+  subFolders: INestedFolder[]
+}

@@ -1,60 +1,14 @@
-import {
-  Box,
-  Collapse,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText
-} from '@material-ui/core'
+import { Box, List, ListItem, ListItemIcon } from '@material-ui/core'
 import { Folder as FolderIcon } from '@material-ui/icons'
-import { IFolder, IFolderPreview } from 'interfaces'
+import { IFolder, INestedFolder } from 'interfaces'
 import * as React from 'react'
 import { IFolderMap } from 'stores/BookmarkStore'
+import FolderListItem from './FolderListItem'
 
 interface IProps {
   folders: IFolderMap
   currentFolderId: string
   onFolderClick: (id: string) => void
-}
-
-interface INestedFolderProps {
-  folder: INestedFolder
-  onClick: (id: string) => void
-}
-
-interface INestedFolder extends IFolderPreview {
-  subFolders: INestedFolder[]
-}
-
-interface INestedFolderMap {
-  [name: string]: INestedFolder
-}
-
-const FolderListItem: React.FC<INestedFolderProps> = ({ folder, onClick }) => {
-  const [openSubFolders, setOpenSubFolders] = React.useState(false)
-  const toggle = () => {
-    setOpenSubFolders(!openSubFolders)
-    onClick(folder.id)
-  }
-  return (
-    <>
-      <ListItem button onClick={toggle}>
-        <ListItemIcon>
-          <FolderIcon />
-        </ListItemIcon>
-        <ListItemText primary={folder.name} />
-      </ListItem>
-      {folder.subFolders.length ? (
-        <Collapse in={openSubFolders}>
-          <List>
-            {folder.subFolders.map((subFolder) => (
-              <FolderListItem folder={subFolder} onClick={onClick} />
-            ))}
-          </List>
-        </Collapse>
-      ) : null}
-    </>
-  )
 }
 
 const CurrentFolder: React.FC<IProps> = ({
