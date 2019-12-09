@@ -6,9 +6,12 @@ import { IFolderMap } from 'stores/BookmarkStore'
 import FolderListItem from './FolderListItem'
 
 const useStyles = makeStyles({
-  root: {
+  folderList: {
     width: 350,
     height: '100%'
+  },
+  rootFolderItem: {
+    padding: 0
   }
 })
 
@@ -39,8 +42,12 @@ const CurrentFolder: React.FC<IProps> = ({
   const hierarchy = rootFolders.map(nestFolder)
 
   return (
-    <List className={styles.root}>
-      <ListItem button onClick={() => onFolderClick('')}>
+    <List className={styles.folderList}>
+      <ListItem
+        className={styles.rootFolderItem}
+        button
+        onClick={() => onFolderClick('')}
+      >
         <ListItemIcon>
           <FolderIcon />
         </ListItemIcon>
