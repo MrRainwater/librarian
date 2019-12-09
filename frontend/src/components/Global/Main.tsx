@@ -8,7 +8,7 @@ import {
 import { ThemeProvider } from '@material-ui/styles'
 import { getInitial } from 'api'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
-import CurrentFolder from 'components/Bookmarks/CurrentFolder'
+import FolderList from 'components/Bookmarks/FolderList'
 import { IFolderFull } from 'interfaces'
 import * as React from 'react'
 import { actions, useBookmarksStore } from 'stores/BookmarkStore'
@@ -44,7 +44,7 @@ const Main: React.FC = () => {
       <AppBar />
       <Box display="flex">
         <Box>
-          <CurrentFolder
+          <FolderList
             folders={folders}
             currentFolderId={currentFolderId}
             onFolderClick={(folderId) =>
