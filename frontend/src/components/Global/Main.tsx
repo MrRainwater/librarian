@@ -1,4 +1,10 @@
-import { Box, Container, createMuiTheme, CssBaseline } from '@material-ui/core'
+import {
+  Box,
+  Container,
+  createMuiTheme,
+  CssBaseline,
+  Grid
+} from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import { getInitial } from 'api'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
@@ -35,21 +41,27 @@ const Main: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="xl">
-        <AppBar />
-        <BookmarkFilter bookmarks={bookmarks} onResults={setFiltered} />
-        <CurrentFolder
-          folders={folders}
-          currentFolderId={currentFolderId}
-          onFolderClick={(folderId) =>
-            dispatch(actions.openFolder({ folderId }))
-          }
-        />
-        <Bookmarks bookmarks={filteredBookmarks} folders={currentFolders} />
-        <Box position="fixed" bottom={0} right={0} m={3}>
-          <SpeedDialButton />
+      <AppBar />
+      <Box display="flex">
+        <Box>
+          <CurrentFolder
+            folders={folders}
+            currentFolderId={currentFolderId}
+            onFolderClick={(folderId) =>
+              dispatch(actions.openFolder({ folderId }))
+            }
+          />
         </Box>
-      </Container>
+        <Box px={4} flexGrow={1}>
+          <Box mt={2} mb={4}>
+            <BookmarkFilter bookmarks={bookmarks} onResults={setFiltered} />
+          </Box>
+          <Bookmarks bookmarks={filteredBookmarks} folders={currentFolders} />
+        </Box>
+      </Box>
+      <Box position="fixed" bottom={0} right={0} m={3}>
+        <SpeedDialButton />
+      </Box>
     </ThemeProvider>
   )
 }
