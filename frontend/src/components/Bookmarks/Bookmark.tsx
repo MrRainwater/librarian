@@ -6,12 +6,21 @@ import LinkIcon from '@material-ui/icons/Link'
 import LibraryCard from 'components/Util/LibraryCard'
 import { IBookmark } from 'interfaces'
 import * as React from 'react'
+import { useDrag } from 'react-dnd'
 
 interface IProps {
   bookmark: IBookmark
+  folderId: string
 }
 
-const Bookmark: React.FunctionComponent<IProps> = ({ bookmark }) => {
+export const bookmarkDragType = 'BOOKMARK'
+
+const Bookmark: React.FunctionComponent<IProps> = ({ bookmark, folderId }) => {
+  const [, dragRef] = useDrag({
+    item: { type: bookmarkDragType, folderId, id: bookmark.id },
+    collect: () => ({})
+  })
+
   const actions = (
     <>
       <a href={bookmark.url} target="_blank">
@@ -30,9 +39,9 @@ const Bookmark: React.FunctionComponent<IProps> = ({ bookmark }) => {
       </IconButton>
     </>
   )
-
   return (
     <LibraryCard
+      forwardRef={dragRef}
       title={bookmark.title}
       content={bookmark.description}
       img={bookmark.img}

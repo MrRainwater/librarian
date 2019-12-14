@@ -4,15 +4,26 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  makeStyles
+  makeStyles,
+  Theme
 } from '@material-ui/core'
 import { Folder as FolderIcon } from '@material-ui/icons'
 import { INestedFolder } from 'interfaces'
 import * as React from 'react'
+import { useDrop } from 'react-dnd'
+import { actions, IMoveBookmark, useBookmarksStore } from 'stores/BookmarkStore'
+import { bookmarkDragType } from './Bookmark'
 
-const useStyles = makeStyles((theme) => ({
+interface IStyleProps {
+  depth: number
+  isOver: boolean
+}
+
+const useStyles = makeStyles<Theme, IStyleProps>((theme) => ({
   folderListItem: {
-    paddingLeft: ({ depth }: { depth: number }) => theme.spacing(depth * 2)
+    paddingLeft: ({ depth }) => theme.spacing(depth * 2),
+    background: ({ isOver }) =>
+      isOver ? 'rgba(0, 0, 0, 0.08)' : theme.palette.background.default
   }
 }))
 
@@ -22,8 +33,27 @@ interface IProps {
   depth?: number
 }
 
+interface IDragAction {
+  id: string
+  type: string
+}
+
+interface ICollect {
+  isOver: boolean
+}
+
 const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
-  const styles = useStyles({ depth })
+  const [{ isOver }, dropRef] = useDrop<IDragAction, unknown, ICollect>({
+    accept: bookmarkDragType,
+    drop: (item) =>
+      dispatch(
+        actions.moveBookmark({ bookmarkId: item.id, targetFolderId: folder.id })
+      ),
+    hover: () => setOpenSubFolders(true),
+    collect: (monitor) => ({ isOver: monitor.isOver() })
+  })
+  const [, dispatch] = useBookmarksStore()
+  const styles = useStyles({ depth, isOver })
   const [openSubFolders, setOpenSubFolders] = React.useState(false)
   const toggle = () => {
     setOpenSubFolders(!openSubFolders)
@@ -31,7 +61,12 @@ const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
   }
   return (
     <>
-      <ListItem className={styles.folderListItem} button onClick={toggle}>
+      <ListItem
+        ref={dropRef}
+        className={styles.folderListItem}
+        button
+        onClick={toggle}
+      >
         <ListItemIcon>
           <FolderIcon />
         </ListItemIcon>

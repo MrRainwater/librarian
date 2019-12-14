@@ -56,7 +56,11 @@ const Main: React.FC = () => {
           <Box mt={2} mb={4}>
             <BookmarkFilter bookmarks={bookmarks} onResults={setFiltered} />
           </Box>
-          <Bookmarks bookmarks={filteredBookmarks} folders={currentFolders} />
+          <Bookmarks
+            currentFolderId={currentFolderId}
+            bookmarks={filteredBookmarks}
+            folders={currentFolders}
+          />
         </Box>
       </Box>
       <Box position="fixed" bottom={0} right={0} m={3}>

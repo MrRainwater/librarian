@@ -25,6 +25,11 @@ interface ISetFolder {
   bookmarks: IBookmark[]
 }
 
+export interface IMoveBookmark {
+  bookmarkId: string
+  targetFolderId: string
+}
+
 export const initialState: IState = {
   folders: {
     '': {
@@ -55,6 +60,15 @@ const librarySlice = createSlice({
       const folder = state.folders[action.payload.folderId] as IFolderFull
       state.currentFolderId = folder?.id ?? state.currentFolderId
       folder.bookmarks = action.payload.bookmarks
+    },
+    moveBookmark(state, { payload: { bookmarkId,  targetFolderId } }: PayloadAction<IMoveBookmark>) {
+      const currentFolder = state.folders[state.currentFolderId]as IFolderFull
+      const bookmark = currentFolder.bookmarks.find(({ id }) => id === bookmarkId)!
+      currentFolder.bookmarks = currentFolder.bookmarks.filter(({ id }) => id !== bookmarkId)
+      const targetFolder = state.folders[targetFolderId]
+      // TODO: handle unloaded folders properly & max depth error?
+      'bookmarks' in targetFolder
+        ? targetFolder.bookmarks.push(bookmark) : (targetFolder as IFolderFull).bookmarks = [bookmark]
     }
   }
 })
