@@ -45,6 +45,13 @@ const resolvers = {
     await Bookmark.findByIdAndUpdate(bookmarkId, { folderId }, { new: true })
     return Folder.findById(folderId)
   },
+  unfolderBookmark({ bookmarkId }: { bookmarkId: string }) {
+    return Bookmark.findByIdAndUpdate(
+      bookmarkId,
+      { folderId: null },
+      { new: true }
+    )
+  },
   metadata: ({ url }: IMetadataArgs) => {
     return getMetadata(url)
   }
