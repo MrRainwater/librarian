@@ -37,6 +37,10 @@ interface IMoveBookmark {
   targetFolderId: string
 }
 
+interface IUnfolderBookmark {
+  bookmarkId: string
+}
+
 type IActions = ISetFolderAction
 
 export const initialState: IState = {
@@ -76,13 +80,12 @@ const librarySlice = createSlice({
 
 export const { reducer } = librarySlice
 
+type Thunk = ThunkAction<void, IState, null, IActions>
+
 const moveBookmark = ({
   bookmarkId,
   targetFolderId
-}: IMoveBookmark): ThunkAction<void, IState, null, IActions> => async (
-  dispatch,
-  getState
-) => {
+}: IMoveBookmark): Thunk => async (dispatch, getState) => {
   const targetBookmarks = await api.moveBookmark(bookmarkId, targetFolderId)
   const { currentFolderId, folders } = getState()
   const { bookmarks: currentBookmarks } = folders[
@@ -102,9 +105,34 @@ const moveBookmark = ({
   )
 }
 
+const unfolderBookmark = ({ bookmarkId }: IUnfolderBookmark): Thunk => async (
+  dispatch,
+  getState
+) => {
+  const bookmark = await api.unfolderBookmark(bookmarkId)
+  const { currentFolderId, folders } = getState()
+  const { bookmarks: currentBookmarks } = folders[
+    currentFolderId
+  ] as IFolderFull
+  const { bookmarks: targetBookmarks } = folders['']
+  dispatch(
+    actions.setFolder({
+      bookmarks: [...targetBookmarks, bookmark],
+      folderId: ''
+    })
+  )
+  dispatch(
+    actions.setFolder({
+      bookmarks: currentBookmarks.filter(({ id }) => id !== bookmarkId),
+      folderId: currentFolderId
+    })
+  )
+}
+
 export const actions = {
   ...librarySlice.actions,
-  moveBookmark
+  moveBookmark,
+  unfolderBookmark
 }
 
 export const store = configureStore({ reducer })

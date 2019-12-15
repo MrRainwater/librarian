@@ -16,9 +16,14 @@ export const useDropBookmark = (folderId: string, hover: () => void) => {
   return useDrop<IDragAction, unknown, IDragCollection>({
     accept: bookmarkDragType,
     drop: (item) =>
-      dispatch(
-        actions.moveBookmark({ bookmarkId: item.id, targetFolderId: folderId })
-      ),
+      folderId !== ''
+        ? dispatch(
+            actions.moveBookmark({
+              bookmarkId: item.id,
+              targetFolderId: folderId
+            })
+          )
+        : dispatch(actions.unfolderBookmark({ bookmarkId: item.id })),
     hover,
     collect: (monitor) => ({ isOver: monitor.isOver() })
   })

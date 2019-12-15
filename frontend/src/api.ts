@@ -137,3 +137,23 @@ export function moveBookmark(
     { bookmarkId, folderId }
   ).then(({ moveBookmark: { bookmarks } }) => bookmarks)
 }
+
+interface IUnfolderBookmarkResponse {
+  unfolderBookmark: IBookmark
+}
+
+export const unfolderBookmark = (bookmarkId: string) =>
+  graphql<IUnfolderBookmarkResponse>(
+    `
+      mutation unfolderBookmark($bookmarkId: String!) {
+        unfolderBookmark(bookmarkId: $bookmarkId) {
+          id
+          url
+          title
+          description
+          img
+        }
+      }
+    `,
+    { bookmarkId }
+  ).then(({ unfolderBookmark: bookmark }) => bookmark)
