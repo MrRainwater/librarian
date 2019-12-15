@@ -67,6 +67,7 @@ const librarySlice = createSlice({
     },
     setFolder(state, action: ISetFolderAction) {
       const folder = state.folders[action.payload.folderId] as IFolderFull
+      // TODO: probably doesn't need to set currentFolder but is accidentally preventing
       state.currentFolderId = folder?.id ?? state.currentFolderId
       folder.bookmarks = action.payload.bookmarks
     }

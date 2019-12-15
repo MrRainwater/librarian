@@ -35,6 +35,7 @@ const Main: React.FC = () => {
     })
   }, [])
 
+  // TODO: does not work properly when moving bookmark when filter exists
   React.useEffect(() => {
     setFiltered(bookmarks)
   }, [currentFolderId])
