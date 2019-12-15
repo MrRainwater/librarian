@@ -11,6 +11,7 @@ interface IProps {
 const Folder: React.FC<IProps> = ({ folder }) => {
   const [{ folders, currentFolderId }, dispatch] = useBookmarksStore()
   const onClick = async () => {
+    console.log({folder})
     if (!folder.bookmarks) {
       const bookmarks = await openFolder(folder.id)
       dispatch(

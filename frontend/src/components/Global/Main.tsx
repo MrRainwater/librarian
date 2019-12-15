@@ -31,12 +31,13 @@ const Main: React.FC = () => {
   React.useEffect(() => {
     getInitial().then((data) => {
       dispatch(actions.initialize(data))
+      setFiltered(data.bookmarks)
     })
   }, [])
 
   React.useEffect(() => {
     setFiltered(bookmarks)
-  }, [bookmarks])
+  }, [currentFolderId])
 
   return (
     <ThemeProvider theme={theme}>
