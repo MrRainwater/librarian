@@ -8,6 +8,7 @@ import {
   Theme
 } from '@material-ui/core'
 import { Folder as FolderIcon } from '@material-ui/icons'
+import { useDropBookmark } from 'hooks/dragDrop'
 import { INestedFolder } from 'interfaces'
 import * as React from 'react'
 import { useDrop } from 'react-dnd'
@@ -33,26 +34,10 @@ interface IProps {
   depth?: number
 }
 
-interface IDragAction {
-  id: string
-  type: string
-}
-
-interface ICollect {
-  isOver: boolean
-}
-
 const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
-  const [{ isOver }, dropRef] = useDrop<IDragAction, unknown, ICollect>({
-    accept: bookmarkDragType,
-    drop: (item) =>
-      dispatch(
-        actions.moveBookmark({ bookmarkId: item.id, targetFolderId: folder.id })
-      ),
-    hover: () => setOpenSubFolders(true),
-    collect: (monitor) => ({ isOver: monitor.isOver() })
-  })
-  const [, dispatch] = useBookmarksStore()
+  const [{ isOver }, dropRef] = useDropBookmark(folder.id, () =>
+    setOpenSubFolders(true)
+  )
   const styles = useStyles({ depth, isOver })
   const [openSubFolders, setOpenSubFolders] = React.useState(false)
   const toggle = () => {
