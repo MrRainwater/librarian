@@ -9,9 +9,6 @@ const useStyles = makeStyles({
   folderList: {
     width: 350,
     height: '100%'
-  },
-  rootFolderItem: {
-    padding: 0
   }
 })
 
@@ -27,10 +24,12 @@ const CurrentFolder: React.FC<IProps> = ({
   onFolderClick
 }) => {
   const styles = useStyles()
-  const foldersList = Object.values(folders)
-  const rootFolders = foldersList.filter(
-    ({ parentFolderId, id }) => !parentFolderId && id !== ''
-  )
+  const foldersList = Object.values(folders).filter(({ id }) => id !== '')
+  const rootFolder: IFolder = {
+    id: '',
+    name: '',
+    parentFolderId: ''
+  }
 
   const nestFolder = (folder: IFolder): INestedFolder => ({
     ...folder,
@@ -39,27 +38,11 @@ const CurrentFolder: React.FC<IProps> = ({
       .map(nestFolder)
   })
 
-  const hierarchy = rootFolders.map(nestFolder)
+  const hierarchy = nestFolder(rootFolder)
 
   return (
     <List className={styles.folderList}>
-      <ListItem
-        className={styles.rootFolderItem}
-        button
-        onClick={() => onFolderClick('')}
-      >
-        <ListItemIcon>
-          <FolderIcon />
-        </ListItemIcon>
-      </ListItem>
-
-      {hierarchy.map((folder) => (
-        <FolderListItem
-          key={folder.id}
-          folder={folder}
-          onClick={onFolderClick}
-        />
-      ))}
+      <FolderListItem folder={hierarchy} onClick={onFolderClick} />
     </List>
   )
 }
