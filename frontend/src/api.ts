@@ -1,6 +1,6 @@
-import { IBookmark, IFolder } from 'interfaces'
+import { IBookmark, IFolder, IFolderFull } from 'interfaces'
 
-async function graphql(query: string, variables?: any) {
+async function graphql<T = any>(query: string, variables?: any): Promise<T> {
   try {
     const res = await fetch('http://localhost:4000/graphql', {
       method: 'POST',
@@ -61,9 +61,7 @@ export function getInitial(): Promise<{
   }))
 }
 
-export function openFolder(
-  folderId: string
-): Promise<IBookmark[]> {
+export function openFolder(folderId: string): Promise<IBookmark[]> {
   return graphql(
     `
       query openFolder($folderId: String!) {
@@ -112,4 +110,30 @@ export function getMetadata(url: string): Promise<IBookmark> {
     `,
     { url }
   ).then((data) => data.metadata)
+}
+
+interface IMoveBookmarkResponse {
+  moveBookmark: { bookmarks: IBookmark[] }
+}
+
+export function moveBookmark(
+  bookmarkId: string,
+  folderId: string
+): Promise<IBookmark[]> {
+  return graphql<IMoveBookmarkResponse>(
+    `
+      mutation moveBookmark($bookmarkId: String!, $folderId: String!) {
+        moveBookmark(bookmarkId: $bookmarkId, folderId: $folderId) {
+          bookmarks {
+            id
+            url
+            title
+            description
+            img
+          }
+        }
+      }
+    `,
+    { bookmarkId, folderId }
+  ).then(({ moveBookmark: { bookmarks } }) => bookmarks)
 }

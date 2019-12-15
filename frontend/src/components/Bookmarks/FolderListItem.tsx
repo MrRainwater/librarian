@@ -11,7 +11,7 @@ import { Folder as FolderIcon } from '@material-ui/icons'
 import { INestedFolder } from 'interfaces'
 import * as React from 'react'
 import { useDrop } from 'react-dnd'
-import { actions, IMoveBookmark, useBookmarksStore } from 'stores/BookmarkStore'
+import { actions, useBookmarksStore } from 'stores/BookmarkStore'
 import { bookmarkDragType } from './Bookmark'
 
 interface IStyleProps {

@@ -1,6 +1,13 @@
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+  Action,
+  configureStore,
+  createSlice,
+  PayloadAction
+} from '@reduxjs/toolkit'
+import * as api from 'api'
 import { IBookmark, IFolder, IFolderFull } from 'interfaces'
 import { useDispatch, useSelector } from 'react-redux'
+import { ThunkAction } from 'redux-thunk'
 
 export interface IFolderMap {
   '': IFolderFull
@@ -20,15 +27,17 @@ interface IOpenFolder {
   folderId: string
 }
 
-interface ISetFolder {
+type ISetFolderAction = PayloadAction<{
   folderId: string
   bookmarks: IBookmark[]
-}
+}>
 
-export interface IMoveBookmark {
+interface IMoveBookmark {
   bookmarkId: string
   targetFolderId: string
 }
+
+type IActions = ISetFolderAction
 
 export const initialState: IState = {
   folders: {
@@ -56,24 +65,46 @@ const librarySlice = createSlice({
       const folder = state.folders[action.payload.folderId]
       state.currentFolderId = folder ? folder.id : state.currentFolderId
     },
-    setFolder(state, action: PayloadAction<ISetFolder>) {
+    setFolder(state, action: ISetFolderAction) {
       const folder = state.folders[action.payload.folderId] as IFolderFull
       state.currentFolderId = folder?.id ?? state.currentFolderId
       folder.bookmarks = action.payload.bookmarks
-    },
-    moveBookmark(state, { payload: { bookmarkId,  targetFolderId } }: PayloadAction<IMoveBookmark>) {
-      const currentFolder = state.folders[state.currentFolderId]as IFolderFull
-      const bookmark = currentFolder.bookmarks.find(({ id }) => id === bookmarkId)!
-      currentFolder.bookmarks = currentFolder.bookmarks.filter(({ id }) => id !== bookmarkId)
-      const targetFolder = state.folders[targetFolderId]
-      // TODO: handle unloaded folders properly & max depth error?
-      'bookmarks' in targetFolder
-        ? targetFolder.bookmarks.push(bookmark) : (targetFolder as IFolderFull).bookmarks = [bookmark]
     }
   }
 })
 
-export const { reducer, actions } = librarySlice
+export const { reducer } = librarySlice
+
+const moveBookmark = ({
+  bookmarkId,
+  targetFolderId
+}: IMoveBookmark): ThunkAction<void, IState, null, IActions> => async (
+  dispatch,
+  getState
+) => {
+  const targetBookmarks = await api.moveBookmark(bookmarkId, targetFolderId)
+  const { currentFolderId, folders } = getState()
+  const { bookmarks: currentBookmarks } = folders[
+    currentFolderId
+  ] as IFolderFull
+  dispatch(
+    actions.setFolder({
+      bookmarks: targetBookmarks,
+      folderId: targetFolderId
+    })
+  )
+  dispatch(
+    actions.setFolder({
+      folderId: currentFolderId,
+      bookmarks: currentBookmarks.filter(({ id }) => id !== bookmarkId)
+    })
+  )
+}
+
+export const actions = {
+  ...librarySlice.actions,
+  moveBookmark
+}
 
 export const store = configureStore({ reducer })
 

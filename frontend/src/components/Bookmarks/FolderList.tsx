@@ -2,7 +2,7 @@ import { List, ListItem, ListItemIcon, makeStyles } from '@material-ui/core'
 import { Folder as FolderIcon } from '@material-ui/icons'
 import { IFolder, INestedFolder } from 'interfaces'
 import * as React from 'react'
-import { IFolderMap, IMoveBookmark } from 'stores/BookmarkStore'
+import { IFolderMap } from 'stores/BookmarkStore'
 import FolderListItem from './FolderListItem'
 
 const useStyles = makeStyles({
