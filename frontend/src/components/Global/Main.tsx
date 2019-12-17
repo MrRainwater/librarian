@@ -22,7 +22,6 @@ const Main: React.FC = () => {
   const [{ folders, currentFolderId }, dispatch] = useBookmarksStore()
   const folder = folders[currentFolderId]!
   const bookmarks = 'bookmarks' in folder ? folder.bookmarks : []
-  const [filteredBookmarks, setFiltered] = React.useState(bookmarks)
   const currentFolders = Object.values(folders).filter(
     ({ parentFolderId, id }) =>
       id !== currentFolderId && parentFolderId === currentFolderId
@@ -31,14 +30,8 @@ const Main: React.FC = () => {
   React.useEffect(() => {
     getInitial().then((data) => {
       dispatch(actions.initialize(data))
-      setFiltered(data.bookmarks)
     })
   }, [])
-
-  // TODO: does not work properly when moving bookmark when filter exists
-  React.useEffect(() => {
-    setFiltered(bookmarks)
-  }, [currentFolderId])
 
   return (
     <ThemeProvider theme={theme}>
@@ -55,12 +48,9 @@ const Main: React.FC = () => {
           />
         </Box>
         <Box px={4} flexGrow={1}>
-          <Box mt={2} mb={4}>
-            <BookmarkFilter bookmarks={bookmarks} onResults={setFiltered} />
-          </Box>
           <Bookmarks
             currentFolderId={currentFolderId}
-            bookmarks={filteredBookmarks}
+            bookmarks={bookmarks}
             folders={currentFolders}
           />
         </Box>
