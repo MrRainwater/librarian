@@ -50,7 +50,7 @@ const Main: React.FC = () => {
             folders={folders}
             currentFolderId={currentFolderId}
             onFolderClick={(folderId) =>
-              dispatch(actions.openFolder({ folderId }))
+              dispatch(actions.openBookmark({ folderId }))
             }
           />
         </Box>

@@ -23,9 +23,9 @@ interface IInitialize {
   bookmarks: IBookmark[]
 }
 
-interface IOpenFolder {
+type ISetOpenFolder = PayloadAction<{
   folderId: string
-}
+}>
 
 type ISetFolderAction = PayloadAction<{
   folderId: string
@@ -41,7 +41,7 @@ interface IUnfolderBookmark {
   bookmarkId: string
 }
 
-type IActions = ISetFolderAction
+type IActions = ISetFolderAction | ISetOpenFolder
 
 export const initialState: IState = {
   folders: {
@@ -65,7 +65,7 @@ const librarySlice = createSlice({
       globalFolder.bookmarks = bookmarks
       folders.forEach((f) => (state.folders[f.id] = f))
     },
-    openFolder(state, action: PayloadAction<IOpenFolder>) {
+    setOpenFolder(state, action: ISetOpenFolder) {
       const folder = state.folders[action.payload.folderId]
       state.currentFolderId = folder ? folder.id : state.currentFolderId
     },
@@ -105,6 +105,24 @@ const moveBookmark = ({
   )
 }
 
+const openBookmark = ({ folderId }: { folderId: string }): Thunk => async (
+  dispatch,
+  getState
+) => {
+  const { folders } = getState()
+  const folder = folders[folderId]
+  if (!('bookmarks' in folder)) {
+    const bookmarks = await api.openFolder(folder.id)
+    dispatch(
+      actions.setFolder({
+        folderId: folder.id,
+        bookmarks
+      })
+    )
+  }
+  dispatch(actions.setOpenFolder({ folderId: folder.id }))
+}
+
 const unfolderBookmark = ({ bookmarkId }: IUnfolderBookmark): Thunk => async (
   dispatch,
   getState
@@ -132,6 +150,7 @@ const unfolderBookmark = ({ bookmarkId }: IUnfolderBookmark): Thunk => async (
 export const actions = {
   ...librarySlice.actions,
   moveBookmark,
+  openBookmark,
   unfolderBookmark
 }
 
