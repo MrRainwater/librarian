@@ -1,10 +1,4 @@
-import {
-  Box,
-  Container,
-  createMuiTheme,
-  CssBaseline,
-  Grid
-} from '@material-ui/core'
+import { Box, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import { getInitial } from 'api'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
@@ -13,8 +7,6 @@ import { IFolderFull } from 'interfaces'
 import * as React from 'react'
 import { actions, useBookmarksStore } from 'stores/BookmarkStore'
 import AppBar from './AppBar'
-import BookmarkFilter from './BookmarkFilter'
-import SpeedDialButton from './SpeedDialButton'
 
 const theme = createMuiTheme()
 
