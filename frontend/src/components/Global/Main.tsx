@@ -55,9 +55,6 @@ const Main: React.FC = () => {
           />
         </Box>
       </Box>
-      <Box position="fixed" bottom={0} right={0} m={3}>
-        <SpeedDialButton />
-      </Box>
     </ThemeProvider>
   )
 }
