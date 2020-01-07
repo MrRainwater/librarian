@@ -1,0 +1,11 @@
+{
+  "name": "Librarian",
+  "browser_actions": {
+    "default_icon": "/images/icon.png"
+  },
+  "icons": {
+    "48": "/images/icon.png"
+  },
+  "manifest_version": 2,
+  "version": "1"
+}
