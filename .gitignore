@@ -82,3 +82,5 @@ typings/
 .vscode/*
 
 backend/data/*
+
+**/bundle.js
