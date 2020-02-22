@@ -5,14 +5,12 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit'
 import * as api from 'api'
-import { IBookmark, IFolder, IFolderFull } from 'interfaces'
+import { IBookmark, IFolder } from 'interfaces'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkAction } from 'redux-thunk'
 
-export interface IFolderMap {
-  '': IFolderFull
-  [id: string]: IFolder
-}
+export type IFolderMap = Record<string, IFolder>
+
 export interface IState {
   folders: IFolderMap
   currentFolderId: string
@@ -20,7 +18,6 @@ export interface IState {
 
 interface IInitialize {
   folders: IFolder[]
-  bookmarks: IBookmark[]
 }
 
 type ISetOpenFolder = PayloadAction<{
@@ -44,14 +41,7 @@ interface IUnfolderBookmark {
 type IActions = ISetFolderAction | ISetOpenFolder
 
 export const initialState: IState = {
-  folders: {
-    '': {
-      id: '',
-      name: '',
-      bookmarks: [],
-      parentFolderId: ''
-    }
-  },
+  folders: {},
   currentFolderId: ''
 }
 
@@ -60,9 +50,7 @@ const librarySlice = createSlice({
   initialState,
   reducers: {
     initialize(state, action: PayloadAction<IInitialize>) {
-      const { bookmarks, folders } = action.payload
-      const globalFolder = state.folders['']
-      globalFolder.bookmarks = bookmarks
+      const { folders } = action.payload
       folders.forEach((f) => (state.folders[f.id] = f))
     },
     setOpenFolder(state, action: ISetOpenFolder) {
@@ -70,8 +58,8 @@ const librarySlice = createSlice({
       state.currentFolderId = folder ? folder.id : state.currentFolderId
     },
     setFolder(state, action: ISetFolderAction) {
-      const folder = state.folders[action.payload.folderId] as IFolderFull
-      folder.bookmarks = action.payload.bookmarks
+      // const folder = state.folders[action.payload.folderId] as IFolderFull
+      // folder.bookmarks = action.payload.bookmarks
     }
   }
 })
@@ -80,27 +68,15 @@ export const { reducer } = librarySlice
 
 type Thunk = ThunkAction<void, IState, null, IActions>
 
-const moveBookmark = ({
-  bookmarkId,
-  targetFolderId
-}: IMoveBookmark): Thunk => async (dispatch, getState) => {
-  const targetBookmarks = await api.moveBookmark(bookmarkId, targetFolderId)
-  const { currentFolderId, folders } = getState()
-  const { bookmarks: currentBookmarks } = folders[
-    currentFolderId
-  ] as IFolderFull
-  dispatch(
-    actions.setFolder({
-      bookmarks: targetBookmarks,
-      folderId: targetFolderId
-    })
+const initialize = (): Thunk => async (dispatch) => {
+  const [rootNode] = await browser.bookmarks.getTree()
+  const nodes = rootNode.children!
+
+  const folders = nodes.filter(
+    (node): node is IFolder => node.type === 'folder'
   )
-  dispatch(
-    actions.setFolder({
-      folderId: currentFolderId,
-      bookmarks: currentBookmarks.filter(({ id }) => id !== bookmarkId)
-    })
-  )
+
+  actions.initialize({ bookmarks: [], folders: [] })
 }
 
 const openBookmark = ({ folderId }: { folderId: string }): Thunk => async (
@@ -121,35 +97,9 @@ const openBookmark = ({ folderId }: { folderId: string }): Thunk => async (
   dispatch(actions.setOpenFolder({ folderId: folder.id }))
 }
 
-const unfolderBookmark = ({ bookmarkId }: IUnfolderBookmark): Thunk => async (
-  dispatch,
-  getState
-) => {
-  const bookmark = await api.unfolderBookmark(bookmarkId)
-  const { currentFolderId, folders } = getState()
-  const { bookmarks: currentBookmarks } = folders[
-    currentFolderId
-  ] as IFolderFull
-  const { bookmarks: targetBookmarks } = folders['']
-  dispatch(
-    actions.setFolder({
-      bookmarks: [...targetBookmarks, bookmark],
-      folderId: ''
-    })
-  )
-  dispatch(
-    actions.setFolder({
-      bookmarks: currentBookmarks.filter(({ id }) => id !== bookmarkId),
-      folderId: currentFolderId
-    })
-  )
-}
-
 export const actions = {
   ...librarySlice.actions,
-  moveBookmark,
-  openBookmark,
-  unfolderBookmark
+  openBookmark
 }
 
 export const store = configureStore({ reducer })

@@ -15,15 +15,7 @@ export const useDropBookmark = (folderId: string, hover: () => void) => {
   const [, dispatch] = useBookmarksStore()
   return useDrop<IDragAction, unknown, IDragCollection>({
     accept: bookmarkDragType,
-    drop: (item) =>
-      folderId !== ''
-        ? dispatch(
-            actions.moveBookmark({
-              bookmarkId: item.id,
-              targetFolderId: folderId
-            })
-          )
-        : dispatch(actions.unfolderBookmark({ bookmarkId: item.id })),
+    drop: (item) => console.log('dropped bookmark'),
     hover,
     collect: (monitor) => ({ isOver: monitor.isOver() })
   })

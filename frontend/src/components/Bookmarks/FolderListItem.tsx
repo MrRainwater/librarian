@@ -55,7 +55,7 @@ const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
         <ListItemIcon>
           <FolderIcon />
         </ListItemIcon>
-        <ListItemText primary={folder.name} />
+        <ListItemText primary={folder.title} />
       </ListItem>
       {folder.subFolders.length ? (
         <Collapse in={openSubFolders}>

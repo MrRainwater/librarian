@@ -1,9 +1,8 @@
 import { Box, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
-import { getInitial } from 'api'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
 import FolderList from 'components/Bookmarks/FolderList'
-import { IFolderFull } from 'interfaces'
+import { IBookmarkNode } from 'interfaces'
 import * as React from 'react'
 import { actions, useBookmarksStore } from 'stores/BookmarkStore'
 import AppBar from './AppBar'
@@ -13,17 +12,12 @@ const theme = createMuiTheme()
 const Main: React.FC = () => {
   const [{ folders, currentFolderId }, dispatch] = useBookmarksStore()
   const folder = folders[currentFolderId]!
-  const bookmarks = 'bookmarks' in folder ? folder.bookmarks : []
+  const bookmarks = folder.children.filter(
+    (node): node is IBookmarkNode => node.type === 'bookmark'
+  )
   const currentFolders = Object.values(folders).filter(
-    ({ parentFolderId, id }) =>
-      id !== currentFolderId && parentFolderId === currentFolderId
-  ) as IFolderFull[]
-
-  React.useEffect(() => {
-    getInitial().then((data) => {
-      dispatch(actions.initialize(data))
-    })
-  }, [])
+    ({ id }) => id !== currentFolderId
+  )
 
   return (
     <ThemeProvider theme={theme}>

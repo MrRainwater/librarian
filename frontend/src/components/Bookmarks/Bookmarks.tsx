@@ -1,4 +1,4 @@
-import { IBookmark, IFolderFull } from 'interfaces'
+import { IBookmark, IFolderNode } from 'interfaces'
 import * as React from 'react'
 import Bookmark from './Bookmark'
 import Folder from './Folder'
@@ -6,7 +6,7 @@ import * as classes from './styles/Bookmarks.scss'
 
 interface IProps {
   bookmarks: IBookmark[]
-  folders: IFolderFull[]
+  folders: IFolderNode[]
   currentFolderId: string
 }
 

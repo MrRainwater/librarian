@@ -43,8 +43,8 @@ const Bookmark: React.FunctionComponent<IProps> = ({ bookmark, folderId }) => {
     <LibraryCard
       forwardRef={dragRef}
       title={bookmark.title}
-      content={bookmark.description}
-      img={bookmark.img}
+      content={'Bookmark description'}
+      img={'https://source.unsplash.com/random'}
       actions={actions}
     />
   )

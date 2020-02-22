@@ -1,26 +1,23 @@
-export interface IBookmark {
-  id: string
+type IBookmarkTreeNode = browser.bookmarks.IBookmarkTreeNode
+
+export interface IFolderNode extends IBookmarkTreeNode {
+  children: IBookmarkTreeNode[]
+  parentId: string
+  type: 'folder'
+  url: undefined
+}
+
+export interface IBookmarkNode extends IBookmarkTreeNode {
+  children: undefined
+  parentId: string
+  type: 'bookmark'
   url: string
-  title: string
-  description: string
-  img: string
-  tags: string[]
 }
 
-export type IBookmarkCreate = Pick<IBookmark, 'title' | 'description' | 'url'>
+export type IFolder = IFolderNode
 
-export interface IFolderPreview {
-  id: string
-  name: string
-  parentFolderId: string
-}
+export type IBookmark = IBookmarkNode
 
-export interface IFolderFull extends IFolderPreview {
-  bookmarks: IBookmark[]
-}
-
-export type IFolder = IFolderPreview | IFolderFull
-
-export interface INestedFolder extends IFolderPreview {
+export interface INestedFolder extends IFolder {
   subFolders: INestedFolder[]
 }

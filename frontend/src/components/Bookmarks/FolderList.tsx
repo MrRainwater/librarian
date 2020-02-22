@@ -27,14 +27,17 @@ const CurrentFolder: React.FC<IProps> = ({
   const foldersList = Object.values(folders).filter(({ id }) => id !== '')
   const rootFolder: IFolder = {
     id: '',
-    name: '',
-    parentFolderId: ''
+    title: '',
+    parentId: '',
+    children: [],
+    type: 'folder',
+    url: undefined
   }
 
   const nestFolder = (folder: IFolder): INestedFolder => ({
     ...folder,
     subFolders: foldersList
-      .filter(({ parentFolderId }) => parentFolderId === folder.id)
+      .filter(({ parentId }) => parentId === folder.id)
       .map(nestFolder)
   })
 

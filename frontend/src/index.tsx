@@ -6,6 +6,13 @@ import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { store } from 'stores/BookmarkStore'
 
+// tslint:disable-next-line: no-namespace
+declare namespace browser {
+  const bookmarks: string[]
+}
+
+console.log(browser)
+
 ReactDOM.render(
   <DndProvider backend={Backend}>
     <Provider store={store}>

@@ -1,11 +1,10 @@
-import { openFolder } from 'api'
 import LibraryCard from 'components/Util/LibraryCard'
-import { IFolderFull } from 'interfaces'
+import { IFolderNode } from 'interfaces'
 import * as React from 'react'
 import { actions, useBookmarksStore } from 'stores/BookmarkStore'
 
 interface IProps {
-  folder: IFolderFull
+  folder: IFolderNode
 }
 
 const Folder: React.FC<IProps> = ({ folder }) => {
@@ -13,7 +12,7 @@ const Folder: React.FC<IProps> = ({ folder }) => {
   const onClick = () => dispatch(actions.openBookmark({ folderId: folder.id }))
   return (
     <LibraryCard
-      title={folder.name}
+      title={folder.title}
       img={'/folder.png'}
       actions={null}
       onClick={onClick}

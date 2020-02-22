@@ -58,27 +58,9 @@ const CreateBookmarkDialog: React.FunctionComponent<IProps> = ({
           fullWidth
           variant="filled"
           type="text"
-          label="description"
-          value={bookmark.description}
-          onChange={mergeBookmark('description')}
-        />
-        <Spacer />
-        <TextField
-          fullWidth
-          variant="filled"
-          type="text"
           label="url"
           value={bookmark.url}
           onChange={mergeBookmark('url')}
-        />
-        <Spacer />
-        <TextField
-          fullWidth
-          variant="filled"
-          type="text"
-          label="img"
-          value={bookmark.img}
-          onChange={mergeBookmark('img')}
         />
       </DialogContent>
       <DialogActions>

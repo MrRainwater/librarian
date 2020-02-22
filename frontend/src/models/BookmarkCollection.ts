@@ -13,8 +13,8 @@ export default class BookmarkCollection {
 
   public [Symbol.iterator] = () => this.data[Symbol.iterator]()
 
-  public withTags = (tags: string[]) =>
-    new BookmarkCollection(this.data.filter((b) => hasAny(b.tags, tags)))
+  // public withTags = (tags: string[]) =>
+  //   new BookmarkCollection(this.data.filter((b) => hasAny(b.tags, tags)))
 
   public titleContains = (text: string) =>
     new BookmarkCollection(

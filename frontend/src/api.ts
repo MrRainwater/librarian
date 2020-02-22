@@ -1,4 +1,4 @@
-import { IBookmark, IFolder, IFolderFull } from 'interfaces'
+import { IBookmark, IFolder } from 'interfaces'
 
 async function graphql<T = any>(query: string, variables?: any): Promise<T> {
   try {
