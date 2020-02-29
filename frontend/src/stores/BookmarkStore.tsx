@@ -14,11 +14,13 @@ export type IFolderMap = Record<string, IFolder>
 export interface IState {
   folders: IFolderMap
   currentFolderId: string
+  rootFolderId: string
 }
 
-interface IInitialize {
+type IInitialize = PayloadAction<{
   folders: IFolder[]
-}
+  currentFolderId: string
+}>
 
 type ISetOpenFolder = PayloadAction<{
   folderId: string
@@ -38,19 +40,22 @@ interface IUnfolderBookmark {
   bookmarkId: string
 }
 
-type IActions = ISetFolderAction | ISetOpenFolder
+type IActions = IInitialize | ISetFolderAction | ISetOpenFolder
 
 export const initialState: IState = {
   folders: {},
-  currentFolderId: ''
+  currentFolderId: '',
+  rootFolderId: ''
 }
 
 const librarySlice = createSlice({
   name: 'library',
   initialState,
   reducers: {
-    initialize(state, action: PayloadAction<IInitialize>) {
-      const { folders } = action.payload
+    initialize(state, action: IInitialize) {
+      const { folders, currentFolderId } = action.payload
+      state.currentFolderId = currentFolderId
+      state.rootFolderId = currentFolderId
       folders.forEach((f) => (state.folders[f.id] = f))
     },
     setOpenFolder(state, action: ISetOpenFolder) {
@@ -68,15 +73,42 @@ export const { reducer } = librarySlice
 
 type Thunk = ThunkAction<void, IState, null, IActions>
 
-const initialize = (): Thunk => async (dispatch) => {
-  const [rootNode] = await browser.bookmarks.getTree()
-  const nodes = rootNode.children!
+const loadBookmarks = (): Thunk => async (dispatch) => {
+  const rootNodes = await browser.bookmarks.getTree()
 
-  const folders = nodes.filter(
-    (node): node is IFolder => node.type === 'folder'
-  )
+  const getFolders = (
+    nodes: browser.bookmarks.IBookmarkTreeNode[]
+  ): IFolder[] => {
+    const currentFolders = nodes.filter(
+      (node): node is IFolder => node.type === 'folder'
+    )
 
-  actions.initialize({ bookmarks: [], folders: [] })
+    const subFolders = currentFolders.flatMap((folder) =>
+      getFolders(folder.children)
+    )
+
+    return [...currentFolders, ...subFolders]
+  }
+
+  const folders = getFolders(rootNodes)
+
+  const rootFolder: IFolder = {
+    id: '',
+    children: folders,
+    parentId: '',
+    type: 'folder',
+    title: ''
+  }
+
+  let currentFolderId: string
+  if (rootNodes.length === 1) {
+    currentFolderId = rootNodes[0].id
+  } else {
+    currentFolderId = rootFolder.id
+    folders.push(rootFolder)
+  }
+
+  dispatch(actions.initialize({ folders, currentFolderId }))
 }
 
 const openBookmark = ({ folderId }: { folderId: string }): Thunk => async (
@@ -99,6 +131,7 @@ const openBookmark = ({ folderId }: { folderId: string }): Thunk => async (
 
 export const actions = {
   ...librarySlice.actions,
+  loadBookmarks,
   openBookmark
 }
 

@@ -11,8 +11,6 @@ declare namespace browser {
   const bookmarks: string[]
 }
 
-console.log(browser)
-
 ReactDOM.render(
   <DndProvider backend={Backend}>
     <Provider store={store}>

@@ -14,25 +14,18 @@ const useStyles = makeStyles({
 
 interface IProps {
   folders: IFolderMap
-  currentFolderId: string
+  rootFolderId: string
   onFolderClick: (id: string) => void
 }
 
 const CurrentFolder: React.FC<IProps> = ({
   folders,
-  currentFolderId,
+  rootFolderId,
   onFolderClick
 }) => {
   const styles = useStyles()
   const foldersList = Object.values(folders).filter(({ id }) => id !== '')
-  const rootFolder: IFolder = {
-    id: '',
-    title: '',
-    parentId: '',
-    children: [],
-    type: 'folder',
-    url: undefined
-  }
+  const rootFolder = folders[rootFolderId]
 
   const nestFolder = (folder: IFolder): INestedFolder => ({
     ...folder,

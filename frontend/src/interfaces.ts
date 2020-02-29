@@ -4,7 +4,7 @@ export interface IFolderNode extends IBookmarkTreeNode {
   children: IBookmarkTreeNode[]
   parentId: string
   type: 'folder'
-  url: undefined
+  url?: never
 }
 
 export interface IBookmarkNode extends IBookmarkTreeNode {

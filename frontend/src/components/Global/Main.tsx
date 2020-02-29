@@ -2,7 +2,7 @@ import { Box, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import Bookmarks from 'components/Bookmarks/Bookmarks'
 import FolderList from 'components/Bookmarks/FolderList'
-import { IBookmarkNode } from 'interfaces'
+import { IBookmarkNode, IFolder } from 'interfaces'
 import * as React from 'react'
 import { actions, useBookmarksStore } from 'stores/BookmarkStore'
 import AppBar from './AppBar'
@@ -10,14 +10,24 @@ import AppBar from './AppBar'
 const theme = createMuiTheme()
 
 const Main: React.FC = () => {
-  const [{ folders, currentFolderId }, dispatch] = useBookmarksStore()
-  const folder = folders[currentFolderId]!
-  const bookmarks = folder.children.filter(
+  const [
+    { folders, currentFolderId, rootFolderId },
+    dispatch
+  ] = useBookmarksStore()
+  const children = folders[currentFolderId]?.children ?? []
+  const bookmarks = children.filter(
     (node): node is IBookmarkNode => node.type === 'bookmark'
   )
-  const currentFolders = Object.values(folders).filter(
-    ({ id }) => id !== currentFolderId
+  const currentFolders = children.filter(
+    (node): node is IFolder => node.type === 'folder'
   )
+
+  React.useEffect(() => {
+    console.log('loading bookmarks')
+    dispatch(actions.loadBookmarks())
+  }, [])
+
+  console.log({ currentFolders })
 
   return (
     <ThemeProvider theme={theme}>
@@ -27,10 +37,11 @@ const Main: React.FC = () => {
         <Box>
           <FolderList
             folders={folders}
-            currentFolderId={currentFolderId}
-            onFolderClick={(folderId) =>
-              dispatch(actions.openBookmark({ folderId }))
-            }
+            rootFolderId={rootFolderId}
+            onFolderClick={(folderId) => {
+              console.log('opening', { folderId })
+              dispatch(actions.setOpenFolder({ folderId }))
+            }}
           />
         </Box>
         <Box px={4} flexGrow={1}>

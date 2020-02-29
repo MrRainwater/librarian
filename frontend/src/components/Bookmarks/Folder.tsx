@@ -9,7 +9,7 @@ interface IProps {
 
 const Folder: React.FC<IProps> = ({ folder }) => {
   const [, dispatch] = useBookmarksStore()
-  const onClick = () => dispatch(actions.openBookmark({ folderId: folder.id }))
+  const onClick = () => dispatch(actions.setOpenFolder({ folderId: folder.id }))
   return (
     <LibraryCard
       title={folder.title}
