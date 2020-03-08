@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/index.tsx',
@@ -33,6 +34,7 @@ module.exports = {
       }
     ]
   },
+  plugins: [new webpack.EnvironmentPlugin(['NODE_ENV'])],
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx', '.scss', 'sass'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']

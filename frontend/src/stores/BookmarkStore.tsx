@@ -5,6 +5,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit'
 import * as api from 'api'
+import initBrowser from 'browser'
 import { IBookmark, IFolder } from 'interfaces'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkAction } from 'redux-thunk'
@@ -74,8 +75,8 @@ export const { reducer } = librarySlice
 type Thunk = ThunkAction<void, IState, null, IActions>
 
 const loadBookmarks = (): Thunk => async (dispatch) => {
+  await initBrowser()
   const rootNodes = await browser.bookmarks.getTree()
-
   const getFolders = (
     nodes: browser.bookmarks.IBookmarkTreeNode[]
   ): IFolder[] => {

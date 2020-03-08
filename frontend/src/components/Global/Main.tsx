@@ -23,11 +23,8 @@ const Main: React.FC = () => {
   )
 
   React.useEffect(() => {
-    console.log('loading bookmarks')
     dispatch(actions.loadBookmarks())
   }, [])
-
-  console.log({ currentFolders })
 
   return (
     <ThemeProvider theme={theme}>
@@ -39,7 +36,6 @@ const Main: React.FC = () => {
             folders={folders}
             rootFolderId={rootFolderId}
             onFolderClick={(folderId) => {
-              console.log('opening', { folderId })
               dispatch(actions.setOpenFolder({ folderId }))
             }}
           />
