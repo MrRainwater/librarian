@@ -36,12 +36,12 @@ interface IProps {
 
 const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
   const [{ isOver }, dropRef] = useDropBookmark(folder.id, () =>
-    setOpenSubFolders(true)
+    setIsOpen(true)
   )
   const styles = useStyles({ depth, isOver })
-  const [openSubFolders, setOpenSubFolders] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false)
   const toggle = () => {
-    setOpenSubFolders(!openSubFolders)
+    setIsOpen(!isOpen)
     onClick(folder.id)
   }
   return (
@@ -58,7 +58,7 @@ const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
         <ListItemText primary={folder.title} />
       </ListItem>
       {folder.subFolders.length ? (
-        <Collapse in={openSubFolders}>
+        <Collapse in={isOpen}>
           <List>
             {folder.subFolders.map((subFolder) => (
               <FolderListItem
