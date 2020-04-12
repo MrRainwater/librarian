@@ -18,7 +18,7 @@ interface IProps {
   onFolderClick: (id: string) => void
 }
 
-const CurrentFolder: React.FC<IProps> = ({
+const FolderList: React.FC<IProps> = ({
   folders,
   rootFolderId,
   onFolderClick
@@ -43,4 +43,4 @@ const CurrentFolder: React.FC<IProps> = ({
   )
 }
 
-export default CurrentFolder
+export default FolderList
