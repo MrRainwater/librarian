@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "ES2019",
     "jsx": "react",
     "module": "commonjs",
     "baseUrl": "./src",
@@ -10,7 +10,8 @@
     "lib": ["esnext", "dom"],
     "removeComments": true,
     "sourceMap": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*", "./typings.d.ts", "tests/**/*"],
   "exclude": ["node_modules", "dist"]
