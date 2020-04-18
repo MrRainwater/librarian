@@ -20,6 +20,16 @@ export const folders: IFolderNode[] = [
         dateGroupModified: 1582883860416,
         children: [
           {
+            id: 'sf1',
+            parentId: 'f1',
+            title: 'Sub Folder 1',
+            index: 0,
+            dateAdded: 1577375345542,
+            type: 'folder',
+            dateGroupModified: 1582883860416,
+            children: []
+          },
+          {
             id: 'bm1',
             title: 'Bookmark 1',
             index: 0,
@@ -47,7 +57,18 @@ export const folders: IFolderNode[] = [
         dateAdded: 1577375345542,
         type: 'folder',
         dateGroupModified: 1582883860416,
-        children: []
+        children: [
+          {
+            id: 'sf2',
+            parentId: 'f2',
+            title: 'Sub Folder 2',
+            index: 0,
+            dateAdded: 1577375345542,
+            type: 'folder',
+            dateGroupModified: 1582883860416,
+            children: []
+          }
+        ]
       }
     ]
   }
