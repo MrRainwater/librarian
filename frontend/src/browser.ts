@@ -1,12 +1,6 @@
-import { IFolderNode } from 'interfaces'
-
 export default async function initBrowser() {
   if (process.env.NODE_ENV !== 'production') {
-    const {
-      folders
-    }: {
-      folders: browser.bookmarks.IBookmarkTreeNode[]
-    } = await require('data.ts')
+    const { folders } = await import('data')
     window.browser = {
       bookmarks: {
         getTree() {
