@@ -32,13 +32,7 @@ const Main: React.FC = () => {
       <AppBar />
       <Box display="flex">
         <Box>
-          <FolderList
-            folders={folders}
-            rootFolderId={rootFolderId}
-            onFolderClick={(folderId) => {
-              dispatch(actions.setOpenFolder({ folderId }))
-            }}
-          />
+          <FolderList folders={folders} rootFolderId={rootFolderId} />
         </Box>
         <Box px={4} flexGrow={1}>
           <Bookmarks

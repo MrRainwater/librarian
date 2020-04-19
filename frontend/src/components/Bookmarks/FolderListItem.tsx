@@ -31,12 +31,11 @@ const useStyles = makeStyles<Theme, IStyleProps>((theme) => ({
 
 interface IProps {
   folder: INestedFolder
-  onClick: (id: string) => void
   depth?: number
 }
 
-const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
-  const [{ currentFolderId }] = useBookmarksStore()
+const FolderListItem: React.FC<IProps> = ({ folder, depth = 0 }) => {
+  const [{ currentFolderId }, dispatch] = useBookmarksStore()
   const [{ isOver }, dropRef] = useDropBookmark(folder.id, () =>
     setIsOpen(true)
   )
@@ -47,7 +46,7 @@ const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
   }
   const openFolder = () => {
     setIsOpen(true)
-    onClick(folder.id)
+    dispatch(actions.setOpenFolder({ folderId: folder.id }))
   }
 
   const hierarchyOpened = (currentFolder: INestedFolder): boolean => {

@@ -15,14 +15,9 @@ const useStyles = makeStyles({
 interface IProps {
   folders: IFolderMap
   rootFolderId: string
-  onFolderClick: (id: string) => void
 }
 
-const FolderList: React.FC<IProps> = ({
-  folders,
-  rootFolderId,
-  onFolderClick
-}) => {
+const FolderList: React.FC<IProps> = ({ folders, rootFolderId }) => {
   const styles = useStyles()
   const foldersList = Object.values(folders).filter(({ id }) => id !== '')
   const rootFolder = folders[rootFolderId]
@@ -38,7 +33,7 @@ const FolderList: React.FC<IProps> = ({
 
   return (
     <List className={styles.folderList}>
-      <FolderListItem folder={hierarchy} onClick={onFolderClick} />
+      <FolderListItem folder={hierarchy} />
     </List>
   )
 }
