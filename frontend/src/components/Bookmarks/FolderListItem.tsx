@@ -35,6 +35,7 @@ interface IProps {
 }
 
 const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
+  const [{ currentFolderId }] = useBookmarksStore()
   const [{ isOver }, dropRef] = useDropBookmark(folder.id, () =>
     setIsOpen(true)
   )
@@ -44,6 +45,23 @@ const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
     setIsOpen(!isOpen)
     onClick(folder.id)
   }
+
+  const hierarchyOpened = (currentFolder: INestedFolder): boolean => {
+    if (currentFolderId === currentFolder.id) {
+      return true
+    } else {
+      return currentFolder.subFolders.some((subFolder) =>
+        hierarchyOpened(subFolder)
+      )
+    }
+  }
+
+  React.useEffect(() => {
+    if (hierarchyOpened(folder)) {
+      setIsOpen(true)
+    }
+  }, [folder])
+
   return (
     <>
       <ListItem
