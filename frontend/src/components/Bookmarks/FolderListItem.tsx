@@ -1,5 +1,7 @@
 import {
+  Box,
   Collapse,
+  Icon,
   List,
   ListItem,
   ListItemIcon,
@@ -7,7 +9,6 @@ import {
   makeStyles,
   Theme
 } from '@material-ui/core'
-import { Folder as FolderIcon } from '@material-ui/icons'
 import { useDropBookmark } from 'hooks/dragDrop'
 import { INestedFolder } from 'interfaces'
 import * as React from 'react'
@@ -41,8 +42,11 @@ const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
   )
   const styles = useStyles({ depth, isOver })
   const [isOpen, setIsOpen] = React.useState(false)
-  const toggle = () => {
+  const toggleOpen = () => {
     setIsOpen(!isOpen)
+  }
+  const openFolder = () => {
+    setIsOpen(true)
     onClick(folder.id)
   }
 
@@ -64,16 +68,13 @@ const FolderListItem: React.FC<IProps> = ({ folder, onClick, depth = 0 }) => {
 
   return (
     <>
-      <ListItem
-        ref={dropRef}
-        className={styles.folderListItem}
-        button
-        onClick={toggle}
-      >
-        <ListItemIcon>
-          <FolderIcon />
+      <ListItem ref={dropRef} className={styles.folderListItem} button>
+        <ListItemIcon onClick={toggleOpen}>
+          <Icon>{isOpen ? 'folder_open' : 'folder'}</Icon>
         </ListItemIcon>
-        <ListItemText primary={folder.title} />
+        <Box width="100%">
+          <ListItemText primary={folder.title} onClick={openFolder} />
+        </Box>
       </ListItem>
       {folder.subFolders.length ? (
         <Collapse in={isOpen}>
