@@ -82,7 +82,6 @@ const FolderListItem: React.FC<IProps> = ({ folder, depth = 0 }) => {
               <FolderListItem
                 key={subFolder.id}
                 folder={subFolder}
-                onClick={onClick}
                 depth={depth + 1}
               />
             ))}
