@@ -19,13 +19,16 @@ import { bookmarkDragType } from './Bookmark'
 interface IStyleProps {
   depth: number
   isOver: boolean
+  isSelected: boolean
 }
 
 const useStyles = makeStyles<Theme, IStyleProps>((theme) => ({
   folderListItem: {
     paddingLeft: ({ depth }) => theme.spacing(depth * 2),
-    background: ({ isOver }) =>
-      isOver ? 'rgba(0, 0, 0, 0.08)' : theme.palette.background.default
+    background: ({ isOver, isSelected }) =>
+      isOver || isSelected
+        ? 'rgba(0, 0, 0, 0.08)'
+        : theme.palette.background.default
   }
 }))
 
@@ -39,7 +42,8 @@ const FolderListItem: React.FC<IProps> = ({ folder, depth = 0 }) => {
   const [{ isOver }, dropRef] = useDropBookmark(folder.id, () =>
     setIsOpen(true)
   )
-  const styles = useStyles({ depth, isOver })
+  const isSelected = currentFolderId === folder.id
+  const styles = useStyles({ depth, isOver, isSelected })
   const [isOpen, setIsOpen] = React.useState(false)
   const toggleOpen = () => {
     setIsOpen(!isOpen)
