@@ -12,9 +12,7 @@ import {
 import { useDropBookmark } from 'hooks/dragDrop'
 import { INestedFolder } from 'interfaces'
 import * as React from 'react'
-import { useDrop } from 'react-dnd'
 import { actions, useBookmarksStore } from 'stores/BookmarkStore'
-import { bookmarkDragType } from './Bookmark'
 
 interface IStyleProps {
   depth: number
@@ -39,12 +37,12 @@ interface IProps {
 
 const FolderListItem: React.FC<IProps> = ({ folder, depth = 0 }) => {
   const [{ currentFolderId }, dispatch] = useBookmarksStore()
+  const [isOpen, setIsOpen] = React.useState(false)
   const [{ isOver }, dropRef] = useDropBookmark(folder.id, () =>
     setIsOpen(true)
   )
   const isSelected = currentFolderId === folder.id
   const styles = useStyles({ depth, isOver, isSelected })
-  const [isOpen, setIsOpen] = React.useState(false)
   const toggleOpen = () => {
     setIsOpen(!isOpen)
   }
