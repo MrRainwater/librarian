@@ -7,6 +7,9 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended'
   ],
+  env: {
+    jest: true
+  },
   rules: {
     semi: 'off',
     '@typescript-eslint/semi': 'off',

@@ -7,7 +7,7 @@
     "build": "NODE_ENV=production webpack",
     "start": "NODE_ENV=development webpack-dev-server",
     "test": "jest",
-    "lint": "eslint --ext .tsx \"src/**\""
+    "lint": "eslint --ext .tsx,.ts,.jsx,.js src/**"
   },
   "dependencies": {
     "@material-ui/core": "^4.7.0",
