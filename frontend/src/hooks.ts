@@ -48,5 +48,5 @@ export function useGetMetadata() {
     })
   }
 
-  return [metadata, get] as [typeof metadata, typeof get]
+  return [metadata, get] as const
 }
