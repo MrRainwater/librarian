@@ -23,7 +23,7 @@ const Bookmark: React.FunctionComponent<IProps> = ({ bookmark, folderId }) => {
 
   const actions = (
     <>
-      <a href={bookmark.url} target="_blank">
+      <a href={bookmark.url} target="_blank" rel="noopener noreferrer">
         <IconButton>
           <LinkIcon />
         </IconButton>

@@ -1,9 +1,4 @@
-import {
-  Action,
-  configureStore,
-  createSlice,
-  PayloadAction
-} from '@reduxjs/toolkit'
+import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as api from 'api'
 import initBrowser from 'browser'
 import { IBookmark, IFolder } from 'interfaces'
@@ -63,6 +58,7 @@ const librarySlice = createSlice({
       const folder = state.folders[action.payload.folderId]
       state.currentFolderId = folder ? folder.id : state.currentFolderId
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setFolder(state, action: ISetFolderAction) {
       // const folder = state.folders[action.payload.folderId] as IFolderFull
       // folder.bookmarks = action.payload.bookmarks
@@ -109,7 +105,7 @@ const loadBookmarks = (): Thunk => async (dispatch) => {
     folders.push(rootFolder)
   }
 
-  dispatch(actions.initialize({ folders, currentFolderId }))
+  dispatch(librarySlice.actions.initialize({ folders, currentFolderId }))
 }
 
 const openBookmark = ({ folderId }: { folderId: string }): Thunk => async (
@@ -121,13 +117,13 @@ const openBookmark = ({ folderId }: { folderId: string }): Thunk => async (
   if (!('bookmarks' in folder)) {
     const bookmarks = await api.openFolder(folder.id)
     dispatch(
-      actions.setFolder({
+      librarySlice.actions.setFolder({
         folderId: folder.id,
         bookmarks
       })
     )
   }
-  dispatch(actions.setOpenFolder({ folderId: folder.id }))
+  dispatch(librarySlice.actions.setOpenFolder({ folderId: folder.id }))
 }
 
 export const actions = {
@@ -141,5 +137,5 @@ export const store = configureStore({ reducer })
 export const useBookmarksStore = () => {
   const library = useSelector((state: IState) => state)
   const dispatch = useDispatch()
-  return [library, dispatch] as [typeof library, typeof dispatch]
+  return [library, dispatch] as const
 }

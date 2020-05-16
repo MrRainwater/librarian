@@ -1,6 +1,6 @@
 import { bookmarkDragType } from 'components/Bookmarks/Bookmark'
 import { useDrop } from 'react-dnd'
-import { actions, useBookmarksStore } from 'stores/BookmarkStore'
+// import { actions, useBookmarksStore } from 'stores/BookmarkStore'
 
 interface IDragAction {
   id: string
@@ -12,10 +12,10 @@ interface IDragCollection {
 }
 
 export const useDropBookmark = (folderId: string, hover: () => void) => {
-  const [, dispatch] = useBookmarksStore()
+  // const [, dispatch] = useBookmarksStore()
   return useDrop<IDragAction, unknown, IDragCollection>({
     accept: bookmarkDragType,
-    drop: (item) => console.log('dropped bookmark'),
+    // drop: (item) => console.log('dropped bookmark'),
     hover,
     collect: (monitor) => ({ isOver: monitor.isOver() })
   })

@@ -1,9 +1,5 @@
 import { IBookmark } from 'interfaces'
 
-function hasAny<T>(collection: T[], values: T[]) {
-  return values.reduce((has, value) => has && collection.includes(value), true)
-}
-
 export default class BookmarkCollection {
   public data: IBookmark[]
 

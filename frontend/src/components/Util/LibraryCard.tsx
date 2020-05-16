@@ -1,5 +1,4 @@
 import {
-  Box,
   Card,
   CardActions,
   CardContent,
@@ -29,7 +28,7 @@ interface IProps {
   content?: string
   actions: React.ReactNode
   onClick?: () => void
-  forwardRef?: React.Ref<any>
+  forwardRef?: React.Ref<unknown>
 }
 const LibraryCard: React.FC<IProps> = ({
   title,

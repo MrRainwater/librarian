@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IBookmark, IFolder } from 'interfaces'
 
 async function graphql<T = any>(query: string, variables?: any): Promise<T> {

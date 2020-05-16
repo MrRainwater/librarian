@@ -6,7 +6,7 @@ import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { store } from 'stores/BookmarkStore'
 
-// tslint:disable-next-line: no-namespace
+// eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace browser {
   const bookmarks: string[]
 }

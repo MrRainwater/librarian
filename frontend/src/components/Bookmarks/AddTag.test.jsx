@@ -1,6 +1,6 @@
+import React from 'react'
 import { shallow } from 'enzyme'
 import AddTag from './AddTag'
-import Dialog from 'react-toolbox/lib/dialog'
 import { Button, IconButton } from '@material-ui/core'
 
 describe('AddTag', () => {

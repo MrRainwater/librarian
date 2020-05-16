@@ -24,14 +24,13 @@ const CreateBookmarkDialog: React.FunctionComponent<IProps> = ({
   onCancel,
   onSave
 }) => {
+  const [bookmark, setBookmark] = React.useState<IBookmark>(metadata)
+  const [bookmarks, setBookmarks] = useBookmarks()
   function save() {
     createBookmark(bookmark)
     setBookmarks([...bookmarks, bookmark])
     onSave(bookmark)
   }
-
-  const [bookmark, setBookmark] = React.useState<IBookmark>(metadata)
-  const [bookmarks, setBookmarks] = useBookmarks()
 
   function mergeBookmark<T extends IBookmark, K extends keyof T>(key: K) {
     return (e: React.ChangeEvent<HTMLInputElement>) =>

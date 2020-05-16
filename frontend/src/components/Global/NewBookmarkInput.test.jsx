@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useGetMetadata } from 'hooks'
 import { BookmarkFactory } from 'factories/BookmarkFactory'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import NewBookarkInput from 'components/Global/NewBookmarkInput'
 import TextField from '@material-ui/core/TextField'
 import { act } from 'react-dom/test-utils'

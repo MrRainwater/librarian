@@ -1,5 +1,4 @@
 import { IBookmark } from 'interfaces'
-import { times } from 'lodash'
 import { Factory } from 'rosie'
 
 interface IOptions {

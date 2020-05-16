@@ -1,5 +1,4 @@
-import { List, ListItem, ListItemIcon, makeStyles } from '@material-ui/core'
-import { Folder as FolderIcon } from '@material-ui/icons'
+import { List, makeStyles } from '@material-ui/core'
 import { IFolder, INestedFolder } from 'interfaces'
 import * as React from 'react'
 import { IFolderMap } from 'stores/BookmarkStore'

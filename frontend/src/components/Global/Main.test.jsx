@@ -20,7 +20,6 @@ describe('Main', () => {
   describe('load', () => {
     it('dispatches and sets bookmarks', async () => {
       const bookmarks = [BookmarkFactory.build(), BookmarkFactory.build()]
-      getBookmarks.mockResolvedValue(bookmarks)
       const dispatch = jest.fn()
       useBookmarksStore.mockReturnValue([{ bookmarks: [] }, dispatch])
       let component

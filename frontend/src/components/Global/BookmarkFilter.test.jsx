@@ -1,4 +1,5 @@
-import { shallow, mount } from 'enzyme'
+import React from 'react'
+import { mount } from 'enzyme'
 import BookmarkFilter from './BookmarkFilter'
 import BookmarkFactory from 'factories/BookmarkFactory'
 import { act } from 'react-dom/test-utils'
