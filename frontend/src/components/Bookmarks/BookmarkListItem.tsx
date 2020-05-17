@@ -12,6 +12,9 @@ const useStyles = makeStyles(() => ({
   link: {
     color: 'inherit',
     textDecoration: 'inherit'
+  },
+  text: {
+    cursor: 'pointer'
   }
 }))
 
@@ -19,9 +22,10 @@ interface IProps {
   type: 'bookmark' | 'folder'
   title: string
   url?: string
+  onClick?: () => void
 }
 
-const BookmarkListItem: React.FC<IProps> = ({ type, title, url }) => {
+const BookmarkListItem: React.FC<IProps> = ({ type, title, url, onClick }) => {
   const styles = useStyles()
 
   return (
@@ -38,7 +42,11 @@ const BookmarkListItem: React.FC<IProps> = ({ type, title, url }) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <ListItemText primary={title} />
+          <ListItemText
+            className={styles.text}
+            primary={title}
+            onClick={onClick}
+          />
         </a>
       </Box>
     </ListItem>

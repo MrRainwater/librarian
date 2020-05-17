@@ -2,6 +2,7 @@ import { IBookmark, IFolderNode } from 'interfaces'
 import * as React from 'react'
 import { List, makeStyles, Divider } from '@material-ui/core'
 import BookmarkListItem from './BookmarkListItem'
+import { useBookmarksStore, actions } from 'stores/BookmarkStore'
 
 interface IProps {
   bookmarks: IBookmark[]
@@ -17,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Bookmarks: React.FunctionComponent<IProps> = ({ bookmarks, folders }) => {
   const classes = useStyles()
+  const [, dispatch] = useBookmarksStore()
+  const openBookmark = (folderId: string) =>
+    dispatch(actions.setOpenFolder({ folderId }))
+
   return (
     <List className={classes.list}>
       {folders.map((folder, i) => (
@@ -26,6 +31,7 @@ const Bookmarks: React.FunctionComponent<IProps> = ({ bookmarks, folders }) => {
             key={folder.id}
             type="folder"
             title={folder.title}
+            onClick={() => openBookmark(folder.id)}
           />
         </>
       ))}
