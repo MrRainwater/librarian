@@ -10,6 +10,13 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    'react/prop-types': 0
+    'react/prop-types': 0,
+    'react/self-closing-comp': [
+      'error',
+      {
+        component: true,
+        html: true
+      }
+    ]
   }
 }
