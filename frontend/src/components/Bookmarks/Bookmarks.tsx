@@ -1,8 +1,7 @@
 import { IBookmark, IFolderNode } from 'interfaces'
 import * as React from 'react'
-import Bookmark from './Bookmark'
-import Folder from './Folder'
-import * as classes from './styles/Bookmarks.scss'
+import { List, makeStyles, Divider } from '@material-ui/core'
+import BookmarkListItem from './BookmarkListItem'
 
 interface IProps {
   bookmarks: IBookmark[]
@@ -10,24 +9,38 @@ interface IProps {
   currentFolderId: string
 }
 
-const Bookmarks: React.FunctionComponent<IProps> = ({
-  bookmarks,
-  folders,
-  currentFolderId
-}) => {
+const useStyles = makeStyles((theme) => ({
+  list: {
+    backgroundColor: theme.palette.background.paper
+  }
+}))
+
+const Bookmarks: React.FunctionComponent<IProps> = ({ bookmarks, folders }) => {
+  const classes = useStyles()
   return (
-    <div className={classes.bookmarks}>
-      {folders.map((folder) => (
-        <Folder key={folder.id} folder={folder} />
+    <List className={classes.list}>
+      {folders.map((folder, i) => (
+        <>
+          {i !== 0 && <Divider />}
+          <BookmarkListItem
+            key={folder.id}
+            icon="folder"
+            title={folder.title}
+          />
+        </>
       ))}
       {bookmarks.map((bookmark) => (
-        <Bookmark
-          key={bookmark.id}
-          bookmark={bookmark}
-          folderId={currentFolderId}
-        />
+        <>
+          <Divider />
+          <BookmarkListItem
+            key={bookmark.id}
+            icon="bookmark"
+            title={bookmark.title}
+            url={bookmark.url}
+          />
+        </>
       ))}
-    </div>
+    </List>
   )
 }
 
