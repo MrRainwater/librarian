@@ -5,8 +5,18 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended'
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'react'
   ],
+  parserOptions: {
+    project: ['./tsconfig.json']
+  },
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   env: {
     jest: true
   },
@@ -19,6 +29,14 @@ module.exports = {
     '@typescript-eslint/naming-convention': [
       'error',
       { selector: 'interface', prefix: ['I'], format: ['PascalCase'] }
+    ],
+    'react/prop-types': 0,
+    'react/self-closing-comp': [
+      'error',
+      {
+        component: true,
+        html: true
+      }
     ]
   }
 }
