@@ -24,7 +24,7 @@ const Bookmarks: React.FunctionComponent<IProps> = ({ bookmarks, folders }) => {
           {i !== 0 && <Divider />}
           <BookmarkListItem
             key={folder.id}
-            icon="folder"
+            type="folder"
             title={folder.title}
           />
         </>
@@ -34,7 +34,7 @@ const Bookmarks: React.FunctionComponent<IProps> = ({ bookmarks, folders }) => {
           <Divider />
           <BookmarkListItem
             key={bookmark.id}
-            icon="bookmark"
+            type="bookmark"
             title={bookmark.title}
             url={bookmark.url}
           />

@@ -16,19 +16,19 @@ const useStyles = makeStyles(() => ({
 }))
 
 interface IProps {
-  icon: 'bookmark' | 'folder'
+  type: 'bookmark' | 'folder'
   title: string
   url?: string
 }
 
-const BookmarkListItem: React.FC<IProps> = ({ icon, title, url }) => {
+const BookmarkListItem: React.FC<IProps> = ({ type, title, url }) => {
   const styles = useStyles()
 
   return (
     <ListItem>
       <Box p={1}>
         <ListItemIcon>
-          <Icon>{icon}</Icon>
+          <Icon>{type}</Icon>
         </ListItemIcon>
       </Box>
       <Box ml={1}>
