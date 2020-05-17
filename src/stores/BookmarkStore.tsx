@@ -1,5 +1,4 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import * as api from 'api'
 import initBrowser from 'browser'
 import { IBookmark, IFolder } from 'interfaces'
 import { useDispatch, useSelector } from 'react-redux'
@@ -108,28 +107,9 @@ const loadBookmarks = (): Thunk => async (dispatch) => {
   dispatch(librarySlice.actions.initialize({ folders, currentFolderId }))
 }
 
-const openBookmark = ({ folderId }: { folderId: string }): Thunk => async (
-  dispatch,
-  getState
-) => {
-  const { folders } = getState()
-  const folder = folders[folderId]
-  if (!('bookmarks' in folder)) {
-    const bookmarks = await api.openFolder(folder.id)
-    dispatch(
-      librarySlice.actions.setFolder({
-        folderId: folder.id,
-        bookmarks
-      })
-    )
-  }
-  dispatch(librarySlice.actions.setOpenFolder({ folderId: folder.id }))
-}
-
 export const actions = {
   ...librarySlice.actions,
-  loadBookmarks,
-  openBookmark
+  loadBookmarks
 }
 
 export const store = configureStore({ reducer })

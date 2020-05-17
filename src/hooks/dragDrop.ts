@@ -1,4 +1,3 @@
-import { bookmarkDragType } from 'components/Bookmarks/Bookmark'
 import { useDrop } from 'react-dnd'
 // import { actions, useBookmarksStore } from 'stores/BookmarkStore'
 
@@ -10,6 +9,8 @@ interface IDragAction {
 interface IDragCollection {
   isOver: boolean
 }
+
+export const bookmarkDragType = 'BOOKMARK'
 
 export const useDropBookmark = (folderId: string, hover: () => void) => {
   // const [, dispatch] = useBookmarksStore()
