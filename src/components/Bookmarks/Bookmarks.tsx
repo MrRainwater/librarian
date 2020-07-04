@@ -29,7 +29,7 @@ const Bookmarks: React.FunctionComponent<IProps> = ({
   return (
     <List className={classes.list}>
       {folders.map((folder, i) => (
-        <>
+        <React.Fragment key={folder.id}>
           {i !== 0 && <Divider />}
           <BookmarkListItem
             key={folder.id}
@@ -39,10 +39,10 @@ const Bookmarks: React.FunctionComponent<IProps> = ({
             title={folder.title}
             onClick={() => openBookmark(folder.id)}
           />
-        </>
+        </React.Fragment>
       ))}
       {bookmarks.map((bookmark) => (
-        <>
+        <React.Fragment key={bookmark.id}>
           <Divider />
           <BookmarkListItem
             key={bookmark.id}
@@ -52,7 +52,7 @@ const Bookmarks: React.FunctionComponent<IProps> = ({
             title={bookmark.title}
             url={bookmark.url}
           />
-        </>
+        </React.Fragment>
       ))}
     </List>
   )
