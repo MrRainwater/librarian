@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   makeStyles
 } from '@material-ui/core'
+import { useDragBookmark } from 'hooks/dragDrop'
 
 const useStyles = makeStyles(() => ({
   link: {
@@ -21,15 +22,25 @@ const useStyles = makeStyles(() => ({
 interface IProps {
   type: 'bookmark' | 'folder'
   title: string
+  parentId: string
+  id: string
   url?: string
   onClick?: () => void
 }
 
-const BookmarkListItem: React.FC<IProps> = ({ type, title, url, onClick }) => {
+const BookmarkListItem: React.FC<IProps> = ({
+  id,
+  parentId,
+  type,
+  title,
+  url,
+  onClick
+}) => {
   const styles = useStyles()
+  const dragRef = useDragBookmark(id, parentId)
 
   return (
-    <ListItem>
+    <ListItem innerRef={dragRef}>
       <Box p={1}>
         <ListItemIcon>
           <Icon>{type}</Icon>

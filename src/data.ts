@@ -31,6 +31,7 @@ export const folders: IFolderNode[] = [
           },
           {
             id: 'bm1',
+            parentId: 'f1',
             title: 'Bookmark 1',
             index: 0,
             dateAdded: 1577375345542,
@@ -40,6 +41,7 @@ export const folders: IFolderNode[] = [
           },
           {
             id: 'bm2',
+            parentId: 'f1',
             title: 'Bookmark 2',
             index: 0,
             dateAdded: 1577375345542,

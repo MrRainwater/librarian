@@ -16,7 +16,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Bookmarks: React.FunctionComponent<IProps> = ({ bookmarks, folders }) => {
+const Bookmarks: React.FunctionComponent<IProps> = ({
+  bookmarks,
+  folders,
+  currentFolderId
+}) => {
   const classes = useStyles()
   const [, dispatch] = useBookmarksStore()
   const openBookmark = (folderId: string) =>
@@ -29,6 +33,8 @@ const Bookmarks: React.FunctionComponent<IProps> = ({ bookmarks, folders }) => {
           {i !== 0 && <Divider />}
           <BookmarkListItem
             key={folder.id}
+            id={folder.id}
+            parentId={currentFolderId}
             type="folder"
             title={folder.title}
             onClick={() => openBookmark(folder.id)}
@@ -40,6 +46,8 @@ const Bookmarks: React.FunctionComponent<IProps> = ({ bookmarks, folders }) => {
           <Divider />
           <BookmarkListItem
             key={bookmark.id}
+            id={bookmark.id}
+            parentId={currentFolderId}
             type="bookmark"
             title={bookmark.title}
             url={bookmark.url}

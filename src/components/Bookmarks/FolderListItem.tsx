@@ -38,9 +38,7 @@ interface IProps {
 const FolderListItem: React.FC<IProps> = ({ folder, depth = 0 }) => {
   const [{ currentFolderId }, dispatch] = useBookmarksStore()
   const [isOpen, setIsOpen] = React.useState(false)
-  const [{ isOver }, dropRef] = useDropBookmark(folder.id, () =>
-    setIsOpen(true)
-  )
+  const [{ isOver }, dropRef] = useDropBookmark(folder.id)
   const isSelected = currentFolderId === folder.id
   const styles = useStyles({ depth, isOver, isSelected })
   const toggleOpen = () => {

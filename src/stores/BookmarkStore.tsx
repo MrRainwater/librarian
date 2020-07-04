@@ -26,16 +26,16 @@ type ISetFolderAction = PayloadAction<{
   bookmarks: IBookmark[]
 }>
 
-interface IMoveBookmark {
+type IMoveBookmark = PayloadAction<{
   bookmarkId: string
   targetFolderId: string
-}
+}>
 
 interface IUnfolderBookmark {
   bookmarkId: string
 }
 
-type IActions = IInitialize | ISetFolderAction | ISetOpenFolder
+type IActions = IInitialize | ISetFolderAction | ISetOpenFolder | IMoveBookmark
 
 export const initialState: IState = {
   folders: {},
@@ -56,6 +56,31 @@ const librarySlice = createSlice({
     setOpenFolder(state, action: ISetOpenFolder) {
       const folder = state.folders[action.payload.folderId]
       state.currentFolderId = folder ? folder.id : state.currentFolderId
+    },
+    moveBookmark(state, action: IMoveBookmark) {
+      const { bookmarkId, targetFolderId } = action.payload
+      const getNodes = (
+        nodes: browser.bookmarks.IBookmarkTreeNode[] = []
+      ): browser.bookmarks.IBookmarkTreeNode[] => {
+        const children = nodes.flatMap((node) => getNodes(node.children))
+        return [...nodes, ...children]
+      }
+
+      const nodes = getNodes(Object.values(state.folders))
+      const node = nodes.find(({ id }) => id === bookmarkId)
+
+      if (!node) throw new Error('Attempting to move nonexistant node')
+
+      const targetFolder = state.folders[targetFolderId]
+      const oldFolder = node.parentId ? state.folders[node.parentId] : null
+
+      targetFolder.children.push(node)
+      if (oldFolder) {
+        oldFolder.children = oldFolder.children.filter(
+          (node) => node.id !== bookmarkId
+        )
+      }
+      node.parentId = targetFolderId
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setFolder(state, action: ISetFolderAction) {
