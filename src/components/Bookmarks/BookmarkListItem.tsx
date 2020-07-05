@@ -70,7 +70,6 @@ const BookmarkListItem: React.FC<IProps> = ({
 
   return (
     <>
-      {' '}
       <ListItem innerRef={attachRef}>
         <Box p={1}>
           <ListItemIcon>
