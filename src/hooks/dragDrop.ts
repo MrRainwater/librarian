@@ -15,9 +15,10 @@ interface IDragCollection {
 }
 
 export const useDropBookmark = (folderId: string) => {
-  const [, dispatch] = useBookmarksStore()
+  const [{ folders }, dispatch] = useBookmarksStore()
   return useDrop<IDragBookmark, unknown, IDragCollection>({
     accept: bookmarkDragType,
+    canDrop: (item) => !folders[item.id],
     drop: (item) =>
       dispatch(
         actions.moveBookmark({ bookmarkId: item.id, targetFolderId: folderId })
