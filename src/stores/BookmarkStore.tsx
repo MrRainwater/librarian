@@ -31,16 +31,30 @@ type IMoveBookmark = PayloadAction<{
   targetFolderId: string
 }>
 
+type IRemoveNode = PayloadAction<{ id: string }>
+
 interface IUnfolderBookmark {
   bookmarkId: string
 }
 
-type IActions = IInitialize | ISetFolderAction | ISetOpenFolder | IMoveBookmark
+type IActions =
+  | IInitialize
+  | ISetFolderAction
+  | ISetOpenFolder
+  | IMoveBookmark
+  | IRemoveNode
 
 export const initialState: IState = {
   folders: {},
   currentFolderId: '',
   rootFolderId: ''
+}
+
+const getNodes = (
+  nodes: browser.bookmarks.IBookmarkTreeNode[] = []
+): browser.bookmarks.IBookmarkTreeNode[] => {
+  const children = nodes.flatMap((node) => getNodes(node.children))
+  return [...nodes, ...children]
 }
 
 const librarySlice = createSlice({
@@ -59,12 +73,6 @@ const librarySlice = createSlice({
     },
     moveBookmark(state, action: IMoveBookmark) {
       const { bookmarkId, targetFolderId } = action.payload
-      const getNodes = (
-        nodes: browser.bookmarks.IBookmarkTreeNode[] = []
-      ): browser.bookmarks.IBookmarkTreeNode[] => {
-        const children = nodes.flatMap((node) => getNodes(node.children))
-        return [...nodes, ...children]
-      }
 
       const nodes = getNodes(Object.values(state.folders) as IFolder[])
       const node = nodes.find(({ id }) => id === bookmarkId)
@@ -84,6 +92,23 @@ const librarySlice = createSlice({
       }
       node.parentId = targetFolderId
       browser.bookmarks.move(bookmarkId, { parentId: targetFolderId })
+    },
+    removeNode(state, { payload: { id } }: IRemoveNode) {
+      const node = getNodes(Object.values(state.folders) as IFolder[]).find(
+        (node) => node.id === id
+      )
+
+      if (!node) throw new Error('Attemptinf to remove nonexistant node')
+
+      const parentFolder = state.folders[node.parentId || '']
+
+      if (parentFolder) {
+        parentFolder.children = parentFolder.children.filter(
+          (node) => node.id !== id
+        )
+      }
+
+      browser.bookmarks.removeTree(id)
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setFolder(state, action: ISetFolderAction) {

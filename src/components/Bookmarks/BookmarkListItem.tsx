@@ -5,9 +5,12 @@ import {
   Icon,
   ListItemText,
   ListItemIcon,
-  makeStyles
+  makeStyles,
+  ListItemSecondaryAction,
+  IconButton
 } from '@material-ui/core'
 import { useDragBookmark, useDropBookmark } from 'hooks/dragDrop'
+import { useBookmarksStore, actions } from 'stores/BookmarkStore'
 
 const useStyles = makeStyles(() => ({
   link: {
@@ -36,6 +39,7 @@ const BookmarkListItem: React.FC<IProps> = ({
   url,
   onClick
 }) => {
+  const [, dispatch] = useBookmarksStore()
   const styles = useStyles()
   const dragRef = useDragBookmark(id, parentId)
   const [, dropRef] = useDropBookmark(id)
@@ -64,6 +68,13 @@ const BookmarkListItem: React.FC<IProps> = ({
             primary={title}
             onClick={onClick}
           />
+          <ListItemSecondaryAction
+            onClick={() => dispatch(actions.removeNode({ id }))}
+          >
+            <IconButton>
+              <Icon>delete</Icon>
+            </IconButton>
+          </ListItemSecondaryAction>
         </a>
       </Box>
     </ListItem>

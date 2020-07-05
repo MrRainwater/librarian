@@ -8,6 +8,9 @@ export default async function initBrowser() {
         },
         move() {
           return Promise.resolve()
+        },
+        removeTree() {
+          return Promise.resolve()
         }
       }
     }

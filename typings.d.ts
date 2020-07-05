@@ -28,4 +28,6 @@ declare namespace browser.bookmarks {
   }
 
   function move(id: string, destination: IBookmarkDestination): Promise<void>
+
+  function removeTree(id: string): Promise<void>
 }
