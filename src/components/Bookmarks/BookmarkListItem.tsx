@@ -7,7 +7,12 @@ import {
   ListItemIcon,
   makeStyles,
   ListItemSecondaryAction,
-  IconButton
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button
 } from '@material-ui/core'
 import { useDragBookmark, useDropBookmark } from 'hooks/dragDrop'
 import { useBookmarksStore, actions } from 'stores/BookmarkStore'
@@ -43,41 +48,68 @@ const BookmarkListItem: React.FC<IProps> = ({
   const styles = useStyles()
   const dragRef = useDragBookmark(id, parentId)
   const [, dropRef] = useDropBookmark(id)
+  const [dialogOpen, setDialogOpen] = React.useState(false)
 
   function attachRef(el: React.RefObject<unknown>) {
     dragRef(el)
     dropRef(el)
   }
 
+  function openDialog() {
+    setDialogOpen(true)
+  }
+
+  function closeDialog() {
+    setDialogOpen(false)
+  }
+
+  function deleteBookmark() {
+    closeDialog()
+    dispatch(actions.removeNode({ id }))
+  }
+
   return (
-    <ListItem innerRef={attachRef}>
-      <Box p={1}>
-        <ListItemIcon>
-          <Icon>{type}</Icon>
-        </ListItemIcon>
-      </Box>
-      <Box ml={1}>
-        <a
-          className={styles.link}
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <ListItemText
-            className={styles.text}
-            primary={title}
-            onClick={onClick}
-          />
-          <ListItemSecondaryAction
-            onClick={() => dispatch(actions.removeNode({ id }))}
+    <>
+      {' '}
+      <ListItem innerRef={attachRef}>
+        <Box p={1}>
+          <ListItemIcon>
+            <Icon>{type}</Icon>
+          </ListItemIcon>
+        </Box>
+        <Box ml={1}>
+          <a
+            className={styles.link}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
           >
+            <ListItemText
+              className={styles.text}
+              primary={title}
+              onClick={onClick}
+            />
+          </a>
+          <ListItemSecondaryAction onClick={openDialog}>
             <IconButton>
               <Icon>delete</Icon>
             </IconButton>
           </ListItemSecondaryAction>
-        </a>
-      </Box>
-    </ListItem>
+        </Box>
+      </ListItem>
+      <Dialog open={dialogOpen} onClose={closeDialog}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>Are you sure you want to delete {title}</DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={deleteBookmark} color="primary" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
 
