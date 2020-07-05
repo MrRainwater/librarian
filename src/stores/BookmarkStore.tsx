@@ -107,6 +107,9 @@ const librarySlice = createSlice({
           (node) => node.id !== id
         )
       }
+      if (node.type === 'folder') {
+        delete state.folders[id]
+      }
 
       browser.bookmarks.removeTree(id)
     },
