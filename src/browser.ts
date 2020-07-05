@@ -5,6 +5,9 @@ export default async function initBrowser() {
       bookmarks: {
         getTree() {
           return Promise.resolve(folders)
+        },
+        move() {
+          return Promise.resolve()
         }
       }
     }

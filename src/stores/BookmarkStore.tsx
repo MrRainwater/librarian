@@ -83,6 +83,7 @@ const librarySlice = createSlice({
         )
       }
       node.parentId = targetFolderId
+      browser.bookmarks.move(bookmarkId, { parentId: targetFolderId })
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setFolder(state, action: ISetFolderAction) {
