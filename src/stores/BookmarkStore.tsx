@@ -4,7 +4,7 @@ import { IBookmark, IFolder } from 'interfaces'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkAction } from 'redux-thunk'
 
-export type IFolderMap = Record<string, IFolder>
+export type IFolderMap = Partial<Record<string, IFolder>>
 
 export interface IState {
   folders: IFolderMap
@@ -66,12 +66,14 @@ const librarySlice = createSlice({
         return [...nodes, ...children]
       }
 
-      const nodes = getNodes(Object.values(state.folders))
+      const nodes = getNodes(Object.values(state.folders) as IFolder[])
       const node = nodes.find(({ id }) => id === bookmarkId)
 
       if (!node) throw new Error('Attempting to move nonexistant node')
 
       const targetFolder = state.folders[targetFolderId]
+      if (!targetFolder)
+        throw new Error('Attempting to move to nonexistant folder')
       const oldFolder = node.parentId ? state.folders[node.parentId] : null
 
       targetFolder.children.push(node)

@@ -18,7 +18,9 @@ interface IProps {
 
 const FolderList: React.FC<IProps> = ({ folders, rootFolderId }) => {
   const styles = useStyles()
-  const foldersList = Object.values(folders).filter(({ id }) => id !== '')
+  const foldersList = Object.values(folders).filter(
+    (folder): folder is IFolder => folder?.id !== ''
+  )
   const rootFolder = folders[rootFolderId]
 
   const nestFolder = (folder: IFolder): INestedFolder => ({
@@ -28,11 +30,9 @@ const FolderList: React.FC<IProps> = ({ folders, rootFolderId }) => {
       .map(nestFolder)
   })
 
-  const hierarchy = nestFolder(rootFolder)
-
   return (
     <List className={styles.folderList}>
-      <FolderListItem folder={hierarchy} />
+      {rootFolder && <FolderListItem folder={nestFolder(rootFolder)} />}
     </List>
   )
 }
