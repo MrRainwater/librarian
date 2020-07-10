@@ -4,17 +4,21 @@
     "default_icon": "/images/icon.png",
     "default_title": "Librarian"
   },
+  "page_action": {
+    "browser_style": true,
+    "show_matches": ["<all_urls>"],
+    "default_icon": {
+      "48": "/images/student.png"
+    },
+    "default_title": "bookmark page"
+  },
   "background": {
-    "scripts": [
-      "background.js"
-    ]
+    "scripts": ["background.js"]
   },
   "icons": {
     "48": "/images/icon.png"
   },
-  "permissions": [
-    "bookmarks"
-  ],
+  "permissions": ["bookmarks", "tabs"],
   "manifest_version": 2,
   "version": "1"
 }

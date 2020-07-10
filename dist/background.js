@@ -3,3 +3,10 @@ browser.browserAction.onClicked.addListener(() => {
     url: 'index.html'
   })
 })
+
+browser.pageAction.onClicked.addListener(async (tab) => {
+  browser.bookmarks.create({
+    url: tab.url,
+    title: tab.title
+  })
+})
