@@ -2,11 +2,13 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: {
+    bundle: './src/index.tsx',
+    pageAction: './src/pageAction/index.tsx'
+  },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    historyApiFallback: true
+    contentBase: path.join(__dirname, 'dist')
   },
   mode: 'development',
   module: {
@@ -40,7 +42,7 @@ module.exports = {
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist')
   }
 }

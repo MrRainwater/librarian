@@ -35,6 +35,8 @@ type IRemoveNode = PayloadAction<{ id: string }>
 
 type IAddFolder = PayloadAction<{ folder: IFolder }>
 
+type IAddBookmark = PayloadAction<{ bookmark: IFolder }>
+
 interface IUnfolderBookmark {
   bookmarkId: string
 }
@@ -46,6 +48,7 @@ type IActions =
   | IMoveBookmark
   | IRemoveNode
   | IAddFolder
+  | IAddBookmark
 
 export const initialState: IState = {
   folders: {},
@@ -156,6 +159,8 @@ const loadBookmarks = (): Thunk => async (dispatch) => {
     title: ''
   }
 
+  console.log(folders)
+
   let currentFolderId: string
   if (rootNodes.length === 1) {
     currentFolderId = rootNodes[0].id
@@ -179,10 +184,20 @@ const createFolder = ({ title, parentId }: ICreateFolder): Thunk => async (
   dispatch(librarySlice.actions.addFolder({ folder }))
 }
 
+type ICreateBookmark = { parentId: string }
+
+const createBookmark = ({ parentId }: ICreateBookmark): Thunk => async () => {
+  const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
+  const { url, title } = tab
+  console.log({ tab })
+  await browser.bookmarks.create({ parentId, title, url })
+}
+
 export const actions = {
   ...librarySlice.actions,
   loadBookmarks,
-  createFolder
+  createFolder,
+  createBookmark
 }
 
 export const store = configureStore({ reducer })

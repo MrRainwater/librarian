@@ -32,6 +32,16 @@ export default async function initBrowser() {
         create(bookmark) {
           return Promise.resolve(createBookmark(bookmark))
         }
+      },
+      tabs: {
+        query() {
+          return Promise.resolve([
+            {
+              title: 'Librarian',
+              url: 'https://google.com'
+            }
+          ])
+        }
       }
     }
   }

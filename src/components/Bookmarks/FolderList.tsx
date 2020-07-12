@@ -14,9 +14,14 @@ const useStyles = makeStyles({
 interface IProps {
   folders: IFolderMap
   rootFolderId: string
+  addingBookmark?: boolean
 }
 
-const FolderList: React.FC<IProps> = ({ folders, rootFolderId }) => {
+const FolderList: React.FC<IProps> = ({
+  folders,
+  rootFolderId,
+  addingBookmark = false
+}) => {
   const styles = useStyles()
   const foldersList = Object.values(folders).filter(
     (folder): folder is IFolder => folder?.id !== ''
@@ -32,7 +37,12 @@ const FolderList: React.FC<IProps> = ({ folders, rootFolderId }) => {
 
   return (
     <List className={styles.folderList}>
-      {rootFolder && <FolderListItem folder={nestFolder(rootFolder)} />}
+      {rootFolder && (
+        <FolderListItem
+          folder={nestFolder(rootFolder)}
+          addingBookmark={addingBookmark}
+        />
+      )}
     </List>
   )
 }

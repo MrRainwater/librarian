@@ -2,9 +2,11 @@ import {
   Box,
   Collapse,
   Icon,
+  IconButton,
   List,
   ListItem,
   ListItemIcon,
+  ListItemSecondaryAction,
   ListItemText,
   makeStyles,
   Theme
@@ -33,9 +35,14 @@ const useStyles = makeStyles<Theme, IStyleProps>((theme) => ({
 interface IProps {
   folder: INestedFolder
   depth?: number
+  addingBookmark: boolean
 }
 
-const FolderListItem: React.FC<IProps> = ({ folder, depth = 0 }) => {
+const FolderListItem: React.FC<IProps> = ({
+  folder,
+  depth = 0,
+  addingBookmark
+}) => {
   const [{ currentFolderId }, dispatch] = useBookmarksStore()
   const [isOpen, setIsOpen] = React.useState(false)
   const [{ isOver }, dropRef] = useDropBookmark(folder.id)
@@ -73,6 +80,17 @@ const FolderListItem: React.FC<IProps> = ({ folder, depth = 0 }) => {
         </ListItemIcon>
         <Box width="100%">
           <ListItemText primary={folder.title} onClick={openFolder} />
+          {addingBookmark && (
+            <ListItemSecondaryAction
+              onClick={() =>
+                dispatch(actions.createBookmark({ parentId: folder.id }))
+              }
+            >
+              <IconButton>
+                <Icon>add_circle_outline</Icon>
+              </IconButton>
+            </ListItemSecondaryAction>
+          )}
         </Box>
       </ListItem>
       {folder.subFolders.length ? (
@@ -83,6 +101,7 @@ const FolderListItem: React.FC<IProps> = ({ folder, depth = 0 }) => {
                 key={subFolder.id}
                 folder={subFolder}
                 depth={depth + 1}
+                addingBookmark={addingBookmark}
               />
             ))}
           </List>

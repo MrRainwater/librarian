@@ -10,7 +10,8 @@
     "default_icon": {
       "48": "/images/student.png"
     },
-    "default_title": "bookmark page"
+    "default_title": "bookmark page",
+    "default_popup": "pageAction.html"
   },
   "background": {
     "scripts": ["background.js"]

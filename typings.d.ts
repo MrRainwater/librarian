@@ -39,3 +39,12 @@ declare namespace browser.bookmarks {
 
   function removeTree(id: string): Promise<void>
 }
+
+declare namespace browser.tabs {
+  export interface ITab {
+    title: string
+    url: string
+  }
+
+  function query(params: { active: true; currentWindow: true }): Promise<ITab[]>
+}
