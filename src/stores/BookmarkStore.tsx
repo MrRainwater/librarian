@@ -159,8 +159,6 @@ const loadBookmarks = (): Thunk => async (dispatch) => {
     title: ''
   }
 
-  console.log(folders)
-
   let currentFolderId: string
   if (rootNodes.length === 1) {
     currentFolderId = rootNodes[0].id
@@ -187,10 +185,12 @@ const createFolder = ({ title, parentId }: ICreateFolder): Thunk => async (
 type ICreateBookmark = { parentId: string }
 
 const createBookmark = ({ parentId }: ICreateBookmark): Thunk => async () => {
-  const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
-  const { url, title } = tab
-  console.log({ tab })
+  const [{ url, title }] = await browser.tabs.query({
+    active: true,
+    currentWindow: true
+  })
   await browser.bookmarks.create({ parentId, title, url })
+  window.close()
 }
 
 export const actions = {
