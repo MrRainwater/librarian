@@ -84,3 +84,4 @@ typings/
 backend/data/*
 
 **/bundle.js
+**/pageAction.js
