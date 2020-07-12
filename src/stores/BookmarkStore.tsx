@@ -33,6 +33,8 @@ type IMoveBookmark = PayloadAction<{
 
 type IRemoveNode = PayloadAction<{ id: string }>
 
+type IAddFolder = PayloadAction<{ folder: IFolder }>
+
 interface IUnfolderBookmark {
   bookmarkId: string
 }
@@ -43,6 +45,7 @@ type IActions =
   | ISetOpenFolder
   | IMoveBookmark
   | IRemoveNode
+  | IAddFolder
 
 export const initialState: IState = {
   folders: {},
@@ -113,10 +116,11 @@ const librarySlice = createSlice({
 
       browser.bookmarks.removeTree(id)
     },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    setFolder(state, action: ISetFolderAction) {
-      // const folder = state.folders[action.payload.folderId] as IFolderFull
-      // folder.bookmarks = action.payload.bookmarks
+    addFolder(state, { payload: { folder } }: IAddFolder) {
+      const parentFolder = state.folders[folder.parentId]
+      if (!parentFolder) throw new Error('Parent folder not found')
+      parentFolder.children.push(folder)
+      state.folders[folder.id] = folder
     }
   }
 })
@@ -163,9 +167,22 @@ const loadBookmarks = (): Thunk => async (dispatch) => {
   dispatch(librarySlice.actions.initialize({ folders, currentFolderId }))
 }
 
+type ICreateFolder = { title: string; parentId: string }
+
+const createFolder = ({ title, parentId }: ICreateFolder): Thunk => async (
+  dispatch
+) => {
+  const folder = (await browser.bookmarks.create({
+    parentId,
+    title
+  })) as IFolder
+  dispatch(librarySlice.actions.addFolder({ folder }))
+}
+
 export const actions = {
   ...librarySlice.actions,
-  loadBookmarks
+  loadBookmarks,
+  createFolder
 }
 
 export const store = configureStore({ reducer })

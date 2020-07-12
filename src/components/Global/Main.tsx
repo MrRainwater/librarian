@@ -6,6 +6,7 @@ import { IBookmarkNode, IFolder } from 'interfaces'
 import * as React from 'react'
 import { actions, useBookmarksStore } from 'stores/BookmarkStore'
 import AppBar from './AppBar'
+import AddFolderButton from 'components/Bookmarks/AddFolderButton'
 
 const theme = createMuiTheme()
 
@@ -41,6 +42,9 @@ const Main: React.FC = () => {
             folders={currentFolders}
           />
         </Box>
+      </Box>
+      <Box position="absolute" bottom={0} right={0} m={2}>
+        <AddFolderButton />
       </Box>
     </ThemeProvider>
   )

@@ -29,5 +29,13 @@ declare namespace browser.bookmarks {
 
   function move(id: string, destination: IBookmarkDestination): Promise<void>
 
+  export interface IBookmarkCreateDetails {
+    title: string
+    parentId: string
+    url?: string
+  }
+
+  function create(bookmark: IBookmarkCreateDetails): Promise<IBookmarkTreeNode>
+
   function removeTree(id: string): Promise<void>
 }
