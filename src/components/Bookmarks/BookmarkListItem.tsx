@@ -5,17 +5,8 @@ import {
   Icon,
   ListItemText,
   ListItemIcon,
-  makeStyles,
-  ListItemSecondaryAction,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button
+  makeStyles
 } from '@material-ui/core'
-import { useDragBookmark, useDropBookmark } from 'hooks/dragDrop'
-import { useBookmarksStore, actions } from 'stores/BookmarkStore'
 
 const useStyles = makeStyles(() => ({
   link: {
@@ -28,52 +19,19 @@ const useStyles = makeStyles(() => ({
 }))
 
 interface IProps {
-  type: 'bookmark' | 'folder'
   title: string
-  parentId: string
-  id: string
-  url?: string
-  onClick?: () => void
+  url: string
 }
 
-const BookmarkListItem: React.FC<IProps> = ({
-  id,
-  parentId,
-  type,
-  title,
-  url,
-  onClick
-}) => {
-  const [, dispatch] = useBookmarksStore()
+const BookmarkListItem: React.FC<IProps> = ({ title, url }) => {
   const styles = useStyles()
-  const dragRef = useDragBookmark(id, parentId)
-  const [, dropRef] = useDropBookmark(id)
-  const [dialogOpen, setDialogOpen] = React.useState(false)
-
-  function attachRef(el: React.RefObject<unknown>) {
-    dragRef(el)
-    dropRef(el)
-  }
-
-  function openDialog() {
-    setDialogOpen(true)
-  }
-
-  function closeDialog() {
-    setDialogOpen(false)
-  }
-
-  function deleteBookmark() {
-    closeDialog()
-    dispatch(actions.removeNode({ id }))
-  }
 
   return (
     <>
-      <ListItem innerRef={attachRef}>
+      <ListItem>
         <Box p={1}>
           <ListItemIcon>
-            <Icon>{type}</Icon>
+            <Icon>bookmark</Icon>
           </ListItemIcon>
         </Box>
         <Box ml={1}>
@@ -83,31 +41,10 @@ const BookmarkListItem: React.FC<IProps> = ({
             target="_blank"
             rel="noopener noreferrer"
           >
-            <ListItemText
-              className={styles.text}
-              primary={title}
-              onClick={onClick}
-            />
+            <ListItemText className={styles.text} primary={title} />
           </a>
-          <ListItemSecondaryAction onClick={openDialog}>
-            <IconButton>
-              <Icon>delete</Icon>
-            </IconButton>
-          </ListItemSecondaryAction>
         </Box>
       </ListItem>
-      <Dialog open={dialogOpen} onClose={closeDialog}>
-        <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>Are you sure you want to delete {title}</DialogContent>
-        <DialogActions>
-          <Button onClick={closeDialog} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={deleteBookmark} color="primary" autoFocus>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
     </>
   )
 }

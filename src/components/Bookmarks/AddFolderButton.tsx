@@ -10,10 +10,8 @@ import {
   Button,
   DialogContentText
 } from '@material-ui/core'
-import { useBookmarksStore, actions } from 'stores/BookmarkStore'
 
 const AddFolderButton: React.FC = () => {
-  const [{ currentFolderId }, dispatch] = useBookmarksStore()
   const [dialogOpen, setDialogOpen] = React.useState(false)
   const [name, setName] = React.useState('')
 
@@ -24,7 +22,6 @@ const AddFolderButton: React.FC = () => {
 
   function createBookmark() {
     handleClose()
-    dispatch(actions.createFolder({ parentId: currentFolderId, title: name }))
   }
 
   return (

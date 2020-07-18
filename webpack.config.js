@@ -3,8 +3,7 @@ const webpack = require('webpack')
 
 module.exports = {
   entry: {
-    bundle: './src/index.tsx',
-    pageAction: './src/pageAction/index.tsx'
+    bundle: './src/index.tsx'
   },
   devtool: 'inline-source-map',
   devServer: {
